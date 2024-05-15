@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:12-alpine
+    restart: unless-stopped
+    container_name: holder_postgres
+    environment:
+      - POSTGRES_USER=app_holder
+      - POSTGRES_PASSWORD=app_holder
+      - POSTGRES_DB=holder
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg-isready -U app_holder -d holder'"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - holder-network
+
+volumes:
+  holder_postgres: { }
+
+networks:
+  holder-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.10.2.0/24

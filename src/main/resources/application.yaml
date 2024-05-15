@@ -1,0 +1,42 @@
+spring:
+  main:
+    banner-mode: off
+  application:
+    name: holder
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/holder
+    username: app_holder
+    password: app_holder
+    driver-class-name: org.postgresql.Driver
+
+  flyway:
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    schemas: public
+    default-schema: public
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+    open-in-view: false
+
+  logging:
+    level:
+      org:
+        springframework:
+          web: ${LOG_LEVEL:DEBUG}
+      com:
+        montebruni:
+          sales: ${LOG_LEVEL:DEBUG}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
