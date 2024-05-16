@@ -1,17 +1,14 @@
-package com.montebruni.holder.configurations
+package com.montebruni.holder.configuration
 
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
-import org.springframework.context.annotation.Import
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.testcontainers.containers.PostgreSQLContainer
-import org.testcontainers.utility.DockerImageName
 
 @DataJpaTest
-@Import(JacksonConfiguration::class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 open class DatabaseIT(
     private val repositories: List<JpaRepository<*, *>> = emptyList()
@@ -23,11 +20,12 @@ open class DatabaseIT(
     fun cleanDb() = repositories.forEach { it.deleteAllInBatch() }
 
     companion object {
+
         @JvmStatic
-        val postgresContainer = PostgreSQLContainer(DockerImageName.parse("postgres:14.7-alpine")).apply {
-            withUsername("app_sales")
-            withPassword("app_sales")
-            withDatabaseName("sales")
+        val postgresContainer = PostgreSQLContainer("postgres:14.7-alpine").apply {
+            withUsername("app_holder")
+            withPassword("app_holder")
+            withDatabaseName("holder")
         }.also { it.start() }
 
         @JvmStatic

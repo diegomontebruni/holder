@@ -1,4 +1,4 @@
-package com.montebruni.holder.configurations
+package com.montebruni.holder.configuration
 
 import io.mockk.clearAllMocks
 import io.mockk.junit5.MockKExtension
