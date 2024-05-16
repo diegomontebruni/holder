@@ -1,4 +1,4 @@
-package com.montebruni.holder.configurations
+package com.montebruni.holder.configuration
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.extension.ExtendWith

@@ -1,4 +1,4 @@
-package com.montebruni.holder.configurations
+package com.montebruni.holder.configuration
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.DeserializationFeature
