@@ -51,4 +51,35 @@ class UserRepositoryAdapterTest(
             assertNull(result)
         }
     }
+
+    @Nested
+    inner class FindByUsername {
+
+        @Test
+        fun `should find user by username`() {
+            val userModel = createUserModel()
+
+            every { repository.findByUsername(userModel.username) } returns userModel
+
+            val result = adapter.findByUsername(userModel.username)
+
+            assertNotNull(result)
+            assertEquals(userModel.id, result?.id)
+            assertEquals(userModel.username, result?.username)
+            assertEquals(userModel.password, result?.password)
+            assertEquals(userModel.status.name, result?.status?.name)
+            assertEquals(userModel.createdAt, result?.createdAt)
+        }
+
+        @Test
+        fun `should return null when not found user by username`() {
+            val userModel = createUserModel()
+
+            every { repository.findByUsername(userModel.username) } returns null
+
+            val result = adapter.findByUsername(userModel.username)
+
+            assertNull(result)
+        }
+    }
 }
