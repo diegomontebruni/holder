@@ -1,33 +1,33 @@
-## Descricao
+## Description
 
-Este projeto é um gerenciador de carteira de ações, onde é possivel gerenciar multiplas carteiras de um usuário.
+This project is a stock portfolio manager, where it is possible to manage multiple portfolios of a user.
 
-## Tecnologias
+## Technologies
 
-O projeto foi desenvolvido utilizando as seguintes tecnologias:
+The project was developed using the following technologies:
 
-- Kotlin - Linguagem de programação
-- Spring Boot - Framework para desenvolvimento de aplicações Java
-- PostgreSQL - Banco de dados
-- Docker - Ferramenta para criação de containers
+- [Kotlin](https://kotlinlang.org/) - Programming language
+- [Spring Boot](https://spring.io/projects/spring-boot) - Framework for developing Java/Kotlin applications
+- [PostgreSQL](https://www.postgresql.org/) - Database
+- [Docker](https://www.docker.com/) - Tool for creating containers
 
-## Executando o projeto
+## Running the project
 
-Para executar o projeto, é necessário ter o Docker instalado na máquina. 
-Após a instalação, basta executar o comando abaixo na raiz do projeto:
+To run the project, it is necessary to have Docker installed on the machine.
+After installation, just run the command below at the root of the project:
 
 ```bash
 docker compose up -d
 ```
 
-## Estrutura do projeto
+## Project Structure
 
-### Módulos
+### Modules
 
-O projeto foi dividido em módulos:
+The project was divided into modules:
 
-- **account**: Contém as regras de negócio dos usuários
-- **wallet**: Contém as regras de negócio das carteiras
-- **stock**: Contém as regras de negócio das ações
-- **transaction**: Contém as regras de negócio das transações
-- **common**: Contém as classes comuns a todos os módulos
+- **account**: Contains the business rules of the users
+- **wallet**: Contains the business rules of the wallets
+- **stock**: Contains the business rules of the stocks
+- **transaction**: Contains the business rules of the transactions
+- **common**: Contains the classes common to all modules
