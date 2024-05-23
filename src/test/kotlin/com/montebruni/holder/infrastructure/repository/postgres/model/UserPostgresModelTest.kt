@@ -13,7 +13,9 @@ class UserPostgresModelTest {
         val user = model.toUser()
 
         assertEquals(model.id, user.id)
-        assertEquals(model.name, user.name)
+        assertEquals(model.username, user.username)
+        assertEquals(model.password, user.password)
+        assertEquals(model.status.name, user.status.name)
         assertEquals(model.createdAt, user.createdAt)
     }
 }

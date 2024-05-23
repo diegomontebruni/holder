@@ -14,4 +14,6 @@ class UserRepositoryAdapter(
 ) : UserRepository {
 
     override fun findById(id: UUID): User? = repository.findByIdOrNull(id)?.toUser()
+
+    override fun findByUsername(username: String): User? = repository.findByUsername(username)?.toUser()
 }

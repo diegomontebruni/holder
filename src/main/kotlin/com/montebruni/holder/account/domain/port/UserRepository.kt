@@ -6,4 +6,5 @@ import java.util.UUID
 interface UserRepository {
 
     fun findById(id: UUID): User?
+    fun findByUsername(username: String): User?
 }

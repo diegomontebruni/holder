@@ -1,5 +1,6 @@
 package com.montebruni.holder.account.infrastructure.database.postgres.model
 
+import com.montebruni.holder.account.domain.entity.Status
 import com.montebruni.holder.account.domain.entity.User
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -17,16 +18,27 @@ class UserPostgresModel(
     @Column(updatable = false)
     val id: UUID = UUID.randomUUID(),
 
-    @Column(name = "name")
-    val name: String,
+    @Column(name = "username")
+    val username: String,
+
+    @Column(name = "password")
+    val password: String,
+
+    @Column(name = "status")
+    val status: StatusModel = StatusModel.ACTIVE,
 
     @CreatedDate
     @Column(name = "created_at", nullable = false)
     val createdAt: Instant = Instant.now(),
-)
+) {
+
+    enum class StatusModel { ACTIVE, INACTIVE }
+}
 
 fun UserPostgresModel.toUser() = User(
     id = id,
-    name = name,
+    username = username,
+    password = password,
+    status = Status.valueOf(status.name),
     createdAt = createdAt
 )
