@@ -18,7 +18,21 @@ class UserPostgresRepositoryIT(
         val result = repository.findByIdOrNull(user.id)
 
         assertEquals(user.id, result?.id)
-        assertEquals(user.name, result?.name)
+        assertEquals(user.username, result?.username)
+        assertEquals(user.password, result?.password)
+        assertEquals(user.status.name, result?.status?.name)
+        assertEquals(user.createdAt, result?.createdAt)
+    }
+
+    @Test
+    fun `should find user by username`() {
+        val user = createUserModel().also(repository::save)
+        val result = repository.findByUsername(user.username)
+
+        assertEquals(user.id, result?.id)
+        assertEquals(user.username, result?.username)
+        assertEquals(user.password, result?.password)
+        assertEquals(user.status.name, result?.status?.name)
         assertEquals(user.createdAt, result?.createdAt)
     }
 }

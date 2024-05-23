@@ -34,7 +34,9 @@ class UserRepositoryAdapterTest(
 
             assertNotNull(result)
             assertEquals(userModel.id, result?.id)
-            assertEquals(userModel.name, result?.name)
+            assertEquals(userModel.username, result?.username)
+            assertEquals(userModel.password, result?.password)
+            assertEquals(userModel.status.name, result?.status?.name)
             assertEquals(userModel.createdAt, result?.createdAt)
         }
 

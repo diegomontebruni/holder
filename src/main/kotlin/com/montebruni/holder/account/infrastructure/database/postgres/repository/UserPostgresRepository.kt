@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository
 import java.util.UUID
 
 @Repository
-interface UserPostgresRepository : JpaRepository<UserPostgresModel, UUID>
+interface UserPostgresRepository : JpaRepository<UserPostgresModel, UUID> {
+
+    fun findByUsername(username: String): UserPostgresModel?
+}
