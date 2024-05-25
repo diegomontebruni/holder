@@ -1,6 +1,5 @@
-package com.montebruni.holder.infrastructure.repository.postgres.adapter
+package com.montebruni.holder.account.infrastructure.database.postgres.adapter
 
-import com.montebruni.holder.account.infrastructure.database.postgres.adapter.CustomerRepositoryAdapter
 import com.montebruni.holder.account.infrastructure.database.postgres.repository.CustomerPostgresRepository
 import com.montebruni.holder.configuration.UnitTests
 import com.montebruni.holder.fixtures.createCustomerModel
