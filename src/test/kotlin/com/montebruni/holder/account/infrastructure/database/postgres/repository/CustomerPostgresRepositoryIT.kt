@@ -1,6 +1,5 @@
-package com.montebruni.holder.infrastructure.repository.postgres
+package com.montebruni.holder.account.infrastructure.database.postgres.repository
 
-import com.montebruni.holder.account.infrastructure.database.postgres.repository.CustomerPostgresRepository
 import com.montebruni.holder.configuration.DatabaseIT
 import com.montebruni.holder.fixtures.createCustomerModel
 import org.junit.jupiter.api.Assertions.assertEquals
