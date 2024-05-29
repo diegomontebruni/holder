@@ -2,6 +2,7 @@ package com.montebruni.holder.account.infrastructure.database.postgres.adapter
 
 import com.montebruni.holder.account.domain.entity.User
 import com.montebruni.holder.account.domain.port.UserRepository
+import com.montebruni.holder.account.infrastructure.database.postgres.model.UserPostgresModel
 import com.montebruni.holder.account.infrastructure.database.postgres.model.toUser
 import com.montebruni.holder.account.infrastructure.database.postgres.repository.UserPostgresRepository
 import org.springframework.data.repository.findByIdOrNull
@@ -12,6 +13,8 @@ import java.util.UUID
 class UserRepositoryAdapter(
     private val repository: UserPostgresRepository
 ) : UserRepository {
+
+    override fun save(user: User): User = repository.save(UserPostgresModel.fromUser(user)).toUser()
 
     override fun findById(id: UUID): User? = repository.findByIdOrNull(id)?.toUser()
 

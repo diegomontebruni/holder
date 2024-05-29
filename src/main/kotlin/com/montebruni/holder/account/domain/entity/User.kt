@@ -1,12 +1,12 @@
 package com.montebruni.holder.account.domain.entity
 
-import java.time.Instant
+import com.montebruni.holder.common.valueobject.Password
+import com.montebruni.holder.common.valueobject.Username
 import java.util.UUID
 
 data class User(
-    val id: UUID,
-    val username: String,
-    val password: String,
-    val status: Status = Status.ACTIVE,
-    val createdAt: Instant? = null
+    val id: UUID = UUID.randomUUID(),
+    val username: Username,
+    val password: Password,
+    val status: Status = Status.PENDING
 )

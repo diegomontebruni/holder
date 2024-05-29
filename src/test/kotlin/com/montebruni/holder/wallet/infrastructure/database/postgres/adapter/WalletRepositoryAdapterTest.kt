@@ -9,6 +9,7 @@ import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.slot
+import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -40,6 +41,8 @@ class WalletRepositoryAdapterTest(
             assertEquals(walletSlot.captured.managerId, result.managerId)
             assertEquals(walletSlot.captured.balance, result.balance.value.toDouble())
             assertEquals(walletSlot.captured.createdAt, result.createdAt)
+
+            verify { repository.save(walletSlot.captured) }
         }
     }
 
@@ -58,6 +61,8 @@ class WalletRepositoryAdapterTest(
             assertEquals(walletModel.managerId, result?.managerId)
             assertEquals(walletModel.balance, result?.balance?.value?.toDouble())
             assertEquals(walletModel.createdAt, result?.createdAt)
+
+            verify { repository.findByIdOrNull(walletModel.id) }
         }
 
         @Test
@@ -67,6 +72,8 @@ class WalletRepositoryAdapterTest(
             every { repository.findByIdOrNull(walletModel.id) } returns null
 
             adapter.findById(walletModel.id).let(::assertNull)
+
+            verify { repository.findByIdOrNull(walletModel.id) }
         }
     }
 
@@ -89,6 +96,8 @@ class WalletRepositoryAdapterTest(
             assertEquals(walletModel.managerId, result.managerId)
             assertEquals(walletModel.balance, result.balance.value.toDouble())
             assertEquals(walletModel.createdAt, result.createdAt)
+
+            verify { repository.findByManagerId(mangerIdSlot.captured) }
         }
 
         @Test
@@ -101,6 +110,8 @@ class WalletRepositoryAdapterTest(
             adapter.findByManagerId(managerId).let { assertTrue(it.isEmpty()) }
 
             assertEquals(managerId, mangerIdSlot.captured)
+
+            verify { repository.findByManagerId(mangerIdSlot.captured) }
         }
     }
 }
