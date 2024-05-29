@@ -6,6 +6,7 @@ import com.montebruni.holder.fixtures.createCustomerModel
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
+import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertNull
@@ -37,6 +38,8 @@ class CustomerRepositoryAdapterTest(
             assertEquals(customerModel.name, result?.name)
             assertEquals(customerModel.email, result?.email)
             assertEquals(customerModel.createdAt, result?.createdAt)
+
+            verify { repository.findByIdOrNull(customerModel.id) }
         }
 
         @Test
@@ -46,6 +49,8 @@ class CustomerRepositoryAdapterTest(
             every { repository.findByIdOrNull(customerModel.id) } returns null
 
             adapter.findById(customerModel.id).let(::assertNull)
+
+            verify { repository.findByIdOrNull(customerModel.id) }
         }
     }
 
@@ -66,6 +71,8 @@ class CustomerRepositoryAdapterTest(
             assertEquals(customerModel.name, result?.name)
             assertEquals(customerModel.email, result?.email)
             assertEquals(customerModel.createdAt, result?.createdAt)
+
+            verify { repository.findByUserId(customerModel.userId) }
         }
 
         @Test
@@ -75,6 +82,8 @@ class CustomerRepositoryAdapterTest(
             every { repository.findByUserId(customerModel.userId) } returns null
 
             adapter.findByUserId(customerModel.userId).let(::assertNull)
+
+            verify { repository.findByUserId(customerModel.userId) }
         }
     }
 }

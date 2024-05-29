@@ -1,3 +1,3 @@
 package com.montebruni.holder.account.domain.entity
 
-enum class Status { ACTIVE, INACTIVE }
+enum class Status { PENDING, ACTIVE, INACTIVE }

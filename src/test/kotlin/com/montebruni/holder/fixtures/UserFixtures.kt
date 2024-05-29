@@ -1,17 +1,16 @@
 package com.montebruni.holder.fixtures
 
-import com.montebruni.holder.account.domain.entity.Status
 import com.montebruni.holder.account.domain.entity.User
 import com.montebruni.holder.account.infrastructure.database.postgres.model.UserPostgresModel
-import java.time.Instant
+import com.montebruni.holder.account.usecase.input.CreateUserInput
+import com.montebruni.holder.common.valueobject.Password
+import com.montebruni.holder.common.valueobject.Username
 import java.util.UUID
 
 fun createUser() = User(
     id = UUID.randomUUID(),
-    username = "john.snow",
-    password = "password",
-    status = Status.ACTIVE,
-    createdAt = Instant.now()
+    username = Username("john.snow"),
+    password = Password("password")
 )
 
 fun createUserModel() = UserPostgresModel(
@@ -19,4 +18,10 @@ fun createUserModel() = UserPostgresModel(
     username = "john.snow",
     password = "password",
     status = UserPostgresModel.StatusModel.ACTIVE,
+)
+
+fun createUserInput() = CreateUserInput(
+    username = "john.snow",
+    password = "password",
+    managerId = UUID.randomUUID()
 )
