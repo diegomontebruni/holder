@@ -14,7 +14,7 @@ class UserRepositoryAdapter(
     private val repository: UserPostgresRepository
 ) : UserRepository {
 
-    override fun save(user: User): User = repository.save(UserPostgresModel.fromUser(user)).toUser()
+    override fun save(user: User): User = UserPostgresModel.fromUser(user).let(repository::save).toUser()
 
     override fun findById(id: UUID): User? = repository.findByIdOrNull(id)?.toUser()
 
