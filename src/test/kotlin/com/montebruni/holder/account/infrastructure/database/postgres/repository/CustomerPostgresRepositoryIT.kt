@@ -55,4 +55,17 @@ class CustomerPostgresRepositoryIT(
             repository.findByUserId(UUID.randomUUID()).let(::assertNull)
         }
     }
+
+    @Nested
+    inner class SaveCustomerCases {
+
+        @Test
+        fun `should save customer with nullable properties`() {
+            val customer = createCustomerModel().copy(name = null).also(repository::save)
+
+            val result = repository.findByIdOrNull(customer.id)
+
+            assertNull(result?.name)
+        }
+    }
 }

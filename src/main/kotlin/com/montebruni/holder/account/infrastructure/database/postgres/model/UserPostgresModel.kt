@@ -2,8 +2,8 @@ package com.montebruni.holder.account.infrastructure.database.postgres.model
 
 import com.montebruni.holder.account.domain.entity.Status
 import com.montebruni.holder.account.domain.entity.User
-import com.montebruni.holder.common.valueobject.Password
-import com.montebruni.holder.common.valueobject.Username
+import com.montebruni.holder.account.domain.valueobject.Password
+import com.montebruni.holder.account.domain.valueobject.Username
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
@@ -16,7 +16,7 @@ import java.util.UUID
 
 @Entity
 @Table(name = "users")
-class UserPostgresModel(
+data class UserPostgresModel(
 
     @Id
     @Column(updatable = false)

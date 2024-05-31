@@ -1,7 +1,7 @@
 package com.montebruni.holder.account.domain.entity
 
-import com.montebruni.holder.common.valueobject.Password
-import com.montebruni.holder.common.valueobject.Username
+import com.montebruni.holder.account.domain.valueobject.Password
+import com.montebruni.holder.account.domain.valueobject.Username
 import java.util.UUID
 
 data class User(

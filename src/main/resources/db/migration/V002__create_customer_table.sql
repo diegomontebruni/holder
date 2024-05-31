@@ -1,7 +1,7 @@
 CREATE TABLE customer (
     id UUID PRIMARY KEY,
     user_id UUID NOT NULL,
-    name VARCHAR NOT NULL,
+    name VARCHAR,
     email VARCHAR NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL
 );

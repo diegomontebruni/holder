@@ -36,7 +36,7 @@ class CustomerRepositoryAdapterTest(
             assertEquals(customerModel.id, result?.id)
             assertEquals(customerModel.userId, result?.userId)
             assertEquals(customerModel.name, result?.name)
-            assertEquals(customerModel.email, result?.email)
+            assertEquals(customerModel.email, result?.email?.value)
             assertEquals(customerModel.createdAt, result?.createdAt)
 
             verify { repository.findByIdOrNull(customerModel.id) }
@@ -69,7 +69,7 @@ class CustomerRepositoryAdapterTest(
             assertEquals(customerModel.id, result?.id)
             assertEquals(customerModel.userId, result?.userId)
             assertEquals(customerModel.name, result?.name)
-            assertEquals(customerModel.email, result?.email)
+            assertEquals(customerModel.email, result?.email?.value)
             assertEquals(customerModel.createdAt, result?.createdAt)
 
             verify { repository.findByUserId(customerModel.userId) }
