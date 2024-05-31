@@ -1,9 +1,9 @@
 package com.montebruni.holder.account.events.user
 
 import com.montebruni.holder.account.domain.entity.Status
-import com.montebruni.holder.common.event.EventData
 import com.montebruni.holder.account.domain.valueobject.Password
 import com.montebruni.holder.account.domain.valueobject.Username
+import com.montebruni.holder.common.event.EventData
 import java.util.UUID
 
 data class UserEventData(

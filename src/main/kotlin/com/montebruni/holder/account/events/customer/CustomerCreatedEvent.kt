@@ -13,7 +13,7 @@ data class CustomerCreatedEvent(
         id = entity.id,
         userId = entity.userId,
         name = entity.name,
-        email = entity.email.value,
+        email = entity.email,
         createdAt = entity.createdAt,
         managerId = managerId
     )
