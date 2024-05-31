@@ -31,3 +31,7 @@ The project was divided into modules:
 - **stock**: Contains the business rules of the stocks
 - **transaction**: Contains the business rules of the transactions
 - **common**: Contains the classes common to all modules
+
+### Software Design
+
+The project was developed using a mix of Clean Architecture and Port and Adapters
