@@ -1,6 +1,7 @@
 package com.montebruni.holder.account.infrastructure.database.postgres.model
 
 import com.montebruni.holder.account.domain.entity.Customer
+import com.montebruni.holder.account.domain.valueobject.Email
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
@@ -11,7 +12,7 @@ import java.util.UUID
 
 @Entity
 @Table(name = "customer")
-class CustomerPostgresModel(
+data class CustomerPostgresModel(
 
     @Id
     @Column(updatable = false)
@@ -20,8 +21,8 @@ class CustomerPostgresModel(
     @Column(name = "user_id", nullable = false)
     val userId: UUID,
 
-    @Column(name = "name", nullable = false)
-    val name: String,
+    @Column(name = "name")
+    val name: String? = null,
 
     @Column(name = "email", nullable = false)
     val email: String,
@@ -35,6 +36,6 @@ fun CustomerPostgresModel.toCustomer() = Customer(
     id = id,
     userId = userId,
     name = name,
-    email = email,
+    email = Email(email),
     createdAt = createdAt
 )
