@@ -4,7 +4,7 @@ import com.montebruni.holder.account.domain.entity.User
 import com.montebruni.holder.common.event.Event
 import java.util.UUID
 
-class UserCreatedEvent(
+data class UserCreatedEvent(
     override val entity: User,
     private val managerId: UUID? = null
 ) : Event {

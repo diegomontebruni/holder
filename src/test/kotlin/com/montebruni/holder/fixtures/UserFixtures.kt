@@ -3,6 +3,7 @@ package com.montebruni.holder.fixtures
 import com.montebruni.holder.account.domain.entity.User
 import com.montebruni.holder.account.domain.valueobject.Password
 import com.montebruni.holder.account.domain.valueobject.Username
+import com.montebruni.holder.account.events.user.UserCreatedEvent
 import com.montebruni.holder.account.infrastructure.database.postgres.model.UserPostgresModel
 import com.montebruni.holder.account.usecase.input.CreateUserInput
 import java.util.UUID
@@ -23,5 +24,10 @@ fun createUserModel() = UserPostgresModel(
 fun createUserInput() = CreateUserInput(
     username = "john.snow",
     password = "password",
+    managerId = UUID.randomUUID()
+)
+
+fun createUserCreatedEvent() = UserCreatedEvent(
+    entity = createUser(),
     managerId = UUID.randomUUID()
 )
