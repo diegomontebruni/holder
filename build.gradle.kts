@@ -38,6 +38,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("io.github.microutils:kotlin-logging:2.0.11")
 
     implementation("org.flywaydb:flyway-core")
     runtimeOnly("org.postgresql:postgresql")
