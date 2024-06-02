@@ -1,4 +1,4 @@
-package com.montebruni.holder.common.event.springevent
+package com.montebruni.holder.infrastructure.event.springevent
 
 import com.montebruni.holder.common.event.Event
 import com.montebruni.holder.common.event.EventPublisher
