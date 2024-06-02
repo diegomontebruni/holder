@@ -32,10 +32,10 @@ spring:
     level:
       org:
         springframework:
-          web: ${LOG_LEVEL:DEBUG}
+          web: INFO
       com:
         montebruni:
-          sales: ${LOG_LEVEL:DEBUG}
+          holder: WARN
 
 springdoc:
   swagger-ui:
