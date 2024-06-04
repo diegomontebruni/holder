@@ -1,4 +1,4 @@
-package com.montebruni.holder.common.valueobject
+package com.montebruni.holder.wallet.domain.valueobject
 
 import java.math.BigDecimal
 

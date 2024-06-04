@@ -1,4 +1,4 @@
-package com.montebruni.holder.account.events.customer
+package com.montebruni.holder.account.domain.events.listener
 
 import com.montebruni.holder.account.usecase.CreateCustomer
 import com.montebruni.holder.account.usecase.input.CreateCustomerInput

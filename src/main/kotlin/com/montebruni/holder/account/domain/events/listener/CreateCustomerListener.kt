@@ -1,11 +1,12 @@
-package com.montebruni.holder.account.events.customer
+package com.montebruni.holder.account.domain.events.listener
 
-import com.montebruni.holder.account.events.user.UserCreatedEvent
+import com.montebruni.holder.account.domain.events.data.UserCreatedEvent
 import com.montebruni.holder.account.usecase.CreateCustomer
 import com.montebruni.holder.account.usecase.input.CreateCustomerInput
 import com.montebruni.holder.account.usecase.input.fromEvent
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
+import kotlin.let
 
 @Component
 class CreateCustomerListener(
