@@ -1,7 +1,7 @@
 package com.montebruni.holder.wallet.infrastructure.database.postgres.model
 
-import com.montebruni.holder.common.valueobject.Amount
 import com.montebruni.holder.wallet.domain.entity.Wallet
+import com.montebruni.holder.wallet.domain.valueobject.Amount
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id

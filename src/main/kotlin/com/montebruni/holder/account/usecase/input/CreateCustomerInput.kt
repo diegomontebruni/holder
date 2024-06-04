@@ -1,8 +1,8 @@
 package com.montebruni.holder.account.usecase.input
 
 import com.montebruni.holder.account.domain.entity.Customer
+import com.montebruni.holder.account.domain.events.data.UserCreatedEvent
 import com.montebruni.holder.account.domain.valueobject.Email
-import com.montebruni.holder.account.events.user.UserCreatedEvent
 import java.util.UUID
 
 data class CreateCustomerInput(

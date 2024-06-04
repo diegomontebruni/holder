@@ -1,6 +1,6 @@
 package com.montebruni.holder.wallet.domain.entity
 
-import com.montebruni.holder.common.valueobject.Amount
+import com.montebruni.holder.wallet.domain.valueobject.Amount
 import java.time.Instant
 import java.util.UUID
 
