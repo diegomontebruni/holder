@@ -1,9 +1,9 @@
 package com.montebruni.holder.account.application.usecase
 
+import com.montebruni.holder.account.application.dataprovider.UserRepository
 import com.montebruni.holder.account.application.domain.entity.User
 import com.montebruni.holder.account.application.domain.events.UserCreatedEvent
 import com.montebruni.holder.account.application.domain.exception.UserAlreadyExistsException
-import com.montebruni.holder.account.application.domain.port.UserRepository
 import com.montebruni.holder.account.application.usecase.impl.CreateUserImpl
 import com.montebruni.holder.common.event.EventPublisher
 import com.montebruni.holder.configuration.UnitTests

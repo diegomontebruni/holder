@@ -1,6 +1,6 @@
 package com.montebruni.holder.wallet.infrastructure.dataprovider
 
-import com.montebruni.holder.account.application.domain.port.CustomerRepository
+import com.montebruni.holder.account.application.dataprovider.CustomerRepository
 import com.montebruni.holder.configuration.UnitTests
 import com.montebruni.holder.fixtures.createCustomer
 import io.mockk.every
