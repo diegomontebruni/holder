@@ -1,10 +1,10 @@
 package com.montebruni.holder.account.application.usecase.impl
 
+import com.montebruni.holder.account.application.dataprovider.CustomerRepository
+import com.montebruni.holder.account.application.dataprovider.UserRepository
 import com.montebruni.holder.account.application.domain.entity.Customer
 import com.montebruni.holder.account.application.domain.events.CustomerCreatedEvent
 import com.montebruni.holder.account.application.domain.exception.UserNotFoundException
-import com.montebruni.holder.account.application.domain.port.CustomerRepository
-import com.montebruni.holder.account.application.domain.port.UserRepository
 import com.montebruni.holder.account.application.usecase.CreateCustomer
 import com.montebruni.holder.account.application.usecase.input.CreateCustomerInput
 import com.montebruni.holder.account.application.usecase.input.toCustomer

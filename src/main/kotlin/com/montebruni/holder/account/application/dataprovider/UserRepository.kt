@@ -1,4 +1,4 @@
-package com.montebruni.holder.account.application.domain.port
+package com.montebruni.holder.account.application.dataprovider
 
 import com.montebruni.holder.account.application.domain.entity.User
 import java.util.UUID

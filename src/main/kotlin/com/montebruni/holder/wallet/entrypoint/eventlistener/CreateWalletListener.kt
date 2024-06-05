@@ -3,7 +3,6 @@ package com.montebruni.holder.wallet.entrypoint.eventlistener
 import com.montebruni.holder.account.application.domain.events.CustomerCreatedEvent
 import com.montebruni.holder.wallet.application.usecase.CreateWallet
 import com.montebruni.holder.wallet.application.usecase.input.CreateWalletInput
-import com.montebruni.holder.wallet.application.usecase.input.fromEvent
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
 
@@ -14,6 +13,9 @@ class CreateWalletListener(
 
     @EventListener(classes = [CustomerCreatedEvent::class])
     fun listener(event: CustomerCreatedEvent) {
-        CreateWalletInput.fromEvent(event).let(createWallet::execute)
+        CreateWalletInput(
+            customerId = event.getData().id ?: throw IllegalArgumentException("customer id is null"),
+            managerId = event.getData().managerId
+        ).let(createWallet::execute)
     }
 }

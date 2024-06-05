@@ -1,7 +1,7 @@
 package com.montebruni.holder.account.infrastructure.database.postgres.adapter
 
+import com.montebruni.holder.account.application.dataprovider.UserRepository
 import com.montebruni.holder.account.application.domain.entity.User
-import com.montebruni.holder.account.application.domain.port.UserRepository
 import com.montebruni.holder.account.infrastructure.database.postgres.model.UserPostgresModel
 import com.montebruni.holder.account.infrastructure.database.postgres.model.toUser
 import com.montebruni.holder.account.infrastructure.database.postgres.repository.UserPostgresRepository

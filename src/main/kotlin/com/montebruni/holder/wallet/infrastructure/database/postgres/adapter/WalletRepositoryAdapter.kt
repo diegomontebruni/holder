@@ -1,7 +1,7 @@
 package com.montebruni.holder.wallet.infrastructure.database.postgres.adapter
 
+import com.montebruni.holder.wallet.application.dataprovider.WalletRepository
 import com.montebruni.holder.wallet.application.domain.entity.Wallet
-import com.montebruni.holder.wallet.application.domain.port.WalletRepository
 import com.montebruni.holder.wallet.infrastructure.database.postgres.model.WalletPostgresModel
 import com.montebruni.holder.wallet.infrastructure.database.postgres.model.fromWallet
 import com.montebruni.holder.wallet.infrastructure.database.postgres.model.toWallet
