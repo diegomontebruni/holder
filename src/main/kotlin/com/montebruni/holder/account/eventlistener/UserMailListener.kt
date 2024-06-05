@@ -1,6 +1,6 @@
-package com.montebruni.holder.account.domain.events.listener
+package com.montebruni.holder.account.eventlistener
 
-import com.montebruni.holder.account.domain.events.data.UserCreatedEvent
+import com.montebruni.holder.account.domain.events.UserCreatedEvent
 import com.montebruni.holder.account.domain.mail.UserCreatedMailData
 import com.montebruni.holder.account.domain.mail.UserCreatedMailTemplate
 import com.montebruni.holder.common.mail.MailSender

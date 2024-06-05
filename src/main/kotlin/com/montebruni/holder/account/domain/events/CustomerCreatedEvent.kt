@@ -1,4 +1,4 @@
-package com.montebruni.holder.account.domain.events.data
+package com.montebruni.holder.account.domain.events
 
 import com.montebruni.holder.account.domain.entity.Customer
 import com.montebruni.holder.common.event.Event

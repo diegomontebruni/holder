@@ -1,7 +1,7 @@
 package com.montebruni.holder.account.usecase
 
 import com.montebruni.holder.account.domain.entity.User
-import com.montebruni.holder.account.domain.events.data.UserCreatedEvent
+import com.montebruni.holder.account.domain.events.UserCreatedEvent
 import com.montebruni.holder.account.domain.exception.UserAlreadyExistsException
 import com.montebruni.holder.account.domain.port.UserRepository
 import com.montebruni.holder.account.usecase.input.CreateUserInput

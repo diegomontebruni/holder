@@ -1,7 +1,7 @@
 package com.montebruni.holder.fixtures
 
 import com.montebruni.holder.account.domain.entity.User
-import com.montebruni.holder.account.domain.events.data.UserCreatedEvent
+import com.montebruni.holder.account.domain.events.UserCreatedEvent
 import com.montebruni.holder.account.domain.valueobject.Password
 import com.montebruni.holder.account.domain.valueobject.Username
 import com.montebruni.holder.account.infrastructure.database.postgres.model.UserPostgresModel
