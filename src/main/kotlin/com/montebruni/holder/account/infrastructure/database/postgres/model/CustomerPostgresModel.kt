@@ -1,7 +1,7 @@
 package com.montebruni.holder.account.infrastructure.database.postgres.model
 
-import com.montebruni.holder.account.domain.entity.Customer
-import com.montebruni.holder.account.domain.valueobject.Email
+import com.montebruni.holder.account.application.domain.entity.Customer
+import com.montebruni.holder.account.application.domain.valueobject.Email
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
