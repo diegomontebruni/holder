@@ -1,13 +1,13 @@
 package com.montebruni.holder.wallet.application.usecase
 
-import com.montebruni.holder.account.application.domain.exception.CustomerNotFoundException
-import com.montebruni.holder.account.application.domain.port.CustomerRepository
 import com.montebruni.holder.common.event.EventPublisher
 import com.montebruni.holder.configuration.UnitTests
 import com.montebruni.holder.fixtures.createCreateWalletInput
+import com.montebruni.holder.wallet.application.dataprovider.CustomerDataProvider
+import com.montebruni.holder.wallet.application.dataprovider.WalletRepository
+import com.montebruni.holder.wallet.application.dataprovider.exception.CustomerDataProviderNotFoundException
 import com.montebruni.holder.wallet.application.domain.entity.Wallet
 import com.montebruni.holder.wallet.application.domain.events.WalletCreatedEvent
-import com.montebruni.holder.wallet.application.domain.port.WalletRepository
 import com.montebruni.holder.wallet.application.usecase.impl.CreateWalletImpl
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
@@ -26,7 +26,7 @@ import java.util.UUID
 
 class CreateWalletImplTest(
     @MockK private val walletRepository: WalletRepository,
-    @MockK private val customerRepository: CustomerRepository,
+    @MockK private val customerDataProvider: CustomerDataProvider,
     @MockK private val eventPublisher: EventPublisher
 ) : UnitTests() {
 
@@ -37,11 +37,11 @@ class CreateWalletImplTest(
     fun `should throw customer not found exception when customer not found`() {
         val input = createCreateWalletInput()
 
-        every { customerRepository.findById(input.customerId) } returns null
+        every { customerDataProvider.findById(input.customerId) } returns null
 
-        assertThrows<CustomerNotFoundException> { createWallet.execute(input) }
+        assertThrows<CustomerDataProviderNotFoundException> { createWallet.execute(input) }
 
-        verify(exactly = 1) { customerRepository.findById(input.customerId) }
+        verify(exactly = 1) { customerDataProvider.findById(input.customerId) }
         verify(exactly = 0) {
             walletRepository.create(any())
             eventPublisher.publishEvent(any())
@@ -53,11 +53,11 @@ class CreateWalletImplTest(
         val input = createCreateWalletInput()
         val customerIdSlot = mutableListOf<UUID>()
 
-        every { customerRepository.findById(capture(customerIdSlot)) } returns mockk() andThen null
+        every { customerDataProvider.findById(capture(customerIdSlot)) } returns mockk() andThen null
 
-        assertThrows<CustomerNotFoundException> { createWallet.execute(input) }
+        assertThrows<CustomerDataProviderNotFoundException> { createWallet.execute(input) }
 
-        customerIdSlot.forEach { verify { customerRepository.findById(it) } }
+        customerIdSlot.forEach { verify { customerDataProvider.findById(it) } }
         verify(exactly = 0) {
             walletRepository.create(any())
             eventPublisher.publishEvent(any())
@@ -70,7 +70,7 @@ class CreateWalletImplTest(
         val walletSlot = slot<Wallet>()
         val eventSlot = slot<WalletCreatedEvent>()
 
-        every { customerRepository.findById(input.customerId) } returns mockk()
+        every { customerDataProvider.findById(input.customerId) } returns mockk()
         every {
             walletRepository.create(capture(walletSlot))
         } answers { walletSlot.captured.copy(createdAt = Instant.now()) }
@@ -95,7 +95,7 @@ class CreateWalletImplTest(
         assertEquals(eventCaptured.createdAt, output.createdAt)
 
         verify(exactly = 1) {
-            customerRepository.findById(input.customerId)
+            customerDataProvider.findById(input.customerId)
             walletRepository.create(walletSlot.captured)
             eventPublisher.publishEvent(eventSlot.captured)
         }
@@ -108,7 +108,7 @@ class CreateWalletImplTest(
         val walletSlot = slot<Wallet>()
         val eventSlot = slot<WalletCreatedEvent>()
 
-        every { customerRepository.findById(capture(findInputSlot)) } returns mockk()
+        every { customerDataProvider.findById(capture(findInputSlot)) } returns mockk()
         every {
             walletRepository.create(capture(walletSlot))
         } answers { walletSlot.captured.copy(createdAt = Instant.now()) }
@@ -128,7 +128,7 @@ class CreateWalletImplTest(
         assertEquals(input.managerId, output.managerId)
 
         findInputSlot.forEach {
-            verify { customerRepository.findById(it) }
+            verify { customerDataProvider.findById(it) }
             verify(exactly = 1) {
                 walletRepository.create(walletSlot.captured)
                 eventPublisher.publishEvent(eventSlot.captured)

@@ -1,4 +1,4 @@
-package com.montebruni.holder.wallet.application.domain.port
+package com.montebruni.holder.wallet.application.dataprovider
 
 import com.montebruni.holder.wallet.application.domain.entity.Wallet
 import java.util.UUID
