@@ -3,6 +3,7 @@ package com.montebruni.holder.fixtures
 import com.montebruni.holder.wallet.domain.entity.Wallet
 import com.montebruni.holder.wallet.domain.valueobject.Amount
 import com.montebruni.holder.wallet.infrastructure.database.postgres.model.WalletPostgresModel
+import com.montebruni.holder.wallet.usecase.input.CreateWalletInput
 import java.util.UUID
 
 fun createWalletModel() = WalletPostgresModel(
@@ -15,4 +16,9 @@ fun createWallet() = Wallet(
     id = UUID.randomUUID(),
     managerId = UUID.randomUUID(),
     balance = Amount(100.0)
+)
+
+fun createCreateWalletInput() = CreateWalletInput(
+    customerId = UUID.randomUUID(),
+    managerId = UUID.randomUUID(),
 )
