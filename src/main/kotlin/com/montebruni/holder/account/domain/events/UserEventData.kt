@@ -1,4 +1,4 @@
-package com.montebruni.holder.account.domain.events.data
+package com.montebruni.holder.account.domain.events
 
 import com.montebruni.holder.account.domain.entity.Status
 import com.montebruni.holder.account.domain.valueobject.Password

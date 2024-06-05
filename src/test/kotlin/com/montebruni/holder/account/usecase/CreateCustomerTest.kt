@@ -1,7 +1,7 @@
 package com.montebruni.holder.account.usecase
 
 import com.montebruni.holder.account.domain.entity.Customer
-import com.montebruni.holder.account.domain.events.data.CustomerCreatedEvent
+import com.montebruni.holder.account.domain.events.CustomerCreatedEvent
 import com.montebruni.holder.account.domain.exception.UserNotFoundException
 import com.montebruni.holder.account.domain.port.CustomerRepository
 import com.montebruni.holder.account.domain.port.UserRepository

@@ -1,6 +1,6 @@
-package com.montebruni.holder.account.domain.events.listener
+package com.montebruni.holder.account.eventlistener
 
-import com.montebruni.holder.account.domain.events.data.UserCreatedEvent
+import com.montebruni.holder.account.domain.events.UserCreatedEvent
 import com.montebruni.holder.account.usecase.CreateCustomer
 import com.montebruni.holder.account.usecase.input.CreateCustomerInput
 import com.montebruni.holder.account.usecase.input.fromEvent
