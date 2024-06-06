@@ -1,6 +1,7 @@
 package com.montebruni.holder.fixtures
 
 import com.montebruni.holder.account.application.event.events.CustomerCreatedEvent
+import com.montebruni.holder.account.application.usecase.input.CompleteCustomerRegistrationInput
 import com.montebruni.holder.account.application.usecase.input.CreateCustomerInput
 import com.montebruni.holder.account.domain.entity.Customer
 import com.montebruni.holder.account.domain.valueobject.Email
@@ -30,4 +31,9 @@ fun createCreateCustomerInput() = CreateCustomerInput(
 fun createCustomerCreatedEvent() = CustomerCreatedEvent(
     entity = createCustomer(),
     managerId = UUID.randomUUID()
+)
+
+fun createCompleteCustomerRegistrationInput() = CompleteCustomerRegistrationInput(
+    userId = UUID.randomUUID(),
+    name = "John Doe"
 )
