@@ -1,7 +1,7 @@
 package com.montebruni.holder.account.application.usecase.output
 
-import com.montebruni.holder.account.application.domain.entity.Status
-import com.montebruni.holder.account.application.domain.entity.User
+import com.montebruni.holder.account.domain.entity.Status
+import com.montebruni.holder.account.domain.entity.User
 import java.util.UUID
 
 data class CreateUserOutput(

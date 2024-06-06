@@ -1,15 +1,15 @@
 package com.montebruni.holder.account.application.usecase.impl
 
-import com.montebruni.holder.account.application.dataprovider.UserRepository
-import com.montebruni.holder.account.application.domain.entity.User
-import com.montebruni.holder.account.application.domain.events.UserCreatedEvent
-import com.montebruni.holder.account.application.domain.exception.UserAlreadyExistsException
+import com.montebruni.holder.account.application.event.EventPublisher
+import com.montebruni.holder.account.application.event.events.UserCreatedEvent
 import com.montebruni.holder.account.application.usecase.CreateUser
 import com.montebruni.holder.account.application.usecase.input.CreateUserInput
 import com.montebruni.holder.account.application.usecase.input.toUser
 import com.montebruni.holder.account.application.usecase.output.CreateUserOutput
 import com.montebruni.holder.account.application.usecase.output.fromUser
-import com.montebruni.holder.common.event.EventPublisher
+import com.montebruni.holder.account.domain.entity.User
+import com.montebruni.holder.account.domain.exception.UserAlreadyExistsException
+import com.montebruni.holder.account.domain.repositories.UserRepository
 import org.springframework.stereotype.Service
 import java.util.UUID
 import kotlin.also

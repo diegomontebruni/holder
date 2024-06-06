@@ -1,7 +1,7 @@
 package com.montebruni.holder.wallet.application.usecase.output
 
-import com.montebruni.holder.wallet.application.domain.entity.Wallet
-import com.montebruni.holder.wallet.application.domain.valueobject.Amount
+import com.montebruni.holder.wallet.domain.entity.Wallet
+import com.montebruni.holder.wallet.domain.valueobject.Amount
 import java.time.Instant
 import java.util.UUID
 
