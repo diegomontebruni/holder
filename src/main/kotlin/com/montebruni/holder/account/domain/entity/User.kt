@@ -9,4 +9,7 @@ data class User(
     val username: Username,
     val password: Password,
     val status: Status = Status.PENDING
-)
+) {
+
+    fun isPending() = status == Status.PENDING
+}
