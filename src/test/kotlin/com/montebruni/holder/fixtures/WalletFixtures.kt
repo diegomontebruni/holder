@@ -1,8 +1,8 @@
 package com.montebruni.holder.fixtures
 
-import com.montebruni.holder.wallet.application.domain.entity.Wallet
-import com.montebruni.holder.wallet.application.domain.valueobject.Amount
 import com.montebruni.holder.wallet.application.usecase.input.CreateWalletInput
+import com.montebruni.holder.wallet.domain.entity.Wallet
+import com.montebruni.holder.wallet.domain.valueobject.Amount
 import com.montebruni.holder.wallet.infrastructure.database.postgres.model.WalletPostgresModel
 import java.util.UUID
 

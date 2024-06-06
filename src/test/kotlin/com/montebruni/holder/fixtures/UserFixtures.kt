@@ -1,10 +1,10 @@
 package com.montebruni.holder.fixtures
 
-import com.montebruni.holder.account.application.domain.entity.User
-import com.montebruni.holder.account.application.domain.events.UserCreatedEvent
-import com.montebruni.holder.account.application.domain.valueobject.Password
-import com.montebruni.holder.account.application.domain.valueobject.Username
+import com.montebruni.holder.account.application.event.events.UserCreatedEvent
 import com.montebruni.holder.account.application.usecase.input.CreateUserInput
+import com.montebruni.holder.account.domain.entity.User
+import com.montebruni.holder.account.domain.valueobject.Password
+import com.montebruni.holder.account.domain.valueobject.Username
 import com.montebruni.holder.account.infrastructure.database.postgres.model.UserPostgresModel
 import java.util.UUID
 

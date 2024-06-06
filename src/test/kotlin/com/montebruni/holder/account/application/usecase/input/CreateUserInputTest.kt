@@ -1,6 +1,6 @@
 package com.montebruni.holder.account.application.usecase.input
 
-import com.montebruni.holder.account.application.domain.entity.Status
+import com.montebruni.holder.account.domain.entity.Status
 import com.montebruni.holder.fixtures.createUserInput
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test

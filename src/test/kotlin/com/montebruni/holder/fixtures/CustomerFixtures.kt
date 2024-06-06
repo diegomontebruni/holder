@@ -1,9 +1,9 @@
 package com.montebruni.holder.fixtures
 
-import com.montebruni.holder.account.application.domain.entity.Customer
-import com.montebruni.holder.account.application.domain.events.CustomerCreatedEvent
-import com.montebruni.holder.account.application.domain.valueobject.Email
+import com.montebruni.holder.account.application.event.events.CustomerCreatedEvent
 import com.montebruni.holder.account.application.usecase.input.CreateCustomerInput
+import com.montebruni.holder.account.domain.entity.Customer
+import com.montebruni.holder.account.domain.valueobject.Email
 import com.montebruni.holder.account.infrastructure.database.postgres.model.CustomerPostgresModel
 import java.util.UUID
 
