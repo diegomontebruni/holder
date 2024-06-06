@@ -1,6 +1,6 @@
 package com.montebruni.holder.infrastructure.event.springevent
 
-import com.montebruni.holder.common.event.Event
+import com.montebruni.holder.common.event.AccountEvent
 import com.montebruni.holder.configuration.UnitTests
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
@@ -21,8 +21,8 @@ class SpringEventPublisherTest(
 
     @Test
     fun `should publish event`() {
-        val event = mockk<Event>()
-        val eventSlot = slot<Event>()
+        val event = mockk<AccountEvent>()
+        val eventSlot = slot<AccountEvent>()
 
         justRun { applicationEventPublisher.publishEvent(capture(eventSlot)) }
 

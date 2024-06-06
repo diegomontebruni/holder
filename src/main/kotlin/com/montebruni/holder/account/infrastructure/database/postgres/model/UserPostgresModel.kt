@@ -1,9 +1,9 @@
 package com.montebruni.holder.account.infrastructure.database.postgres.model
 
-import com.montebruni.holder.account.application.domain.entity.Status
-import com.montebruni.holder.account.application.domain.entity.User
-import com.montebruni.holder.account.application.domain.valueobject.Password
-import com.montebruni.holder.account.application.domain.valueobject.Username
+import com.montebruni.holder.account.domain.entity.Status
+import com.montebruni.holder.account.domain.entity.User
+import com.montebruni.holder.account.domain.valueobject.Password
+import com.montebruni.holder.account.domain.valueobject.Username
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType

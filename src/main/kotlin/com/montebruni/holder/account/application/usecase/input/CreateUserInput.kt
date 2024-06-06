@@ -1,8 +1,8 @@
 package com.montebruni.holder.account.application.usecase.input
 
-import com.montebruni.holder.account.application.domain.entity.User
-import com.montebruni.holder.account.application.domain.valueobject.Password
-import com.montebruni.holder.account.application.domain.valueobject.Username
+import com.montebruni.holder.account.domain.entity.User
+import com.montebruni.holder.account.domain.valueobject.Password
+import com.montebruni.holder.account.domain.valueobject.Username
 import java.util.UUID
 
 data class CreateUserInput(

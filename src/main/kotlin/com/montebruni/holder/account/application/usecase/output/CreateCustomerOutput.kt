@@ -1,7 +1,7 @@
 package com.montebruni.holder.account.application.usecase.output
 
-import com.montebruni.holder.account.application.domain.entity.Customer
-import com.montebruni.holder.account.application.domain.valueobject.Email
+import com.montebruni.holder.account.domain.entity.Customer
+import com.montebruni.holder.account.domain.valueobject.Email
 import java.time.Instant
 import java.util.UUID
 

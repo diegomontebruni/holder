@@ -1,6 +1,6 @@
 package com.montebruni.holder.wallet.application.usecase.input
 
-import com.montebruni.holder.wallet.application.domain.entity.Wallet
+import com.montebruni.holder.wallet.domain.entity.Wallet
 import java.util.UUID
 
 data class CreateWalletInput(

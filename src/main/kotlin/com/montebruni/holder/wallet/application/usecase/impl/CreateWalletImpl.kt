@@ -1,15 +1,15 @@
 package com.montebruni.holder.wallet.application.usecase.impl
 
-import com.montebruni.holder.common.event.EventPublisher
 import com.montebruni.holder.wallet.application.dataprovider.CustomerDataProvider
-import com.montebruni.holder.wallet.application.dataprovider.WalletRepository
 import com.montebruni.holder.wallet.application.dataprovider.exception.CustomerDataProviderNotFoundException
-import com.montebruni.holder.wallet.application.domain.events.WalletCreatedEvent
+import com.montebruni.holder.wallet.application.event.EventPublisher
+import com.montebruni.holder.wallet.application.event.events.WalletCreatedEvent
 import com.montebruni.holder.wallet.application.usecase.CreateWallet
 import com.montebruni.holder.wallet.application.usecase.input.CreateWalletInput
 import com.montebruni.holder.wallet.application.usecase.input.toWallet
 import com.montebruni.holder.wallet.application.usecase.output.CreateWalletOutput
 import com.montebruni.holder.wallet.application.usecase.output.fromWallet
+import com.montebruni.holder.wallet.domain.repositories.WalletRepository
 import org.springframework.stereotype.Service
 import kotlin.also
 import kotlin.let

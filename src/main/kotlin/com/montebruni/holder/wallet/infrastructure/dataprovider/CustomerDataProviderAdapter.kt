@@ -1,6 +1,6 @@
 package com.montebruni.holder.wallet.infrastructure.dataprovider
 
-import com.montebruni.holder.account.application.dataprovider.CustomerRepository
+import com.montebruni.holder.account.domain.repositories.CustomerRepository
 import com.montebruni.holder.wallet.application.dataprovider.CustomerDataProvider
 import com.montebruni.holder.wallet.application.dataprovider.data.CustomerData
 import org.springframework.stereotype.Component
