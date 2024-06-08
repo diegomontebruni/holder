@@ -59,6 +59,14 @@ dependencies {
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 }
 
+configurations.all {
+    resolutionStrategy.eachDependency {
+        if (requested.group == "org.jetbrains.kotlin") {
+            useVersion(io.gitlab.arturbosch.detekt.getSupportedKotlinVersion())
+        }
+    }
+}
+
 dependencyManagement {
     imports {
         mavenBom("org.testcontainers:testcontainers-bom:${property("testContainerVersion")}")
