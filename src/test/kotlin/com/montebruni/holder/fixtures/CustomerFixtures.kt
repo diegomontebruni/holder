@@ -1,6 +1,7 @@
 package com.montebruni.holder.fixtures
 
 import com.montebruni.holder.account.application.event.events.CustomerCreatedEvent
+import com.montebruni.holder.account.application.event.events.CustomerRegistrationCompletedEvent
 import com.montebruni.holder.account.application.usecase.input.CompleteCustomerRegistrationInput
 import com.montebruni.holder.account.application.usecase.input.CreateCustomerInput
 import com.montebruni.holder.account.application.usecase.input.UpdateCustomerInput
@@ -42,4 +43,8 @@ fun createCompleteCustomerRegistrationInput() = CompleteCustomerRegistrationInpu
 fun createUpdateCustomerInput() = UpdateCustomerInput(
     id = UUID.randomUUID(),
     name = "John Doe Input"
+)
+
+fun createCustomerRegistrationCompletedEvent() = CustomerRegistrationCompletedEvent(
+    entity = createCustomer()
 )
