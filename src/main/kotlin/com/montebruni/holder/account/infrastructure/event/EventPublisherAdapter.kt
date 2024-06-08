@@ -5,12 +5,12 @@ import com.montebruni.holder.account.application.event.events.Event
 import com.montebruni.holder.infrastructure.event.SpringEventPublisher
 import org.springframework.stereotype.Component
 
-@Component("accountEventPublisher")
+@Component
 class EventPublisherAdapter(
-    private val publisher: SpringEventPublisher
+    private val eventPublisher: SpringEventPublisher
 ) : EventPublisher {
 
-    override fun publish(event: Event) {
-        publisher.publishEvent(event)
+    override fun publishEvent(event: Event) {
+        eventPublisher.publishEvent(event)
     }
 }

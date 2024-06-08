@@ -26,7 +26,7 @@ class CompleteCustomerRegistrationImpl(
         customerRepository.findByUserId(input.userId)
             ?.let { it.copy(name = input.name) }
             ?.let(::CustomerRegistrationCompletedEvent)
-            ?.also(eventPublisher::publish)
+            ?.also(eventPublisher::publishEvent)
             ?: throw CustomerNotFoundException()
     }
 }

@@ -5,12 +5,12 @@ import com.montebruni.holder.wallet.application.event.EventPublisher
 import com.montebruni.holder.wallet.application.event.events.Event
 import org.springframework.stereotype.Component
 
-@Component("walletEventPublisher")
+@Component
 class EventPublisherAdapter(
-    private val publisher: SpringEventPublisher
+    private val eventPublisher: SpringEventPublisher
 ) : EventPublisher {
 
-    override fun publish(event: Event) {
-        publisher.publishEvent(event)
+    override fun publishEvent(event: Event) {
+        eventPublisher.publishEvent(event)
     }
 }

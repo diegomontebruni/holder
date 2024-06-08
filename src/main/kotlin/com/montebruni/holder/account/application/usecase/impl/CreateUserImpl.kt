@@ -32,5 +32,5 @@ class CreateUserImpl(
     }
 
     private fun publishUserCreatedEvent(user: User, managerId: UUID? = null) =
-        UserCreatedEvent(user, managerId).let(eventPublisher::publish)
+        UserCreatedEvent(user, managerId).let(eventPublisher::publishEvent)
 }

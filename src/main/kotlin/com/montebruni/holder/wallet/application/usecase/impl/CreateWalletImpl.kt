@@ -31,7 +31,7 @@ class CreateWalletImpl(
             .toWallet()
             .let(walletRepository::create)
             .also {
-                WalletCreatedEvent(it).let(eventPublisher::publish)
+                WalletCreatedEvent(it).let(eventPublisher::publishEvent)
             }
             .let { CreateWalletOutput.fromWallet(it) }
     }
