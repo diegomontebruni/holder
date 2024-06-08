@@ -8,6 +8,7 @@ class CustomerRegistrationCompletedEvent(
 ) : Event {
 
     override fun getData(): CustomerEventData = CustomerEventData(
+        id = entity.id,
         userId = entity.userId,
         name = entity.name,
     )

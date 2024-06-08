@@ -13,6 +13,7 @@ class CustomerRegistrationCompletedEventTest {
         val event = CustomerRegistrationCompletedEvent(customer)
         val eventData = event.getData()
 
+        assertEquals(customer.id, eventData.id)
         assertEquals(customer.userId, eventData.userId)
         assertEquals(customer.name, eventData.name)
     }
