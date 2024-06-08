@@ -1,6 +1,6 @@
 package com.montebruni.holder.account.application.event.events
 
-import com.montebruni.holder.fixtures.createUser
+import com.montebruni.holder.fixtures.createCustomer
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
@@ -8,13 +8,12 @@ class CustomerRegistrationCompletedEventTest {
 
     @Test
     fun `should get data from event successfully`() {
-        val user = createUser()
-        val name = "John Doe"
+        val customer = createCustomer()
 
-        val event = CustomerRegistrationCompletedEvent(user, name)
+        val event = CustomerRegistrationCompletedEvent(customer)
         val eventData = event.getData()
 
-        assertEquals(user.id, eventData.userId)
-        assertEquals(name, eventData.name)
+        assertEquals(customer.userId, eventData.userId)
+        assertEquals(customer.name, eventData.name)
     }
 }
