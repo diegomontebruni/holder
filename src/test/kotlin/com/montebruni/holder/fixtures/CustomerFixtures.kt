@@ -35,5 +35,5 @@ fun createCustomerCreatedEvent() = CustomerCreatedEvent(
 
 fun createCompleteCustomerRegistrationInput() = CompleteCustomerRegistrationInput(
     userId = UUID.randomUUID(),
-    name = "John Doe"
+    name = "John Doe Input"
 )
