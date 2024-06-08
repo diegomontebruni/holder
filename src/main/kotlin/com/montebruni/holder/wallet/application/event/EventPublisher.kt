@@ -4,5 +4,5 @@ import com.montebruni.holder.wallet.application.event.events.Event
 
 interface EventPublisher {
 
-    fun publishEvent(event: Event)
+    fun publish(event: Event)
 }

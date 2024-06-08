@@ -34,5 +34,5 @@ class CreateCustomerImpl(
     }
 
     private fun publishCustomerCreatedEvent(customer: Customer, managerId: UUID? = null) =
-        CustomerCreatedEvent(customer, managerId).let(eventPublisher::publishEvent)
+        CustomerCreatedEvent(customer, managerId).let(eventPublisher::publish)
 }
