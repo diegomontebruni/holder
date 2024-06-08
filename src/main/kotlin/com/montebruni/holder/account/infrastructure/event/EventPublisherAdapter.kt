@@ -5,7 +5,7 @@ import com.montebruni.holder.account.application.event.events.Event
 import com.montebruni.holder.infrastructure.event.SpringEventPublisher
 import org.springframework.stereotype.Component
 
-@Component
+@Component("AccountEventPublisher")
 class EventPublisherAdapter(
     private val eventPublisher: SpringEventPublisher
 ) : EventPublisher {

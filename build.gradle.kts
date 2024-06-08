@@ -6,9 +6,9 @@ plugins {
     id("org.flywaydb.flyway") version "10.14.0"
     id("io.gitlab.arturbosch.detekt") version "1.23.6"
 
-    kotlin("jvm") version "2.0.0"
-    kotlin("plugin.spring") version "2.0.0"
-    kotlin("plugin.jpa") version "2.0.0"
+    kotlin("jvm") version "1.9.23"
+    kotlin("plugin.spring") version "1.9.23"
+    kotlin("plugin.jpa") version "1.9.23"
 }
 
 group = "com.montebruni"
@@ -57,14 +57,6 @@ dependencies {
 
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.6")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-}
-
-configurations.all {
-    resolutionStrategy.eachDependency {
-        if (requested.group == "org.jetbrains.kotlin") {
-            useVersion(io.gitlab.arturbosch.detekt.getSupportedKotlinVersion())
-        }
-    }
 }
 
 dependencyManagement {
