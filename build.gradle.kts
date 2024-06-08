@@ -1,9 +1,9 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "3.2.5"
+    id("org.springframework.boot") version "3.3.0"
     id("io.spring.dependency-management") version "1.1.4"
-    id("org.flywaydb.flyway") version "9.16.3"
+    id("org.flywaydb.flyway") version "10.14.0"
     id("io.gitlab.arturbosch.detekt") version "1.23.6"
 
     kotlin("jvm") version "1.9.23"
@@ -29,7 +29,7 @@ repositories {
 }
 
 extra["testContainerVersion"] = "1.19.3"
-extra["springCloudVersion"] = "2023.0.0"
+extra["springCloudVersion"] = "2023.0.2"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -41,6 +41,7 @@ dependencies {
     implementation("io.github.microutils:kotlin-logging:2.0.11")
 
     implementation("org.flywaydb:flyway-core")
+    implementation("org.flywaydb:flyway-database-postgresql")
     runtimeOnly("org.postgresql:postgresql")
 
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
