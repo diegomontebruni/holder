@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 import kotlin.let
 
 @Component
-class UserMailListener(
+class UserCreatedSendMailListener(
     private val mailSender: MailSender
 ) {
 

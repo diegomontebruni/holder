@@ -13,12 +13,12 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-class UserMailListenerTest(
+class UserCreatedSendMailListenerTest(
     @MockK private val mailSender: MailSender
 ) : UnitTests() {
 
     @InjectMockKs
-    private lateinit var userMailListener: UserMailListener
+    private lateinit var listener: UserCreatedSendMailListener
 
     @Test
     fun `should send mail successfully`() {
@@ -32,7 +32,7 @@ class UserMailListenerTest(
 
         justRun { mailSender.send(capture(mailDataSlot)) }
 
-        userMailListener.sendPassword(event)
+        listener.sendPassword(event)
 
         assertEquals(event.getData().username!!.value, mailDataSlot.captured.to)
         assertEquals(template.getSubject(), mailDataSlot.captured.getSubject())
