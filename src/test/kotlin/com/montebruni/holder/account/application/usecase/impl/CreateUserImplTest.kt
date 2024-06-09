@@ -32,11 +32,11 @@ class CreateUserImplTest(
         val input = createUserInput()
         val user = createUser()
 
-        every { userRepository.findByUsername(input.username) } returns user
+        every { userRepository.findByUsername(input.username.value) } returns user
 
         assertThrows<UserAlreadyExistsException> { registerUser.execute(input) }
 
-        verify { userRepository.findByUsername(input.username) }
+        verify { userRepository.findByUsername(input.username.value) }
         verify(exactly = 0) {
             userRepository.save(any())
             eventPublisher.publishEvent(any())
@@ -49,15 +49,15 @@ class CreateUserImplTest(
         val userSlot = slot<User>()
         val userCreatedEventSlot = slot<UserCreatedEvent>()
 
-        every { userRepository.findByUsername(input.username) } returns null
+        every { userRepository.findByUsername(input.username.value) } returns null
         every { userRepository.save(capture(userSlot)) } answers { userSlot.captured }
         justRun { eventPublisher.publishEvent(capture(userCreatedEventSlot)) }
 
         val output = registerUser.execute(input)
 
         val userCaptured = userSlot.captured
-        assertEquals(input.username, userCaptured.username.value)
-        assertEquals(input.password, userCaptured.password.value)
+        assertEquals(input.username.value, userCaptured.username.value)
+        assertEquals(12, userCaptured.password.value.length)
 
         val userCreatedEvent = userCreatedEventSlot.captured.getData()
         assertEquals(userCaptured.id, userCreatedEvent.id)
@@ -70,7 +70,7 @@ class CreateUserImplTest(
         assertEquals(output.status, userCaptured.status)
 
         verify {
-            userRepository.findByUsername(input.username)
+            userRepository.findByUsername(input.username.value)
             userRepository.save(userSlot.captured)
             eventPublisher.publishEvent(userCreatedEventSlot.captured)
         }
@@ -81,7 +81,7 @@ class CreateUserImplTest(
         val input = createUserInput().copy(managerId = null)
         val userCreatedEventSlot = slot<UserCreatedEvent>()
 
-        every { userRepository.findByUsername(input.username) } returns null
+        every { userRepository.findByUsername(input.username.value) } returns null
         every { userRepository.save(any()) } answers { firstArg() }
         justRun { eventPublisher.publishEvent(capture(userCreatedEventSlot)) }
 
@@ -90,7 +90,7 @@ class CreateUserImplTest(
         assertNull(userCreatedEventSlot.captured.getData().managerId)
 
         verify {
-            userRepository.findByUsername(input.username)
+            userRepository.findByUsername(input.username.value)
             userRepository.save(any())
             eventPublisher.publishEvent(userCreatedEventSlot.captured)
         }

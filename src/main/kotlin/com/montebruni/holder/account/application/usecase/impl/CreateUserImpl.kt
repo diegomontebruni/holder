@@ -4,7 +4,6 @@ import com.montebruni.holder.account.application.event.EventPublisher
 import com.montebruni.holder.account.application.event.events.UserCreatedEvent
 import com.montebruni.holder.account.application.usecase.CreateUser
 import com.montebruni.holder.account.application.usecase.input.CreateUserInput
-import com.montebruni.holder.account.application.usecase.input.toUser
 import com.montebruni.holder.account.application.usecase.output.CreateUserOutput
 import com.montebruni.holder.account.application.usecase.output.fromUser
 import com.montebruni.holder.account.domain.entity.User
@@ -22,10 +21,11 @@ class CreateUserImpl(
 ) : CreateUser {
 
     override fun execute(input: CreateUserInput): CreateUserOutput {
-        userRepository.findByUsername(input.username)?.let { throw UserAlreadyExistsException() }
+        val username = input.username.value
 
-        return input
-            .toUser()
+        userRepository.findByUsername(username)?.let { throw UserAlreadyExistsException() }
+
+        return User(username = username)
             .let(userRepository::save)
             .also { publishUserCreatedEvent(it, input.managerId) }
             .let(CreateUserOutput::fromUser)

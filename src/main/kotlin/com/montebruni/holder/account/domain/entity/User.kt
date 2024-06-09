@@ -12,6 +12,8 @@ data class User(
     val status: Status = Status.PENDING
 ) {
 
+    constructor(username: String) : this(username = Username(username), password = Password())
+
     fun isPending() = status == Status.PENDING
 
     fun canBeRegistered() = isPending().takeUnless { it.not() } ?: throw UserAlreadyRegisteredException()
