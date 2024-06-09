@@ -22,7 +22,7 @@ class CreateUserImpl(
 ) : CreateUser {
 
     override fun execute(input: CreateUserInput): CreateUserOutput {
-        userRepository.findByUsername(input.username)?.let { throw UserAlreadyExistsException() }
+        userRepository.findByUsername(input.username.value)?.let { throw UserAlreadyExistsException() }
 
         return input
             .toUser()

@@ -7,24 +7,24 @@ import com.montebruni.holder.account.domain.entity.User
 import com.montebruni.holder.account.domain.valueobject.Password
 import com.montebruni.holder.account.domain.valueobject.Username
 import com.montebruni.holder.account.infrastructure.database.postgres.model.UserPostgresModel
+import com.montebruni.holder.account.presentation.rest.request.CreateUserRequest
 import java.util.UUID
 
 fun createUser() = User(
     id = UUID.randomUUID(),
-    username = Username("john.snow"),
-    password = Password("password")
+    username = Username("john.snow@winterfell.north"),
+    password = Password()
 )
 
 fun createUserModel() = UserPostgresModel(
     id = UUID.randomUUID(),
-    username = "john.snow",
+    username = "john.snow.model@winterfell.north",
     password = "password",
     status = UserPostgresModel.StatusModel.ACTIVE,
 )
 
 fun createUserInput() = CreateUserInput(
-    username = "john.snow",
-    password = "password",
+    username = Username("john.snow@winterfell.north"),
     managerId = UUID.randomUUID()
 )
 
@@ -35,4 +35,8 @@ fun createUserCreatedEvent() = UserCreatedEvent(
 
 fun createCompleteUserRegistrationInput() = CompleteUserRegistrationInput(
     userId = UUID.randomUUID()
+)
+
+fun createCreateUserRequest() = CreateUserRequest(
+    username = "john.snow@winterfell.north"
 )

@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component
 class MailSenderAdapter : MailSender {
 
     override fun send(data: MailData) {
-        logger.debug { "Sending mail to ${data.to} with subject ${data.getSubject()} with body ${data.getBody()}" }
+        logger.debug {
+            "Sending mail to '${data.to}' with subject '${data.getSubject()}' with body '${data.getBody()}'"
+        }
     }
 
     companion object {
