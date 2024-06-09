@@ -56,7 +56,7 @@ class CreateUserImplTest(
         val output = registerUser.execute(input)
 
         val userCaptured = userSlot.captured
-        assertEquals(input.username, userCaptured.username)
+        assertEquals(input.username.value, userCaptured.username.value)
         assertEquals(12, userCaptured.password.value.length)
 
         val userCreatedEvent = userCreatedEventSlot.captured.getData()
