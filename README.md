@@ -11,15 +11,6 @@ The project was developed using the following technologies:
 - [PostgreSQL](https://www.postgresql.org/) - Database
 - [Docker](https://www.docker.com/) - Tool for creating containers
 
-## Running the project
-
-To run the project, it is necessary to have Docker installed on the machine.
-After installation, just run the command below at the root of the project:
-
-```bash
-docker compose up -d
-```
-
 ## Project Structure
 
 ### Modules
@@ -35,3 +26,25 @@ The project was divided into modules:
 ### Software Design
 
 The project was developed using a mix of Clean Architecture and Port and Adapters
+
+## Running the project
+
+To run the project, Docker must be installed on the machine to start the dependencies.
+After installation, simply execute the command below at the root of the project to start the dependencies:
+
+```bash
+docker compose up -d
+```
+
+After the dependencies are up and running, the project can be run using the Gradle Wrapper. 
+Java must be installed on your machine for this. 
+After installation, you can execute the following command at the root of the project:
+
+```bash
+./gradlew bootRun
+```
+
+## API Documentation
+
+This project uses Swagger for API documentation. You can access the Swagger UI by navigating to the `/swagger-ui.html` endpoint of the running application. For example, if the application is running locally on port 8080, you can access the Swagger UI at `http://localhost:8080/swagger-ui.html`.
+
