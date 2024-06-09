@@ -1,6 +1,7 @@
 package com.montebruni.holder.fixtures
 
 import com.montebruni.holder.account.application.event.events.UserCreatedEvent
+import com.montebruni.holder.account.application.usecase.input.CompleteUserRegistrationInput
 import com.montebruni.holder.account.application.usecase.input.CreateUserInput
 import com.montebruni.holder.account.domain.entity.User
 import com.montebruni.holder.account.domain.valueobject.Password
@@ -30,4 +31,8 @@ fun createUserInput() = CreateUserInput(
 fun createUserCreatedEvent() = UserCreatedEvent(
     entity = createUser(),
     managerId = UUID.randomUUID()
+)
+
+fun createCompleteUserRegistrationInput() = CompleteUserRegistrationInput(
+    userId = UUID.randomUUID()
 )

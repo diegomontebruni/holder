@@ -11,6 +11,5 @@ class CustomerRegistrationCompletedEvent(
         id = entity.id,
         userId = entity.userId,
         name = entity.name,
-        email = entity.email,
     )
 }

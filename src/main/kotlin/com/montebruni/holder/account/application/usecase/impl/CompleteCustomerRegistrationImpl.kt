@@ -5,7 +5,6 @@ import com.montebruni.holder.account.application.event.events.CustomerRegistrati
 import com.montebruni.holder.account.application.usecase.CompleteCustomerRegistration
 import com.montebruni.holder.account.application.usecase.input.CompleteCustomerRegistrationInput
 import com.montebruni.holder.account.domain.exception.CustomerNotFoundException
-import com.montebruni.holder.account.domain.exception.UserAlreadyRegisteredException
 import com.montebruni.holder.account.domain.exception.UserNotFoundException
 import com.montebruni.holder.account.domain.repositories.CustomerRepository
 import com.montebruni.holder.account.domain.repositories.UserRepository
@@ -20,7 +19,7 @@ class CompleteCustomerRegistrationImpl(
 
     override fun execute(input: CompleteCustomerRegistrationInput) {
         userRepository.findById(input.userId)
-            ?.also { if (it.isPending().not()) throw UserAlreadyRegisteredException() }
+            ?.canBeRegistered()
             ?: throw UserNotFoundException()
 
         customerRepository.findByUserId(input.userId)

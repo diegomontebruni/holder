@@ -1,5 +1,6 @@
 package com.montebruni.holder.account.domain.entity
 
+import com.montebruni.holder.account.domain.exception.UserAlreadyRegisteredException
 import com.montebruni.holder.account.domain.valueobject.Password
 import com.montebruni.holder.account.domain.valueobject.Username
 import java.util.UUID
@@ -12,4 +13,8 @@ data class User(
 ) {
 
     fun isPending() = status == Status.PENDING
+
+    fun canBeRegistered() = isPending().takeUnless { it.not() } ?: throw UserAlreadyRegisteredException()
+
+    fun activate() = copy(status = Status.ACTIVE)
 }
