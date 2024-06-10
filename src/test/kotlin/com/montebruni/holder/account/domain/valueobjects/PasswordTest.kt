@@ -2,6 +2,7 @@ package com.montebruni.holder.account.domain.valueobjects
 
 import com.montebruni.holder.account.domain.crypto.PasswordEncryptor
 import com.montebruni.holder.account.domain.valueobject.Password
+import com.montebruni.holder.account.infrastructure.crypto.BCryptEncryptor
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -10,14 +11,10 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
 
-@SpringBootTest
 class PasswordTest {
 
-    @Autowired
-    private lateinit var passwordEncryptor: PasswordEncryptor
+    private val passwordEncryptor: PasswordEncryptor = BCryptEncryptor()
 
     @Nested
     inner class ConstructorCases {

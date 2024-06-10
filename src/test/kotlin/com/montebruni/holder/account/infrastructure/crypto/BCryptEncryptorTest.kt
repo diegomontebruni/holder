@@ -6,14 +6,10 @@ import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
 
-@SpringBootTest
 class BCryptEncryptorTest {
 
-    @Autowired
-    private lateinit var bCryptEncryptor: BCryptEncryptor
+    private val bCryptEncryptor: BCryptEncryptor = BCryptEncryptor()
 
     @ParameterizedTest
     @ValueSource(
