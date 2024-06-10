@@ -19,7 +19,7 @@ fun createUser() = User(
 fun createUserModel() = UserPostgresModel(
     id = UUID.randomUUID(),
     username = "john.snow.model@winterfell.north",
-    password = "password",
+    password = Password().value,
     status = UserPostgresModel.StatusModel.ACTIVE,
 )
 
