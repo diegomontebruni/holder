@@ -17,14 +17,14 @@ class BCryptEncryptor : PasswordEncryptor {
         val salt = ByteArray(16)
         random.nextBytes(salt)
         val saltString = Base64.getEncoder().encodeToString(salt)
-        val input = password.length.toString() + password + saltString
-        val encryptedPassword = passwordEncoder.encode(input)
+        val encryptedPassword = passwordEncoder.encode(rawPassword(password, saltString))
         return "$saltString:$encryptedPassword"
     }
 
     override fun validate(password: String, encryptedPasswordWithSalt: String): Boolean {
         val (saltString, encryptedPassword) = encryptedPasswordWithSalt.split(":")
-        val input = password.length.toString() + password + saltString
-        return passwordEncoder.matches(input, encryptedPassword)
+        return passwordEncoder.matches(rawPassword(password, saltString), encryptedPassword)
     }
+
+    private fun rawPassword(password: String, salt: String) = password.length.toString() + password + salt
 }
