@@ -1,8 +1,7 @@
-package com.montebruni.holder.account.application.usecase
+package com.montebruni.holder.account.application.usecase.impl
 
 import com.montebruni.holder.account.application.event.EventPublisher
 import com.montebruni.holder.account.application.event.events.CustomerUpdatedEvent
-import com.montebruni.holder.account.application.usecase.impl.UpdateCustomerImpl
 import com.montebruni.holder.account.domain.entity.Customer
 import com.montebruni.holder.account.domain.exception.CustomerNotFoundException
 import com.montebruni.holder.account.domain.repositories.CustomerRepository
