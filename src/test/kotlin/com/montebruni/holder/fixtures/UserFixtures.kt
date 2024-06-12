@@ -1,6 +1,7 @@
 package com.montebruni.holder.fixtures
 
 import com.montebruni.holder.account.application.event.events.UserCreatedEvent
+import com.montebruni.holder.account.application.usecase.input.ChangeUserPasswordInput
 import com.montebruni.holder.account.application.usecase.input.CompleteUserRegistrationInput
 import com.montebruni.holder.account.application.usecase.input.CreateUserInput
 import com.montebruni.holder.account.domain.entity.User
@@ -39,4 +40,10 @@ fun createCompleteUserRegistrationInput() = CompleteUserRegistrationInput(
 
 fun createCreateUserRequest() = CreateUserRequest(
     username = "john.snow@winterfell.north"
+)
+
+fun createChangeUserPasswordInput(password: Password) = ChangeUserPasswordInput(
+    username = Username("john.snow@winterfell.north"),
+    oldPassword = password,
+    newPassword = Password("New-pard1#"),
 )
