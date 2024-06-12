@@ -8,6 +8,7 @@ import com.montebruni.holder.account.application.usecase.input.UpdateCustomerInp
 import com.montebruni.holder.account.domain.entity.Customer
 import com.montebruni.holder.account.domain.valueobject.Email
 import com.montebruni.holder.account.infrastructure.database.postgres.model.CustomerPostgresModel
+import com.montebruni.holder.account.presentation.rest.request.CompleteCustomerRegistrationRequest
 import java.util.UUID
 
 fun createCustomer() = Customer(
@@ -47,4 +48,9 @@ fun createUpdateCustomerInput() = UpdateCustomerInput(
 
 fun createCustomerRegistrationCompletedEvent() = CustomerRegistrationCompletedEvent(
     entity = createCustomer()
+)
+
+fun createCompleteCustomerRegistrationRequest() = CompleteCustomerRegistrationRequest(
+    userId = UUID.randomUUID(),
+    name = "John Doe Request"
 )
