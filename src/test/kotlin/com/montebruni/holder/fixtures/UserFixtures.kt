@@ -8,6 +8,7 @@ import com.montebruni.holder.account.domain.entity.User
 import com.montebruni.holder.account.domain.valueobject.Password
 import com.montebruni.holder.account.domain.valueobject.Username
 import com.montebruni.holder.account.infrastructure.database.postgres.model.UserPostgresModel
+import com.montebruni.holder.account.presentation.rest.request.ChangeUserPasswordRequest
 import com.montebruni.holder.account.presentation.rest.request.CreateUserRequest
 import java.util.UUID
 
@@ -46,4 +47,10 @@ fun createChangeUserPasswordInput(password: Password) = ChangeUserPasswordInput(
     username = Username("john.snow@winterfell.north"),
     oldPassword = password,
     newPassword = Password("New-pard1#"),
+)
+
+fun createChangeUserPasswordRequest() = ChangeUserPasswordRequest(
+    username = "john.snow@winterfell.north",
+    oldPassword = "Old-pard1#",
+    newPassword = "New-pard1#",
 )
