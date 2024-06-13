@@ -7,6 +7,6 @@ class UserCreatedMailTemplate(
 ) : MailTemplate {
 
     override fun getBody(): String = """
-        Your account has been created successfully. Your password is $password.
+        Your account has been created successfully. Your password is: $password
     """.trimIndent()
 }

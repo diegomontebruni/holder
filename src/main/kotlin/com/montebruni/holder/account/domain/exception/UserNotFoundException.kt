@@ -1,3 +1,3 @@
 package com.montebruni.holder.account.domain.exception
 
-class UserNotFoundException : Exception("User not found")
+class UserNotFoundException : IllegalArgumentException("User not found")

@@ -1,3 +1,3 @@
 package com.montebruni.holder.account.domain.exception
 
-class UserAlreadyExistsException : Exception("User already exists")
+class UserAlreadyExistsException : IllegalArgumentException("User already exists")
