@@ -96,19 +96,17 @@ class UserControllerIT : BaseRestIT() {
         }
 
         @Test
-        fun `should return status code 2xx when some error occurred`() {
-            val request = createChangeUserPasswordRequest()
-
-            every { changeUserPassword.execute(any()) } throws IllegalArgumentException()
+        fun `should return status code 400 when some error occurred`() {
+            val request = createChangeUserPasswordRequest().copy(username = "invalid")
 
             mockMvc.perform(
                 patch("$baseUrl/change-password")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(mapper.writeValueAsString(request))
             )
-                .andExpect(status().is2xxSuccessful)
+                .andExpect(status().is4xxClientError)
 
-            verify(exactly = 1) { changeUserPassword.execute(any()) }
+            verify(exactly = 0) { changeUserPassword.execute(any()) }
         }
     }
 }

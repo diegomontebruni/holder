@@ -72,11 +72,9 @@ class UserController(
 
     @ResponseStatus(HttpStatus.OK)
     @PatchMapping("/change-password")
-    fun changePassword(
-        @RequestBody request: ChangeUserPasswordRequest
-    ) = runCatching {
+    fun changePassword(@RequestBody request: ChangeUserPasswordRequest) {
         request
             .toInput()
             .let(changeUserPassword::execute)
-    }.getOrNull()
+    }
 }

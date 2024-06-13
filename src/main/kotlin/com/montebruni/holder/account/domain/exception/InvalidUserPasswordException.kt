@@ -1,3 +1,3 @@
 package com.montebruni.holder.account.domain.exception
 
-class InvalidUserPasswordException : Exception("Invalid user password")
+class InvalidUserPasswordException : IllegalArgumentException("Invalid password")

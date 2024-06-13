@@ -12,6 +12,6 @@ class UserCreatedMailTemplateTest {
 
         val body = template.getBody()
 
-        assertEquals("Your account has been created successfully. Your password is $password.", body)
+        assertEquals("Your account has been created successfully. Your password is: $password", body)
     }
 }
