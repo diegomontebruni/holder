@@ -1,10 +1,12 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.gradle.testing.jacoco.tasks.JacocoReport
 
 plugins {
     id("org.springframework.boot") version "3.3.0"
     id("io.spring.dependency-management") version "1.1.4"
     id("org.flywaydb.flyway") version "10.14.0"
     id("io.gitlab.arturbosch.detekt") version "1.23.6"
+    id("jacoco")
 
     kotlin("jvm") version "1.9.23"
     kotlin("plugin.spring") version "1.9.23"
@@ -13,6 +15,10 @@ plugins {
 
 group = "com.montebruni"
 version = "0.0.1-SNAPSHOT"
+
+jacoco {
+    toolVersion = "0.8.7"
+}
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -107,4 +113,12 @@ flyway {
     url = "jdbc:postgresql://localhost:5432/holder"
     user = "app_holder"
     password = "app_holder"
+}
+
+tasks.withType<JacocoReport> {
+    reports {
+        xml.required.set(true)
+        csv.required.set(true)
+        html.required.set(false)
+    }
 }
