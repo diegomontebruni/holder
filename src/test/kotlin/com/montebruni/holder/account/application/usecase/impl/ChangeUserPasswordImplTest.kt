@@ -1,6 +1,6 @@
 package com.montebruni.holder.account.application.usecase.impl
 
-import com.montebruni.holder.account.domain.crypto.PasswordEncryptor
+import com.montebruni.holder.account.domain.crypto.EncryptorProvider
 import com.montebruni.holder.account.domain.entity.User
 import com.montebruni.holder.account.domain.exception.InvalidUserPasswordException
 import com.montebruni.holder.account.domain.exception.UserNotFoundException
@@ -20,7 +20,7 @@ import org.junit.jupiter.api.assertThrows
 
 class ChangeUserPasswordImplTest(
     @MockK private val userRepository: UserRepository,
-    @MockK private val passwordEncryptor: PasswordEncryptor
+    @MockK private val encryptorProvider: EncryptorProvider
 ) : UnitTests() {
 
     @InjectMockKs
@@ -37,9 +37,9 @@ class ChangeUserPasswordImplTest(
 
         verify { userRepository.findByUsername(input.username.value) }
         verify(exactly = 0) {
-            passwordEncryptor.validate(any(), any())
+            encryptorProvider.validate(any(), any())
             userRepository.save(any())
-            passwordEncryptor.encrypt(any())
+            encryptorProvider.encrypt(any())
         }
     }
 
@@ -53,7 +53,7 @@ class ChangeUserPasswordImplTest(
         val userPasswordSlot = slot<String>()
 
         every { userRepository.findByUsername(input.username.value) } returns user
-        every { passwordEncryptor.validate(capture(oldPasswordSlot), capture(userPasswordSlot)) } returns false
+        every { encryptorProvider.validate(capture(oldPasswordSlot), capture(userPasswordSlot)) } returns false
 
         assertThrows<InvalidUserPasswordException> { usecase.execute(input) }
 
@@ -62,11 +62,11 @@ class ChangeUserPasswordImplTest(
 
         verify {
             userRepository.findByUsername(input.username.value)
-            passwordEncryptor.validate(oldPasswordSlot.captured, userPasswordSlot.captured)
+            encryptorProvider.validate(oldPasswordSlot.captured, userPasswordSlot.captured)
         }
         verify(exactly = 0) {
             userRepository.save(any())
-            passwordEncryptor.encrypt(any())
+            encryptorProvider.encrypt(any())
         }
     }
 
@@ -79,9 +79,9 @@ class ChangeUserPasswordImplTest(
         val userSlot = slot<User>()
 
         every { userRepository.findByUsername(input.username.value) } returns user
-        every { passwordEncryptor.validate(any(), any()) } returns true
+        every { encryptorProvider.validate(any(), any()) } returns true
         every { userRepository.save(capture(userSlot)) } answers { userSlot.captured }
-        every { passwordEncryptor.encrypt(any()) } answers { input.newPassword.value }
+        every { encryptorProvider.encrypt(any()) } answers { input.newPassword.value }
 
         usecase.execute(input)
 
@@ -89,9 +89,9 @@ class ChangeUserPasswordImplTest(
 
         verify {
             userRepository.findByUsername(input.username.value)
-            passwordEncryptor.validate(any(), any())
+            encryptorProvider.validate(any(), any())
             userRepository.save(userSlot.captured)
-            passwordEncryptor.encrypt(any())
+            encryptorProvider.encrypt(any())
         }
     }
 }

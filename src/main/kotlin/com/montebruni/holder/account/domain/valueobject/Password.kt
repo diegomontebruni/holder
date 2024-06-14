@@ -1,6 +1,8 @@
 package com.montebruni.holder.account.domain.valueobject
 
-import com.montebruni.holder.account.domain.crypto.PasswordEncryptor
+import com.montebruni.holder.account.domain.constants.MAX_PASSWORD_LENGTH
+import com.montebruni.holder.account.domain.constants.MIN_PASSWORD_LENGTH
+import com.montebruni.holder.account.domain.crypto.EncryptorProvider
 import java.security.SecureRandom
 import kotlin.random.Random
 
@@ -11,7 +13,9 @@ data class Password(val value: String) {
 
     init {
         if (isEncrypted().not()) {
-            require(value.length >= 6 && value.length <= 12) { "Password length should be between 6 and 12" }
+            require(value.length >= MIN_PASSWORD_LENGTH && value.length <= MAX_PASSWORD_LENGTH) {
+                "Password length should be between $MIN_PASSWORD_LENGTH and $MAX_PASSWORD_LENGTH"
+            }
             require(value.any { it.isDigit() }) { "Password should contain a digit" }
             require(value.any { it.isLowerCase() }) { "Password should contain a lowercase letter" }
             require(value.any { it.isUpperCase() }) { "Password should contain an uppercase letter" }
@@ -19,11 +23,11 @@ data class Password(val value: String) {
         }
     }
 
-    fun encrypt(encryptor: PasswordEncryptor) = this
+    fun encrypt(encryptor: EncryptorProvider) = this
         .takeIf { isEncrypted() }
         ?: copy(value = encryptor.encrypt(value))
 
-    fun validate(encryptedPassword: String, encryptor: PasswordEncryptor) =
+    fun validate(encryptedPassword: String, encryptor: EncryptorProvider) =
         encryptor.validate(value, encryptedPassword)
 
     private fun isEncrypted(): Boolean =
@@ -35,7 +39,7 @@ data class Password(val value: String) {
 
         private fun randomPassword(): String {
             val chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()-_=+{}[]|:;<>?,./"
-            val passwordLength = 12
+            val passwordLength = MAX_PASSWORD_LENGTH
             val secureRandom = SecureRandom()
             val random = Random(secureRandom.nextLong())
             val password = StringBuilder(passwordLength)

@@ -3,6 +3,7 @@ package com.montebruni.holder.account.infrastructure.database.postgres.model
 import com.montebruni.holder.account.domain.entity.Status
 import com.montebruni.holder.account.domain.entity.User
 import com.montebruni.holder.account.domain.valueobject.Password
+import com.montebruni.holder.account.domain.valueobject.PasswordRecoverToken
 import com.montebruni.holder.account.domain.valueobject.Username
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -32,6 +33,12 @@ data class UserPostgresModel(
     @Enumerated(EnumType.STRING)
     val status: StatusModel,
 
+    @Column(name = "password_recover_token")
+    val passwordRecoverToken: String? = null,
+
+    @Column(name = "password_recover_token_expiration")
+    val passwordRecoverTokenExpiration: Instant? = null,
+
     @CreatedDate
     @Column(name = "created_at", nullable = false)
     val createdAt: Instant = Instant.now(),
@@ -45,7 +52,9 @@ data class UserPostgresModel(
             id = user.id,
             username = user.username.value,
             password = user.password.value,
-            status = StatusModel.valueOf(user.status.name)
+            status = StatusModel.valueOf(user.status.name),
+            passwordRecoverToken = user.passwordRecoverToken?.value,
+            passwordRecoverTokenExpiration = user.passwordRecoverTokenExpiration,
         )
     }
 }
@@ -54,5 +63,7 @@ fun UserPostgresModel.toUser() = User(
     id = id,
     username = Username(username),
     password = Password(password),
-    status = Status.valueOf(status.name)
+    status = Status.valueOf(status.name),
+    passwordRecoverToken = passwordRecoverToken?.let(::PasswordRecoverToken),
+    passwordRecoverTokenExpiration = passwordRecoverTokenExpiration,
 )

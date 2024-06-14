@@ -2,7 +2,7 @@ package com.montebruni.holder.account.application.usecase.impl
 
 import com.montebruni.holder.account.application.event.EventPublisher
 import com.montebruni.holder.account.application.event.events.UserCreatedEvent
-import com.montebruni.holder.account.domain.crypto.PasswordEncryptor
+import com.montebruni.holder.account.domain.crypto.EncryptorProvider
 import com.montebruni.holder.account.domain.entity.User
 import com.montebruni.holder.account.domain.exception.UserAlreadyExistsException
 import com.montebruni.holder.account.domain.repositories.UserRepository
@@ -23,7 +23,7 @@ import org.junit.jupiter.api.assertThrows
 class CreateUserImplTest(
     @MockK private val userRepository: UserRepository,
     @MockK private val eventPublisher: EventPublisher,
-    @MockK private val passwordEncryptor: PasswordEncryptor
+    @MockK private val encryptorProvider: EncryptorProvider
 ) : UnitTests() {
 
     @InjectMockKs
@@ -42,7 +42,7 @@ class CreateUserImplTest(
         verify(exactly = 0) {
             userRepository.save(any())
             eventPublisher.publishEvent(any())
-            passwordEncryptor.encrypt(any())
+            encryptorProvider.encrypt(any())
         }
     }
 
@@ -56,7 +56,7 @@ class CreateUserImplTest(
         every { userRepository.findByUsername(input.username.value) } returns null
         every { userRepository.save(capture(userSlot)) } answers { userSlot.captured }
         justRun { eventPublisher.publishEvent(capture(userCreatedEventSlot)) }
-        every { passwordEncryptor.encrypt(capture(encryptorSlot)) } answers { encryptorSlot.captured }
+        every { encryptorProvider.encrypt(capture(encryptorSlot)) } answers { encryptorSlot.captured }
 
         val output = registerUser.execute(input)
 
@@ -76,7 +76,7 @@ class CreateUserImplTest(
 
         verify {
             userRepository.findByUsername(input.username.value)
-            passwordEncryptor.encrypt(encryptorSlot.captured)
+            encryptorProvider.encrypt(encryptorSlot.captured)
             userRepository.save(userSlot.captured)
             eventPublisher.publishEvent(userCreatedEventSlot.captured)
         }
@@ -91,7 +91,7 @@ class CreateUserImplTest(
         every { userRepository.findByUsername(input.username.value) } returns null
         every { userRepository.save(any()) } answers { firstArg() }
         justRun { eventPublisher.publishEvent(capture(userCreatedEventSlot)) }
-        every { passwordEncryptor.encrypt(capture(encryptorSlot)) } answers { encryptorSlot.captured }
+        every { encryptorProvider.encrypt(capture(encryptorSlot)) } answers { encryptorSlot.captured }
 
         registerUser.execute(input)
 
@@ -99,7 +99,7 @@ class CreateUserImplTest(
 
         verify {
             userRepository.findByUsername(input.username.value)
-            passwordEncryptor.encrypt(encryptorSlot.captured)
+            encryptorProvider.encrypt(encryptorSlot.captured)
             userRepository.save(any())
             eventPublisher.publishEvent(userCreatedEventSlot.captured)
         }
