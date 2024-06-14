@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
@@ -52,5 +53,12 @@ class BCryptEncryptorTest {
 
         assertTrue(bCryptEncryptor.validate(password, encryptedPassword))
         assertFalse(bCryptEncryptor.validate("wrongpassword", encryptedPassword))
+    }
+
+    @Test
+    fun `should generate random token correctly`() {
+        val token = bCryptEncryptor.randomToken()
+
+        assertEquals(60, token.length)
     }
 }

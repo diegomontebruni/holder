@@ -12,6 +12,8 @@ import com.montebruni.holder.account.presentation.rest.request.ChangeUserPasswor
 import com.montebruni.holder.account.presentation.rest.request.CreateUserRequest
 import java.util.UUID
 
+const val RANDOM_PASSWORD_TOKEN = "$2a$10\$WVY07SMiMyZbhXUu4f8Bq.avE8j6uR/WVs8Yz6rwerHuJzhJFyKua"
+
 fun createUser() = User(
     id = UUID.randomUUID(),
     username = Username("john.snow@winterfell.north"),

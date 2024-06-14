@@ -1,8 +1,12 @@
 package com.montebruni.holder.account.domain.valueobjects
 
-import com.montebruni.holder.account.domain.crypto.PasswordEncryptor
+import com.montebruni.holder.account.domain.crypto.EncryptorProvider
 import com.montebruni.holder.account.domain.valueobject.Password
-import com.montebruni.holder.account.infrastructure.crypto.BCryptEncryptor
+import com.montebruni.holder.configuration.UnitTests
+import io.mockk.every
+import io.mockk.impl.annotations.MockK
+import io.mockk.slot
+import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -12,9 +16,9 @@ import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-class PasswordTest {
+class PasswordTest : UnitTests() {
 
-    private val passwordEncryptor: PasswordEncryptor = BCryptEncryptor()
+    @MockK lateinit var encryptorProvider: EncryptorProvider
 
     @Nested
     inner class ConstructorCases {
@@ -59,26 +63,54 @@ class PasswordTest {
     @Nested
     inner class EncryptCases {
 
+        private val passwordEncrypted =
+            "ecg5ljx4WPaEo0xZiIKImA==:$2a$10\$BKEYJQILWBsV2cEdikOuCuQ1iaIuuJSaDYa7BtNDnnJgg9VkS5Nm2"
+
         @Test
         fun `should not be encrypt password if it is already encrypted`() {
-            val password = Password().encrypt(passwordEncryptor)
+            val password = Password(passwordEncrypted)
             val encryptedPassword = Password(password.value)
 
             assertEquals(password.value, encryptedPassword.value)
+
+            verify(exactly = 0) { encryptorProvider.encrypt(any()) }
         }
 
         @Test
         fun `should encrypt the password and be different from the original password`() {
             val password = Password()
-            val encryptedPassword = password.encrypt(passwordEncryptor)
+
+            every { encryptorProvider.encrypt(any()) } returns passwordEncrypted
+
+            val encryptedPassword = password.encrypt(encryptorProvider)
+
             assertNotEquals(password.value, encryptedPassword.value)
+
+            verify { encryptorProvider.encrypt(password.value) }
         }
 
         @Test
         fun `Password should be validated correctly`() {
             val password = Password()
-            val encryptedPassword = password.encrypt(passwordEncryptor)
-            assertTrue(password.validate(encryptedPassword.value, passwordEncryptor))
+            val encryptSlot = slot<String>()
+            val valueValidateSlot = slot<String>()
+            val encryptedValueValidateSlot = slot<String>()
+
+            every { encryptorProvider.encrypt(capture(encryptSlot)) } returns passwordEncrypted
+            every {
+                encryptorProvider.validate(capture(valueValidateSlot), capture(encryptedValueValidateSlot))
+            } returns true
+
+            val encryptedPassword = password.encrypt(encryptorProvider)
+
+            assertTrue(password.validate(encryptedPassword.value, encryptorProvider))
+
+            assertEquals(password.value, encryptSlot.captured)
+            assertEquals(password.value, valueValidateSlot.captured)
+            assertEquals(encryptedPassword.value, encryptedValueValidateSlot.captured)
+
+            verify { encryptorProvider.encrypt(encryptSlot.captured) }
+            verify { encryptorProvider.validate(valueValidateSlot.captured, encryptedValueValidateSlot.captured) }
         }
     }
 }

@@ -6,7 +6,7 @@ import com.montebruni.holder.account.application.usecase.CreateUser
 import com.montebruni.holder.account.application.usecase.input.CreateUserInput
 import com.montebruni.holder.account.application.usecase.output.CreateUserOutput
 import com.montebruni.holder.account.application.usecase.output.fromUser
-import com.montebruni.holder.account.domain.crypto.PasswordEncryptor
+import com.montebruni.holder.account.domain.crypto.EncryptorProvider
 import com.montebruni.holder.account.domain.entity.User
 import com.montebruni.holder.account.domain.exception.UserAlreadyExistsException
 import com.montebruni.holder.account.domain.repositories.UserRepository
@@ -19,7 +19,7 @@ import kotlin.let
 class CreateUserImpl(
     private val userRepository: UserRepository,
     private val eventPublisher: EventPublisher,
-    private val passwordEncryptor: PasswordEncryptor
+    private val encryptorProvider: EncryptorProvider
 ) : CreateUser {
 
     override fun execute(input: CreateUserInput): CreateUserOutput {
@@ -28,7 +28,7 @@ class CreateUserImpl(
         userRepository.findByUsername(username)?.let { throw UserAlreadyExistsException() }
 
         return User(username = username)
-            .also { it.copy(password = it.password.encrypt(passwordEncryptor)).let(userRepository::save) }
+            .also { it.copy(password = it.password.encrypt(encryptorProvider)).let(userRepository::save) }
             .also { publishUserCreatedEvent(it, input.managerId) }
             .let(CreateUserOutput::fromUser)
     }
