@@ -1,5 +1,6 @@
 package com.montebruni.holder.fixtures
 
+import com.montebruni.holder.account.application.event.events.PasswordRecoveryInitiatedEvent
 import com.montebruni.holder.account.application.event.events.UserCreatedEvent
 import com.montebruni.holder.account.application.usecase.input.ChangeUserPasswordInput
 import com.montebruni.holder.account.application.usecase.input.CompleteUserRegistrationInput
@@ -7,10 +8,12 @@ import com.montebruni.holder.account.application.usecase.input.CreateUserInput
 import com.montebruni.holder.account.application.usecase.input.InitiatePasswordRecoveryInput
 import com.montebruni.holder.account.domain.entity.User
 import com.montebruni.holder.account.domain.valueobject.Password
+import com.montebruni.holder.account.domain.valueobject.PasswordRecoverToken
 import com.montebruni.holder.account.domain.valueobject.Username
 import com.montebruni.holder.account.infrastructure.database.postgres.model.UserPostgresModel
 import com.montebruni.holder.account.presentation.rest.request.ChangeUserPasswordRequest
 import com.montebruni.holder.account.presentation.rest.request.CreateUserRequest
+import java.time.Instant
 import java.util.UUID
 
 const val RANDOM_PASSWORD_TOKEN = "$2a$10\$WVY07SMiMyZbhXUu4f8Bq.avE8j6uR/WVs8Yz6rwerHuJzhJFyKua"
@@ -60,4 +63,11 @@ fun createChangeUserPasswordRequest() = ChangeUserPasswordRequest(
 
 fun createInitiatePasswordRecoveryInput() = InitiatePasswordRecoveryInput(
     username = Username("john.snow@winterfell.north")
+)
+
+fun createPasswordRecoveryInitiatedEvent() = PasswordRecoveryInitiatedEvent(
+    entity = createUser().copy(
+        passwordRecoverToken = PasswordRecoverToken(RANDOM_PASSWORD_TOKEN),
+        passwordRecoverTokenExpiration = Instant.now().plusSeconds(3600)
+    )
 )
