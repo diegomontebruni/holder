@@ -4,6 +4,9 @@ spring:
   application:
     name: holder
 
+  server:
+    port: ${SERVER_PORT:8080}
+
   datasource:
     url: jdbc:postgresql://localhost:5432/holder
     username: app_holder
@@ -40,3 +43,7 @@ spring:
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
+
+app:
+  url:
+    recover-password: ${RECOVER_PASSWORD_URL:http://localhost:${spring.server.port}}
