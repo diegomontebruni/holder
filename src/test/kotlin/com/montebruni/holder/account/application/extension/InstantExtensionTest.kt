@@ -6,31 +6,22 @@ import java.time.Instant
 
 class InstantExtensionTest {
 
+    private val dateTime = Instant.parse("2024-06-15T15:25:00Z")
+
     @Test
     fun `should format when given pattern then return formatted string`() {
-        val instant = Instant.parse("2024-06-15T15:25:00Z")
-        val pattern = "dd/MM/yyyy : HH:mm"
-
-        val formatted = instant.format(pattern)
+        val formatted = dateTime.formatFromPattern("dd/MM/yyyy : HH:mm")
 
         assertEquals("15/06/2024 : 12:25", formatted)
     }
 
     @Test
-    fun `should getDate when given instant then return formatted date`() {
-        val instant = Instant.parse("2024-06-15T15:25:00Z")
-
-        val date = instant.getFormattedDate()
-
-        assertEquals("15/06/2024", date)
+    fun `should getFormattedDate when given instant then return formatted date`() {
+        assertEquals("15/06/2024", dateTime.getFormattedDate())
     }
 
     @Test
-    fun `should getTime when given instant then return formatted time`() {
-        val instant = Instant.parse("2024-06-15T15:25:00Z")
-
-        val time = instant.getFormattedTime()
-
-        assertEquals("12:25", time)
+    fun `should getFormattedTime when given instant then return formatted time`() {
+        assertEquals("12:25", dateTime.getFormattedTime())
     }
 }
