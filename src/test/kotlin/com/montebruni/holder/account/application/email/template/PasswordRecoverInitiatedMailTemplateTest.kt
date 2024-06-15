@@ -1,11 +1,12 @@
 package com.montebruni.holder.account.application.email.template
 
+import com.montebruni.holder.configuration.UnitTests
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.test.util.ReflectionTestUtils
 import java.time.Instant
 
-class PasswordRecoverInitiatedMailTemplateTest {
+class PasswordRecoverInitiatedMailTemplateTest : UnitTests() {
 
     @Test
     fun `should getBody when given parameters then return correct body`() {
@@ -14,7 +15,7 @@ class PasswordRecoverInitiatedMailTemplateTest {
         val expirationDate = Instant.parse("2024-06-15T15:25:00Z")
 
         val expectedDate = "15/06/2024"
-        val expectedTime = "12:25"
+        val expectedTime = "15:25"
 
         val template = PasswordRecoverInitiatedMailTemplate(token, expirationDate)
         ReflectionTestUtils.setField(template, "recoverPasswordUrl", recoverPasswordUrl)
