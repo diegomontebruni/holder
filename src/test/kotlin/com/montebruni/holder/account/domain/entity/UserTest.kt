@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.EnumSource
+import java.time.Instant
 
 class UserTest : UnitTests() {
 
@@ -104,6 +105,24 @@ class UserTest : UnitTests() {
             assertNotNull(user.passwordRecoverTokenExpiration)
 
             verify(exactly = 1) { encryptorProvider.randomToken() }
+        }
+    }
+
+    @Nested
+    inner class CanRecoverPasswordCases {
+
+        @Test
+        fun `should return true when password recover token is expired`() {
+            val user = createUser().copy(passwordRecoverTokenExpiration = Instant.now().minusSeconds(1))
+
+            assertTrue(user.canRecoverPassword())
+        }
+
+        @Test
+        fun `should return false when password recover token is not expired`() {
+            val user = createUser().copy(passwordRecoverTokenExpiration = Instant.now().plusSeconds(1))
+
+            assertFalse(user.canRecoverPassword())
         }
     }
 }

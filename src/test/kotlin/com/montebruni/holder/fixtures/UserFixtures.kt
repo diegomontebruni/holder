@@ -4,6 +4,7 @@ import com.montebruni.holder.account.application.event.events.UserCreatedEvent
 import com.montebruni.holder.account.application.usecase.input.ChangeUserPasswordInput
 import com.montebruni.holder.account.application.usecase.input.CompleteUserRegistrationInput
 import com.montebruni.holder.account.application.usecase.input.CreateUserInput
+import com.montebruni.holder.account.application.usecase.input.InitiatePasswordRecoveryInput
 import com.montebruni.holder.account.domain.entity.User
 import com.montebruni.holder.account.domain.valueobject.Password
 import com.montebruni.holder.account.domain.valueobject.Username
@@ -55,4 +56,8 @@ fun createChangeUserPasswordRequest() = ChangeUserPasswordRequest(
     username = "john.snow@winterfell.north",
     oldPassword = "Old-pard1#",
     newPassword = "New-pard1#",
+)
+
+fun createInitiatePasswordRecoveryInput() = InitiatePasswordRecoveryInput(
+    username = Username("john.snow@winterfell.north")
 )

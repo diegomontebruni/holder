@@ -3,6 +3,7 @@ package com.montebruni.holder.account.domain.valueobjects
 import com.montebruni.holder.account.domain.crypto.EncryptorProvider
 import com.montebruni.holder.account.domain.valueobject.PasswordRecoverToken
 import com.montebruni.holder.configuration.UnitTests
+import com.montebruni.holder.fixtures.RANDOM_PASSWORD_TOKEN
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.verify
@@ -17,7 +18,7 @@ class PasswordRecoverTokenTest : UnitTests() {
 
     @Test
     fun `should generate random token correctly`() {
-        val randomToken = "$2a$10\$WVY07SMiMyZbhXUu4f8Bq.avE8j6uR/WVs8Yz6rwerHuJzhJFyKua"
+        val randomToken = RANDOM_PASSWORD_TOKEN
 
         every { encryptorProvider.randomToken() } returns randomToken
 
