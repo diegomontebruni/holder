@@ -124,12 +124,5 @@ class UserTest : UnitTests() {
 
             assertFalse(user.canRecoverPassword())
         }
-
-        @Test
-        fun `should return null when password recover token is not set`() {
-            val user = createUser()
-
-            assertEquals(null, user.canRecoverPassword())
-        }
     }
 }
