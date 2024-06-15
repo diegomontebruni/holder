@@ -30,4 +30,7 @@ data class User(
         passwordRecoverToken = PasswordRecoverToken.generateRandomToken(encryptorProvider),
         passwordRecoverTokenExpiration = Instant.now().plusSeconds(PASSWORD_RECOVER_TOKEN_EXPIRATION_TIME)
     )
+
+    fun canRecoverPassword(): Boolean =
+        passwordRecoverTokenExpiration == null || Instant.now().isAfter(passwordRecoverTokenExpiration)
 }
