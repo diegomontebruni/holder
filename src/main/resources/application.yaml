@@ -46,4 +46,4 @@ springdoc:
 
 app:
   url:
-    recover-password: ${RECOVER_PASSWORD_URL:http://localhost:${spring.server.port}}
+    recover-password: ${RECOVER_PASSWORD_URL:http://localhost:${spring.server.port}/recover-password?token=}

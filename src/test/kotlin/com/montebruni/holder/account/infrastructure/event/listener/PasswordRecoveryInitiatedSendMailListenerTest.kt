@@ -12,9 +12,12 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
+@Suppress("UnusedPrivateProperty")
 class PasswordRecoveryInitiatedSendMailListenerTest(
     @MockK private val mailSender: MailSender
 ) : UnitTests() {
+
+    private val recoverPasswordUrl = "http://localhost:8080/recover-password"
 
     @InjectMockKs
     private lateinit var listener: PasswordRecoveryInitiatedSendMailListener

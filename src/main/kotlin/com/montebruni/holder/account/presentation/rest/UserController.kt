@@ -70,6 +70,40 @@ class UserController(
             .let(createUser::execute)
     }
 
+    @Operation(
+        summary = "Change User Password",
+        description = "Change the user password given an old password and a new password.",
+        tags = ["User"]
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200",
+                description = "User password changed",
+                content = []
+            ),
+            ApiResponse(
+                responseCode = "400",
+                description = "Response error",
+                content = [
+                    Content(
+                        mediaType = APPLICATION_JSON_VALUE,
+                        schema = Schema(implementation = ErrorResponse::class)
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "500",
+                description = "Server side error",
+                content = [
+                    Content(
+                        mediaType = APPLICATION_JSON_VALUE,
+                        schema = Schema(implementation = ErrorResponse::class)
+                    )
+                ]
+            )
+        ]
+    )
     @ResponseStatus(HttpStatus.OK)
     @PatchMapping("/change-password")
     fun changePassword(@RequestBody request: ChangeUserPasswordRequest) {

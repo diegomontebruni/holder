@@ -22,6 +22,8 @@ data class User(
 
     fun isPending() = status == Status.PENDING
 
+    fun isActive() = status == Status.ACTIVE
+
     fun canBeRegistered() = isPending().takeUnless { it.not() } ?: throw UserAlreadyRegisteredException()
 
     fun activate() = copy(status = Status.ACTIVE)
@@ -32,5 +34,9 @@ data class User(
     )
 
     fun canRecoverPassword(): Boolean =
-        passwordRecoverTokenExpiration == null || Instant.now().isAfter(passwordRecoverTokenExpiration)
+        isActive() &&
+            (
+                passwordRecoverTokenExpiration == null ||
+                    Instant.now().isAfter(passwordRecoverTokenExpiration)
+                )
 }

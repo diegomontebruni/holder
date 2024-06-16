@@ -40,6 +40,21 @@ class UserTest : UnitTests() {
     }
 
     @Nested
+    inner class IsActiveCases {
+
+        @Test
+        fun `should return true when status is active`() {
+            assertTrue(createUser().copy(status = Status.ACTIVE).isActive())
+        }
+
+        @ParameterizedTest
+        @EnumSource(Status::class, names = ["ACTIVE"], mode = EnumSource.Mode.EXCLUDE)
+        fun `should return false when status is different than active`(status: Status) {
+            assertFalse(createUser().copy(status = status).isActive())
+        }
+    }
+
+    @Nested
     inner class canBeRegisteredCases {
 
         @Test
@@ -113,14 +128,27 @@ class UserTest : UnitTests() {
 
         @Test
         fun `should return true when password recover token is expired`() {
-            val user = createUser().copy(passwordRecoverTokenExpiration = Instant.now().minusSeconds(1))
+            val user = createUser().copy(
+                status = Status.ACTIVE,
+                passwordRecoverTokenExpiration = Instant.now().minusSeconds(1)
+            )
 
             assertTrue(user.canRecoverPassword())
         }
 
         @Test
         fun `should return false when password recover token is not expired`() {
-            val user = createUser().copy(passwordRecoverTokenExpiration = Instant.now().plusSeconds(1))
+            val user = createUser().copy(
+                status = Status.ACTIVE,
+                passwordRecoverTokenExpiration = Instant.now().plusSeconds(1)
+            )
+
+            assertFalse(user.canRecoverPassword())
+        }
+
+        @Test
+        fun `should return false when user is not active`() {
+            val user = createUser()
 
             assertFalse(user.canRecoverPassword())
         }
