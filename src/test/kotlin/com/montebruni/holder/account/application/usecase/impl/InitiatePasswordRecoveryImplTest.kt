@@ -3,6 +3,7 @@ package com.montebruni.holder.account.application.usecase.impl
 import com.montebruni.holder.account.application.event.EventPublisher
 import com.montebruni.holder.account.application.event.events.PasswordRecoveryInitiatedEvent
 import com.montebruni.holder.account.domain.crypto.EncryptorProvider
+import com.montebruni.holder.account.domain.entity.Status
 import com.montebruni.holder.account.domain.entity.User
 import com.montebruni.holder.account.domain.exception.UserNotFoundException
 import com.montebruni.holder.account.domain.repositories.UserRepository
@@ -52,7 +53,10 @@ class InitiatePasswordRecoveryImplTest(
     @Test
     fun `should not initiate password recovery when user cannot recover password`() {
         val input = createInitiatePasswordRecoveryInput()
-        val user = createUser().copy(passwordRecoverTokenExpiration = Instant.now().plusSeconds(60))
+        val user = createUser().copy(
+            status = Status.ACTIVE,
+            passwordRecoverTokenExpiration = Instant.now().plusSeconds(60)
+        )
 
         every { userRepository.findByUsername(input.username.value) } returns user
 
@@ -69,7 +73,7 @@ class InitiatePasswordRecoveryImplTest(
     @Test
     fun `should initiate password recovery when given valid input`() {
         val input = createInitiatePasswordRecoveryInput()
-        val user = createUser().copy(username = input.username)
+        val user = createUser().copy(username = input.username, status = Status.ACTIVE)
         val userSlot = slot<User>()
         val eventSlot = slot<PasswordRecoveryInitiatedEvent>()
 
