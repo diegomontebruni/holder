@@ -1,7 +1,9 @@
 package com.montebruni.holder.account.presentation.rest
 
 import com.montebruni.holder.account.application.usecase.InitiatePasswordRecovery
+import com.montebruni.holder.account.application.usecase.RecoverPassword
 import com.montebruni.holder.account.application.usecase.input.InitiatePasswordRecoveryInput
+import com.montebruni.holder.account.application.usecase.input.RecoverPasswordInput
 import com.montebruni.holder.configuration.BaseRestIT
 import com.montebruni.holder.fixtures.createInitiatePasswordRecoverRequest
 import com.ninjasquad.springmockk.MockkBean
@@ -21,6 +23,9 @@ class AuthenticationControllerIT : BaseRestIT() {
 
     @MockkBean
     private lateinit var initiatePasswordRecovery: InitiatePasswordRecovery
+
+    @MockkBean
+    private lateinit var recoverPassword: RecoverPassword
 
     private val baseUrl = "/v1/auth"
 
@@ -45,6 +50,28 @@ class AuthenticationControllerIT : BaseRestIT() {
                 }
 
             verify { initiatePasswordRecovery.execute(useCaseInput.captured) }
+        }
+    }
+
+    @Nested
+    inner class RecoverPasswordCases {
+
+        @Test
+        fun `should return 204 when password is recovered`() {
+            val token = "token"
+            val useCaseInput = slot<RecoverPasswordInput>()
+
+            justRun { recoverPassword.execute(capture(useCaseInput)) }
+
+            mockMvc.perform(
+                post("$baseUrl/password-recover")
+                    .contentType(APPLICATION_JSON)
+                    .param("token", token)
+            )
+                .andExpect(status().isNoContent)
+                .run { assertEquals(token, useCaseInput.captured.token) }
+
+            verify { recoverPassword.execute(useCaseInput.captured) }
         }
     }
 }
