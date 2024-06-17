@@ -7,6 +7,7 @@ import com.montebruni.holder.account.presentation.rest.exception.ErrorResponse
 import com.montebruni.holder.account.presentation.rest.request.InitiatePasswordRecoverRequest
 import com.montebruni.holder.account.presentation.rest.request.toInput
 import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
@@ -106,7 +107,11 @@ class AuthenticationController(
     )
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping("/password-recover")
-    fun passwordRecover(@RequestParam("token") token: String) {
+    fun passwordRecover(
+        @RequestParam("token")
+        @Parameter(description = "Token used to recover password", example = "62136780-335d-409e-acb8-0bfc523a76ca")
+        token: String
+    ) {
         RecoverPasswordInput(token).let(recoverPassword::execute)
     }
 }
