@@ -108,7 +108,7 @@ class UserTest : UnitTests() {
     inner class GeneratePasswordRecoverTokenCases {
 
         @Test
-        fun `should generate password recover token`() {
+        fun `should generate password recover token with encryptor provider is not null`() {
             val token = RANDOM_PASSWORD_TOKEN
 
             every { encryptorProvider.randomToken() } returns token
@@ -120,6 +120,16 @@ class UserTest : UnitTests() {
             assertNotNull(user.passwordRecoverTokenExpiration)
 
             verify(exactly = 1) { encryptorProvider.randomToken() }
+        }
+
+        @Test
+        fun `should generate password recover token with encryptor provider is null`() {
+            val user = createUser().generatePasswordRecoverToken()
+
+            assertNotNull(user.passwordRecoverToken)
+            assertNotNull(user.passwordRecoverTokenExpiration)
+
+            verify(exactly = 0) { encryptorProvider.randomToken() }
         }
     }
 

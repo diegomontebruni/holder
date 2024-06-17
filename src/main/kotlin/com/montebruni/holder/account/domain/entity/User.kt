@@ -28,7 +28,7 @@ data class User(
 
     fun activate() = copy(status = Status.ACTIVE)
 
-    fun generatePasswordRecoverToken(encryptorProvider: EncryptorProvider) = copy(
+    fun generatePasswordRecoverToken(encryptorProvider: EncryptorProvider? = null) = copy(
         passwordRecoverToken = PasswordRecoverToken.generateRandomToken(encryptorProvider),
         passwordRecoverTokenExpiration = Instant.now().plusSeconds(PASSWORD_RECOVER_TOKEN_EXPIRATION_TIME)
     )
