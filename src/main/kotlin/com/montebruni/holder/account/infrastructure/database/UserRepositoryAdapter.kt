@@ -20,4 +20,8 @@ class UserRepositoryAdapter(
     override fun findById(id: UUID): User? = repository.findByIdOrNull(id)?.toUser()
 
     override fun findByUsername(username: String): User? = repository.findByUsername(username)?.toUser()
+
+    override fun findByPasswordRecoverToken(token: String): User? = repository.findByPasswordRecoverToken(
+        token
+    )?.toUser()
 }

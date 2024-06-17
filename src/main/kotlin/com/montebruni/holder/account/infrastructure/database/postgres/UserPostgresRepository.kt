@@ -9,4 +9,6 @@ import java.util.UUID
 interface UserPostgresRepository : JpaRepository<UserPostgresModel, UUID> {
 
     fun findByUsername(username: String): UserPostgresModel?
+
+    fun findByPasswordRecoverToken(token: String): UserPostgresModel?
 }

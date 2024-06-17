@@ -33,10 +33,15 @@ data class User(
         passwordRecoverTokenExpiration = Instant.now().plusSeconds(PASSWORD_RECOVER_TOKEN_EXPIRATION_TIME)
     )
 
-    fun canRecoverPassword(): Boolean =
+    fun canInitiateRecoverPassword(): Boolean =
         isActive() &&
             (
-                passwordRecoverTokenExpiration == null ||
+                passwordRecoverToken == null ||
                     Instant.now().isAfter(passwordRecoverTokenExpiration)
                 )
+
+    fun canRecoverPassword(): Boolean =
+        isActive() &&
+            passwordRecoverToken != null &&
+            Instant.now().isBefore(passwordRecoverTokenExpiration)
 }
