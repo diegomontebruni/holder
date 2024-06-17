@@ -17,6 +17,8 @@ import java.time.Instant
 import java.util.UUID
 
 const val RANDOM_PASSWORD_TOKEN = "$2a$10\$WVY07SMiMyZbhXUu4f8Bq.avE8j6uR/WVs8Yz6rwerHuJzhJFyKua"
+const val ENCRYPTED_PASSWORD =
+    "YoQs/HKIO34WfW7mh9ONYg==:\$2a\$10\$EJTYTjTZ/Cvqib7ry8udvO.a0tzZtMdlRihTU/dcKFiZk5RUR1bLS"
 
 fun createUser() = User(
     id = UUID.randomUUID(),

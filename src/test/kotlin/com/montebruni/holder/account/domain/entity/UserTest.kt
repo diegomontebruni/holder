@@ -3,6 +3,7 @@ package com.montebruni.holder.account.domain.entity
 import com.montebruni.holder.account.domain.crypto.EncryptorProvider
 import com.montebruni.holder.account.domain.exception.UserAlreadyRegisteredException
 import com.montebruni.holder.account.domain.valueobject.Password
+import com.montebruni.holder.account.domain.valueobject.PasswordRecoverToken
 import com.montebruni.holder.configuration.UnitTests
 import com.montebruni.holder.fixtures.RANDOM_PASSWORD_TOKEN
 import com.montebruni.holder.fixtures.createUser
@@ -134,23 +135,64 @@ class UserTest : UnitTests() {
     }
 
     @Nested
-    inner class CanRecoverPasswordCases {
+    inner class CanInitiateRecoverPassword {
+
+        @Test
+        fun `should return true when password recover token is null`() {
+            val user = createUser().copy(status = Status.ACTIVE)
+
+            assertTrue(user.canInitiateRecoverPassword())
+        }
 
         @Test
         fun `should return true when password recover token is expired`() {
             val user = createUser().copy(
                 status = Status.ACTIVE,
-                passwordRecoverTokenExpiration = Instant.now().minusSeconds(1)
+                passwordRecoverToken = PasswordRecoverToken(RANDOM_PASSWORD_TOKEN),
+                passwordRecoverTokenExpiration = Instant.now().minusSeconds(3600)
             )
 
-            assertTrue(user.canRecoverPassword())
+            assertTrue(user.canInitiateRecoverPassword())
         }
 
         @Test
         fun `should return false when password recover token is not expired`() {
             val user = createUser().copy(
                 status = Status.ACTIVE,
+                passwordRecoverToken = PasswordRecoverToken(RANDOM_PASSWORD_TOKEN),
                 passwordRecoverTokenExpiration = Instant.now().plusSeconds(1)
+            )
+
+            assertFalse(user.canInitiateRecoverPassword())
+        }
+
+        @Test
+        fun `should return false when user is not active`() {
+            val user = createUser()
+
+            assertFalse(user.canInitiateRecoverPassword())
+        }
+    }
+
+    @Nested
+    inner class CanRecoverPassword {
+
+        @Test
+        fun `should return true when password recover token is valid`() {
+            val user = createUser().copy(
+                status = Status.ACTIVE,
+                passwordRecoverToken = PasswordRecoverToken(RANDOM_PASSWORD_TOKEN),
+                passwordRecoverTokenExpiration = Instant.now().plusSeconds(3600)
+            )
+
+            assertTrue(user.canRecoverPassword())
+        }
+
+        @Test
+        fun `should return false when password recover token is expired`() {
+            val user = createUser().copy(
+                status = Status.ACTIVE,
+                passwordRecoverTokenExpiration = Instant.now().minusSeconds(1000)
             )
 
             assertFalse(user.canRecoverPassword())
@@ -159,6 +201,13 @@ class UserTest : UnitTests() {
         @Test
         fun `should return false when user is not active`() {
             val user = createUser()
+
+            assertFalse(user.canRecoverPassword())
+        }
+
+        @Test
+        fun `should return false when password recover token is null`() {
+            val user = createUser().copy(status = Status.ACTIVE)
 
             assertFalse(user.canRecoverPassword())
         }

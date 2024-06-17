@@ -183,4 +183,43 @@ class UserRepositoryAdapterTest(
             verify { repository.findByUsername(userModel.username) }
         }
     }
+
+    @Nested
+    inner class FindByPasswordRecoverTokenCases {
+
+        private val token = RANDOM_PASSWORD_TOKEN
+
+        @Test
+        fun `should find user by password recover token`() {
+            val userModel = createUserModel().copy(
+                passwordRecoverToken = token,
+                passwordRecoverTokenExpiration = Instant.now()
+            )
+
+            every { repository.findByPasswordRecoverToken(token) } returns userModel
+
+            val result = adapter.findByPasswordRecoverToken(token)
+
+            assertNotNull(result)
+            assertEquals(userModel.id, result?.id)
+            assertEquals(userModel.username, result?.username?.value)
+            assertEquals(userModel.password, result?.password?.value)
+            assertEquals(userModel.status.name, result?.status?.name)
+            assertEquals(userModel.passwordRecoverToken, result?.passwordRecoverToken?.value)
+            assertEquals(userModel.passwordRecoverTokenExpiration, result?.passwordRecoverTokenExpiration)
+
+            verify { repository.findByPasswordRecoverToken(token) }
+        }
+
+        @Test
+        fun `should return null when not found user by password recover token`() {
+            every { repository.findByPasswordRecoverToken(token) } returns null
+
+            val result = adapter.findByPasswordRecoverToken(token)
+
+            assertNull(result)
+
+            verify { repository.findByPasswordRecoverToken(token) }
+        }
+    }
 }

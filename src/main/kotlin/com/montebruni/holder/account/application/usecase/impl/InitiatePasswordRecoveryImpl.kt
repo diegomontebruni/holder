@@ -17,7 +17,7 @@ class InitiatePasswordRecoveryImpl(
     override fun execute(input: InitiatePasswordRecoveryInput) {
         val user = userRepository.findByUsername(input.username.value) ?: throw UserNotFoundException()
 
-        user.canRecoverPassword()
+        user.canInitiateRecoverPassword()
             .takeIf { it.not() }
             ?.let { return }
 

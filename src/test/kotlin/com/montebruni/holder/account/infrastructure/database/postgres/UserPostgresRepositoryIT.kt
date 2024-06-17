@@ -85,4 +85,31 @@ class UserPostgresRepositoryIT(
             repository.findByUsername("not-found").let(::assertNull)
         }
     }
+
+    @Nested
+    inner class FindByPasswordRecoverTokenCases {
+
+        @Test
+        fun `should find user by password recover token`() {
+            val user = createUserModel().copy(
+                passwordRecoverToken = RANDOM_PASSWORD_TOKEN,
+                passwordRecoverTokenExpiration = Instant.now()
+            ).also(repository::save)
+
+            val result = repository.findByPasswordRecoverToken(user.passwordRecoverToken!!)
+
+            assertEquals(user.id, result?.id)
+            assertEquals(user.username, result?.username)
+            assertEquals(user.password, result?.password)
+            assertEquals(user.status.name, result?.status?.name)
+            assertEquals(user.passwordRecoverToken, result?.passwordRecoverToken)
+            assertEquals(user.passwordRecoverTokenExpiration, result?.passwordRecoverTokenExpiration)
+            assertEquals(user.createdAt, result?.createdAt)
+        }
+
+        @Test
+        fun `should return null when user not found`() {
+            repository.findByPasswordRecoverToken("not-found").let(::assertNull)
+        }
+    }
 }

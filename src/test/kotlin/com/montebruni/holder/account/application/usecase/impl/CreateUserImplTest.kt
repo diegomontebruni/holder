@@ -7,6 +7,7 @@ import com.montebruni.holder.account.domain.entity.User
 import com.montebruni.holder.account.domain.exception.UserAlreadyExistsException
 import com.montebruni.holder.account.domain.repositories.UserRepository
 import com.montebruni.holder.configuration.UnitTests
+import com.montebruni.holder.fixtures.ENCRYPTED_PASSWORD
 import com.montebruni.holder.fixtures.createUser
 import com.montebruni.holder.fixtures.createUserInput
 import io.mockk.every
@@ -55,19 +56,19 @@ class CreateUserImplTest(
 
         every { userRepository.findByUsername(input.username.value) } returns null
         every { userRepository.save(capture(userSlot)) } answers { userSlot.captured }
+        every { encryptorProvider.encrypt(capture(encryptorSlot)) } returns ENCRYPTED_PASSWORD
         justRun { eventPublisher.publishEvent(capture(userCreatedEventSlot)) }
-        every { encryptorProvider.encrypt(capture(encryptorSlot)) } answers { encryptorSlot.captured }
 
         val output = registerUser.execute(input)
 
         val userCaptured = userSlot.captured
         assertEquals(input.username.value, userCaptured.username.value)
-        assertEquals(12, userCaptured.password.value.length)
+        assertEquals(ENCRYPTED_PASSWORD, userCaptured.password.value)
 
         val userCreatedEvent = userCreatedEventSlot.captured.getData()
         assertEquals(userCaptured.id, userCreatedEvent.id)
         assertEquals(userCaptured.username, userCreatedEvent.username)
-        assertEquals(userCaptured.password, userCreatedEvent.password)
+        assertEquals(encryptorSlot.captured, userCreatedEvent.password?.value)
         assertEquals(userCaptured.status, userCreatedEvent.status)
         assertEquals(input.managerId, userCreatedEvent.managerId)
 

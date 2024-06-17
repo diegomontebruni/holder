@@ -6,6 +6,7 @@ import com.montebruni.holder.account.domain.entity.Status
 import com.montebruni.holder.account.domain.entity.User
 import com.montebruni.holder.account.domain.exception.UserNotFoundException
 import com.montebruni.holder.account.domain.repositories.UserRepository
+import com.montebruni.holder.account.domain.valueobject.PasswordRecoverToken
 import com.montebruni.holder.configuration.UnitTests
 import com.montebruni.holder.fixtures.createInitiatePasswordRecoveryInput
 import com.montebruni.holder.fixtures.createUser
@@ -51,6 +52,7 @@ class InitiatePasswordRecoveryImplTest(
         val input = createInitiatePasswordRecoveryInput()
         val user = createUser().copy(
             status = Status.ACTIVE,
+            passwordRecoverToken = PasswordRecoverToken("token"),
             passwordRecoverTokenExpiration = Instant.now().plusSeconds(60)
         )
 
@@ -60,6 +62,27 @@ class InitiatePasswordRecoveryImplTest(
 
         verify { userRepository.findByUsername(input.username.value) }
         verify(exactly = 0) {
+            userRepository.save(any())
+            eventPublisher.publishEvent(any())
+        }
+    }
+
+    @Test
+    fun `should initiate when passwordRecoverToken is null but passwordRecoverTokenExpiration exists`() {
+        val input = createInitiatePasswordRecoveryInput()
+        val user = createUser().copy(
+            status = Status.ACTIVE,
+            passwordRecoverTokenExpiration = Instant.now().plusSeconds(60)
+        )
+
+        every { userRepository.findByUsername(input.username.value) } returns user
+        every { userRepository.save(any()) } answers { firstArg() }
+        justRun { eventPublisher.publishEvent(any()) }
+
+        usecase.execute(input)
+
+        verify {
+            userRepository.findByUsername(input.username.value)
             userRepository.save(any())
             eventPublisher.publishEvent(any())
         }
