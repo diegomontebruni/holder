@@ -2,13 +2,11 @@ package com.montebruni.holder.account.application.usecase.impl
 
 import com.montebruni.holder.account.application.event.EventPublisher
 import com.montebruni.holder.account.application.event.events.PasswordRecoveryInitiatedEvent
-import com.montebruni.holder.account.domain.crypto.EncryptorProvider
 import com.montebruni.holder.account.domain.entity.Status
 import com.montebruni.holder.account.domain.entity.User
 import com.montebruni.holder.account.domain.exception.UserNotFoundException
 import com.montebruni.holder.account.domain.repositories.UserRepository
 import com.montebruni.holder.configuration.UnitTests
-import com.montebruni.holder.fixtures.RANDOM_PASSWORD_TOKEN
 import com.montebruni.holder.fixtures.createInitiatePasswordRecoveryInput
 import com.montebruni.holder.fixtures.createUser
 import io.mockk.every
@@ -25,7 +23,6 @@ import java.time.Instant
 
 class InitiatePasswordRecoveryImplTest(
     @MockK private val userRepository: UserRepository,
-    @MockK private val encryptorProvider: EncryptorProvider,
     @MockK private val eventPublisher: EventPublisher
 ) : UnitTests() {
 
@@ -44,7 +41,6 @@ class InitiatePasswordRecoveryImplTest(
 
         verify { userRepository.findByUsername(input.username.value) }
         verify(exactly = 0) {
-            encryptorProvider.randomToken()
             userRepository.save(any())
             eventPublisher.publishEvent(any())
         }
@@ -64,7 +60,6 @@ class InitiatePasswordRecoveryImplTest(
 
         verify { userRepository.findByUsername(input.username.value) }
         verify(exactly = 0) {
-            encryptorProvider.randomToken()
             userRepository.save(any())
             eventPublisher.publishEvent(any())
         }
@@ -78,7 +73,6 @@ class InitiatePasswordRecoveryImplTest(
         val eventSlot = slot<PasswordRecoveryInitiatedEvent>()
 
         every { userRepository.findByUsername(input.username.value) } returns user
-        every { encryptorProvider.randomToken() } returns RANDOM_PASSWORD_TOKEN
         every { userRepository.save(capture(userSlot)) } answers { userSlot.captured }
         justRun { eventPublisher.publishEvent(capture(eventSlot)) }
 
@@ -87,7 +81,7 @@ class InitiatePasswordRecoveryImplTest(
         val userSlotCaptured = userSlot.captured
         assertEquals(user.id, userSlotCaptured.id)
         assertEquals(user.password.value, userSlotCaptured.password.value)
-        assertEquals(RANDOM_PASSWORD_TOKEN, userSlotCaptured.passwordRecoverToken?.value)
+        assertNotNull(userSlotCaptured.passwordRecoverToken?.value)
         assertNotNull(userSlotCaptured.passwordRecoverTokenExpiration)
 
         val eventSlotData = eventSlot.captured.getData()
@@ -96,7 +90,6 @@ class InitiatePasswordRecoveryImplTest(
         assertEquals(userSlotCaptured.passwordRecoverTokenExpiration, eventSlotData.passwordRecoverTokenExpiration)
 
         verify { userRepository.findByUsername(input.username.value) }
-        verify { encryptorProvider.randomToken() }
         verify { userRepository.save(userSlot.captured) }
         verify { eventPublisher.publishEvent(eventSlot.captured) }
     }

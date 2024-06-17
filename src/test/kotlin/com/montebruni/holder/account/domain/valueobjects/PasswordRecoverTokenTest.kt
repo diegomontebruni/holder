@@ -7,17 +7,18 @@ import com.montebruni.holder.fixtures.RANDOM_PASSWORD_TOKEN
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.api.assertDoesNotThrow
+import java.util.UUID
 
 class PasswordRecoverTokenTest : UnitTests() {
 
     @MockK lateinit var encryptorProvider: EncryptorProvider
 
     @Test
-    fun `should generate random token correctly`() {
+    fun `should generate random token correctly when encryptor provider is not null`() {
         val randomToken = RANDOM_PASSWORD_TOKEN
 
         every { encryptorProvider.randomToken() } returns randomToken
@@ -30,14 +31,11 @@ class PasswordRecoverTokenTest : UnitTests() {
     }
 
     @Test
-    fun `should throw error when token is invalid`() {
-        val invalidToken = "invalidToken"
+    fun `should generate random token correctly when encryptor provider is null`() {
+        val token = PasswordRecoverToken.generateRandomToken()
 
-        assertThrows<IllegalArgumentException> {
-            PasswordRecoverToken(invalidToken)
-        }.run {
-            assertEquals("Invalid password recover token", this.message)
-        }
+        assertNotNull(token)
+        assertDoesNotThrow { UUID.fromString(token.value) }
 
         verify(exactly = 0) { encryptorProvider.randomToken() }
     }

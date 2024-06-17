@@ -4,7 +4,6 @@ import com.montebruni.holder.account.application.event.EventPublisher
 import com.montebruni.holder.account.application.event.events.PasswordRecoveryInitiatedEvent
 import com.montebruni.holder.account.application.usecase.InitiatePasswordRecovery
 import com.montebruni.holder.account.application.usecase.input.InitiatePasswordRecoveryInput
-import com.montebruni.holder.account.domain.crypto.EncryptorProvider
 import com.montebruni.holder.account.domain.exception.UserNotFoundException
 import com.montebruni.holder.account.domain.repositories.UserRepository
 import org.springframework.stereotype.Service
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service
 @Service
 class InitiatePasswordRecoveryImpl(
     private val userRepository: UserRepository,
-    private val encryptorProvider: EncryptorProvider,
     private val eventPublisher: EventPublisher
 ) : InitiatePasswordRecovery {
 
@@ -24,7 +22,7 @@ class InitiatePasswordRecoveryImpl(
             ?.let { return }
 
         user
-            .generatePasswordRecoverToken(encryptorProvider)
+            .generatePasswordRecoverToken()
             .also(userRepository::save)
             .let(::PasswordRecoveryInitiatedEvent)
             .let(eventPublisher::publishEvent)
