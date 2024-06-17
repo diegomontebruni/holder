@@ -1,6 +1,6 @@
 package com.montebruni.holder.account.application.email.data
 
-import com.montebruni.holder.account.application.email.template.MailTemplate
+import com.montebruni.holder.account.application.email.template.PasswordRecoverInitiatedMailTemplate
 import com.montebruni.holder.configuration.UnitTests
 import io.mockk.every
 import io.mockk.mockk
@@ -20,7 +20,7 @@ class PasswordRecoverInitiatedMailDataTest : UnitTests() {
 
     @Test
     fun `should return correct body when getBody is called`() {
-        val template = mockk<MailTemplate>()
+        val template = mockk<PasswordRecoverInitiatedMailTemplate>()
 
         every { template.getBody() } returns "Expected body"
 
