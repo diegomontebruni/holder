@@ -10,11 +10,10 @@ data class PasswordRecoverInitiatedMailTemplate(
     private val recoverPasswordUrl: String
 ) : MailTemplate {
 
-    override fun getBody(): String {
-        return """
+    override fun getBody(): String =
+        """
             Hello, we received a request to recover your password. If you did not request this, please ignore this email.
             The link to reset your password is: $recoverPasswordUrl$token
             It will expire on: ${expirationDate.getFormattedDate()} at ${expirationDate.getFormattedTime()}
         """.trimIndent()
-    }
 }
