@@ -5,6 +5,7 @@ import com.montebruni.holder.account.domain.entity.User
 import com.montebruni.holder.account.domain.valueobject.Password
 import com.montebruni.holder.account.domain.valueobject.PasswordRecoverToken
 import com.montebruni.holder.account.domain.valueobject.Username
+import com.montebruni.holder.account.infrastructure.database.postgres.model.UserPostgresModel.StatusModel
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
@@ -46,18 +47,17 @@ data class UserPostgresModel(
 
     enum class StatusModel { PENDING, ACTIVE, INACTIVE }
 
-    companion object {
-
-        fun fromUser(user: User) = UserPostgresModel(
-            id = user.id,
-            username = user.username.value,
-            password = user.password.value,
-            status = StatusModel.valueOf(user.status.name),
-            passwordRecoverToken = user.passwordRecoverToken?.value,
-            passwordRecoverTokenExpiration = user.passwordRecoverTokenExpiration,
-        )
-    }
+    companion object
 }
+
+fun UserPostgresModel.Companion.fromUser(user: User) = UserPostgresModel(
+    id = user.id,
+    username = user.username.value,
+    password = user.password.value,
+    status = StatusModel.valueOf(user.status.name),
+    passwordRecoverToken = user.passwordRecoverToken?.value,
+    passwordRecoverTokenExpiration = user.passwordRecoverTokenExpiration,
+)
 
 fun UserPostgresModel.toUser() = User(
     id = id,

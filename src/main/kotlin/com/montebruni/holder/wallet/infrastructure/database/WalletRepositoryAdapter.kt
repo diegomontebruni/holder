@@ -23,7 +23,7 @@ class WalletRepositoryAdapter(
             .let(repository::save)
             .toWallet()
 
-    override fun findById(id: UUID): Wallet? = repository.findByIdOrNull(id)?.let { it.toWallet() }
+    override fun findById(id: UUID): Wallet? = repository.findByIdOrNull(id)?.toWallet()
 
     override fun findByManagerId(managerId: UUID): List<Wallet> =
         repository.findByManagerId(managerId).map { it.toWallet() }

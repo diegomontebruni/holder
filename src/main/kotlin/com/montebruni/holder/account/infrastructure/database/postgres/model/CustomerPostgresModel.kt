@@ -32,16 +32,15 @@ data class CustomerPostgresModel(
     val createdAt: Instant = Instant.now(),
 ) {
 
-    companion object {
-
-        fun fromCustomer(customer: Customer) = CustomerPostgresModel(
-            id = customer.id,
-            userId = customer.userId,
-            name = customer.name,
-            email = customer.email.value
-        )
-    }
+    companion object
 }
+
+fun CustomerPostgresModel.Companion.fromCustomer(customer: Customer) = CustomerPostgresModel(
+    id = customer.id,
+    userId = customer.userId,
+    name = customer.name,
+    email = customer.email.value
+)
 
 fun CustomerPostgresModel.toCustomer() = Customer(
     id = id,
