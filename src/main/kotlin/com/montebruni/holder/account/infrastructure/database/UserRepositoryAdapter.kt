@@ -4,7 +4,6 @@ import com.montebruni.holder.account.domain.entity.User
 import com.montebruni.holder.account.domain.repositories.UserRepository
 import com.montebruni.holder.account.infrastructure.database.postgres.UserPostgresRepository
 import com.montebruni.holder.account.infrastructure.database.postgres.model.UserPostgresModel
-import com.montebruni.holder.account.infrastructure.database.postgres.model.fromUser
 import com.montebruni.holder.account.infrastructure.database.postgres.model.toUser
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component

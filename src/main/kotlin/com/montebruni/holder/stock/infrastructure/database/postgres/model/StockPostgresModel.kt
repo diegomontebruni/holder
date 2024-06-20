@@ -13,7 +13,7 @@ import java.util.UUID
 
 @Entity
 @Table(name = "stock")
-class StockPostgresModel(
+data class StockPostgresModel(
 
     @Id
     @Column(updatable = false)

@@ -47,17 +47,18 @@ data class UserPostgresModel(
 
     enum class StatusModel { PENDING, ACTIVE, INACTIVE }
 
-    companion object
-}
+    companion object {
 
-fun UserPostgresModel.Companion.fromUser(user: User) = UserPostgresModel(
-    id = user.id,
-    username = user.username.value,
-    password = user.password.value,
-    status = StatusModel.valueOf(user.status.name),
-    passwordRecoverToken = user.passwordRecoverToken?.value,
-    passwordRecoverTokenExpiration = user.passwordRecoverTokenExpiration,
-)
+        fun fromUser(user: User) = UserPostgresModel(
+            id = user.id,
+            username = user.username.value,
+            password = user.password.value,
+            status = StatusModel.valueOf(user.status.name),
+            passwordRecoverToken = user.passwordRecoverToken?.value,
+            passwordRecoverTokenExpiration = user.passwordRecoverTokenExpiration,
+        )
+    }
+}
 
 fun UserPostgresModel.toUser() = User(
     id = id,
