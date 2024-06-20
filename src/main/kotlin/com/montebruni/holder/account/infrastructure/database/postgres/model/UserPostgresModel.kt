@@ -5,6 +5,7 @@ import com.montebruni.holder.account.domain.entity.User
 import com.montebruni.holder.account.domain.valueobject.Password
 import com.montebruni.holder.account.domain.valueobject.PasswordRecoverToken
 import com.montebruni.holder.account.domain.valueobject.Username
+import com.montebruni.holder.account.infrastructure.database.postgres.model.UserPostgresModel.StatusModel
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
