@@ -20,11 +20,11 @@ class StockPostgresRepositoryIT(
         @Test
         fun `should save stock successfully`() {
             val model = createStockPostgresModel().also(repository::save)
-            val result = repository.findByIdOrNull(model.id)
+            val result = repository.findByIdOrNull(model.ticker)
 
             assertNotNull(result)
-            assertEquals(model.id, result!!.id)
-            assertEquals(model.symbol, result.symbol)
+            assertEquals(model.ticker, result!!.ticker)
+            assertEquals(model.ticker, result.ticker)
             assertEquals(model.price, result.price)
             assertEquals(model.createdAt, result.createdAt)
             assertEquals(model.updatedAt, result.updatedAt)
@@ -32,16 +32,16 @@ class StockPostgresRepositoryIT(
     }
 
     @Nested
-    inner class FindBySymbolCases {
+    inner class FindByTickerCases {
 
         @Test
-        fun `should find stock by symbol`() {
+        fun `should find stock by ticker`() {
             val model = createStockPostgresModel().also(repository::save)
-            val result = repository.findBySymbol(model.symbol)
+            val result = repository.findByIdOrNull(model.ticker)
 
             assertNotNull(result)
-            assertEquals(model.id, result!!.id)
-            assertEquals(model.symbol, result.symbol)
+            assertEquals(model.ticker, result!!.ticker)
+            assertEquals(model.ticker, result.ticker)
             assertEquals(model.price, result.price)
             assertEquals(model.createdAt, result.createdAt)
             assertEquals(model.updatedAt, result.updatedAt)
@@ -49,7 +49,7 @@ class StockPostgresRepositoryIT(
 
         @Test
         fun `should return null when stock not found`() {
-            val result = repository.findBySymbol("NOT_FOUND")
+            val result = repository.findByIdOrNull("NOT_FOUND")
 
             assertNull(result)
         }

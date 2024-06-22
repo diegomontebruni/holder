@@ -6,6 +6,7 @@ import com.montebruni.holder.stock.infrastructure.database.postgres.StockPostgre
 import com.montebruni.holder.stock.infrastructure.database.postgres.model.StockPostgresModel
 import com.montebruni.holder.stock.infrastructure.database.postgres.model.fromStock
 import com.montebruni.holder.stock.infrastructure.database.postgres.model.toStock
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
 
 @Component
@@ -19,5 +20,5 @@ class StockRepositoryAdapter(
             .let(repository::save)
             .toStock()
 
-    override fun findBySymbol(symbol: String): Stock? = repository.findBySymbol(symbol)?.toStock()
+    override fun findByTicker(ticker: String): Stock? = repository.findByIdOrNull(ticker)?.toStock()
 }

@@ -4,7 +4,7 @@ import com.montebruni.holder.stock.domain.valueobject.Amount
 import java.time.Instant
 
 data class StockEvent(
-    val symbol: String,
+    val ticker: String,
     val type: StockEventType,
     val amount: Amount,
     val description: String,

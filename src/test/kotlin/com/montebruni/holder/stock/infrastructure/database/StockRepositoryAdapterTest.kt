@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.springframework.data.repository.findByIdOrNull
 
 class StockRepositoryAdapterTest(
     @MockK private val repository: StockPostgresRepository
@@ -37,8 +38,7 @@ class StockRepositoryAdapterTest(
 
             val modelCaptured = modelSlot.captured
             assertEquals(stock.price.value.toDouble(), modelCaptured.price)
-            assertEquals(stock.symbol, modelCaptured.symbol)
-            assertNotNull(modelCaptured.id)
+            assertEquals(stock.ticker, modelCaptured.ticker)
             assertNotNull(modelCaptured.createdAt)
             assertNotNull(modelCaptured.updatedAt)
 
@@ -49,34 +49,34 @@ class StockRepositoryAdapterTest(
     }
 
     @Nested
-    inner class FindBySymbolCases {
+    inner class FindByTickerCases {
 
         @Test
-        fun `should find stock by symbol`() {
-            val symbol = "BBAS3"
-            val model = createStockPostgresModel().copy(symbol = symbol)
+        fun `should find stock by ticker`() {
+            val ticker = "BBAS3"
+            val model = createStockPostgresModel().copy(ticker = ticker)
 
-            every { repository.findBySymbol(symbol) } returns model
+            every { repository.findByIdOrNull(ticker) } returns model
 
-            val result = adapter.findBySymbol(symbol)
+            val result = adapter.findByTicker(ticker)
 
             assertEquals(result!!.price.value.toDouble(), model.price)
-            assertEquals(result.symbol, model.symbol)
+            assertEquals(result.ticker, model.ticker)
 
-            verify { repository.findBySymbol(symbol) }
+            verify { repository.findByIdOrNull(ticker) }
         }
 
         @Test
         fun `should return null when stock not found`() {
-            val symbol = "BBAS3"
+            val ticker = "BBAS3"
 
-            every { repository.findBySymbol(symbol) } returns null
+            every { repository.findByIdOrNull(ticker) } returns null
 
-            val result = adapter.findBySymbol(symbol)
+            val result = adapter.findByTicker(ticker)
 
             assertNull(result)
 
-            verify { repository.findBySymbol(symbol) }
+            verify { repository.findByIdOrNull(ticker) }
         }
     }
 }

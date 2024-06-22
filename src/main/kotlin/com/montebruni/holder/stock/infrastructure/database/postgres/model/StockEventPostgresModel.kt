@@ -18,8 +18,8 @@ data class StockEventPostgresModel(
     @Column(name = "id", updatable = false)
     val id: UUID = UUID.randomUUID(),
 
-    @Column(name = "symbol", updatable = false)
-    val symbol: String,
+    @Column(name = "ticker", updatable = false)
+    val ticker: String,
 
     @Column(name = "type", updatable = false)
     val type: String,
@@ -45,7 +45,7 @@ data class StockEventPostgresModel(
 }
 
 fun StockEventPostgresModel.Companion.fromStockEvent(stockEvent: StockEvent) = StockEventPostgresModel(
-    symbol = stockEvent.symbol,
+    ticker = stockEvent.ticker,
     type = stockEvent.type.name,
     amount = stockEvent.amount.value.toDouble(),
     description = stockEvent.description,
@@ -54,7 +54,7 @@ fun StockEventPostgresModel.Companion.fromStockEvent(stockEvent: StockEvent) = S
 )
 
 fun StockEventPostgresModel.toStockEvent() = StockEvent(
-    symbol = symbol,
+    ticker = ticker,
     type = StockEvent.StockEventType.valueOf(type),
     amount = Amount(amount),
     description = description,

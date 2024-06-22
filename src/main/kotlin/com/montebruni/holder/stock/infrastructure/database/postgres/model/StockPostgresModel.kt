@@ -9,18 +9,14 @@ import jakarta.persistence.Table
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import java.time.Instant
-import java.util.UUID
 
 @Entity
 @Table(name = "stock")
 data class StockPostgresModel(
 
     @Id
-    @Column(updatable = false)
-    val id: UUID = UUID.randomUUID(),
-
-    @Column(name = "symbol", unique = true, nullable = false)
-    val symbol: String,
+    @Column(name = "ticker", nullable = false, unique = true)
+    val ticker: String,
 
     @Column(name = "price", nullable = false)
     val price: Double,
@@ -38,11 +34,11 @@ data class StockPostgresModel(
 }
 
 fun StockPostgresModel.Companion.fromStock(stock: Stock) = StockPostgresModel(
-    symbol = stock.symbol,
+    ticker = stock.ticker,
     price = stock.price.value.toDouble(),
 )
 
 fun StockPostgresModel.toStock() = Stock(
-    symbol = symbol,
+    ticker = ticker,
     price = Amount(price),
 )
