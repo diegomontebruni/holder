@@ -3,7 +3,8 @@ CREATE TABLE customer (
     user_id UUID NOT NULL,
     name VARCHAR,
     email VARCHAR NOT NULL,
-    created_at TIMESTAMP WITH TIME ZONE NOT NULL
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE NOT NULL
 );
 
 create index idx_customer_user_id on customer (user_id);
