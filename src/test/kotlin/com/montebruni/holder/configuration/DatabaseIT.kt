@@ -4,11 +4,13 @@ import org.junit.jupiter.api.BeforeEach
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.testcontainers.containers.PostgreSQLContainer
 
 @DataJpaTest
+@EnableJpaAuditing
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 open class DatabaseIT(
     private val repositories: List<JpaRepository<*, *>> = emptyList()
