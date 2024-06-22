@@ -13,9 +13,8 @@ class StockPostgresModelTest {
         val stock = createStock()
         val model = StockPostgresModel.fromStock(stock)
 
-        assertEquals(stock.symbol, model.symbol)
+        assertEquals(stock.ticker, model.ticker)
         assertEquals(stock.price.value.toDouble(), model.price)
-        assertNotNull(model.id)
         assertNotNull(model.createdAt)
         assertNotNull(model.updatedAt)
     }
@@ -25,7 +24,7 @@ class StockPostgresModelTest {
         val model = createStockPostgresModel()
         val stock = model.toStock()
 
-        assertEquals(model.symbol, stock.symbol)
+        assertEquals(model.ticker, stock.ticker)
         assertEquals(model.price, stock.price.value.toDouble())
     }
 }

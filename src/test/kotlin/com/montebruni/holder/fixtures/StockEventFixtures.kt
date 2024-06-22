@@ -6,7 +6,7 @@ import com.montebruni.holder.stock.infrastructure.database.postgres.model.StockE
 import java.time.Instant
 
 fun createStockEvent() = StockEvent(
-    symbol = "PETR4",
+    ticker = "PETR4",
     type = StockEvent.StockEventType.DIVIDENDO,
     amount = Amount(10.0),
     description = "Dividendo",
@@ -15,7 +15,7 @@ fun createStockEvent() = StockEvent(
 )
 
 fun createStockEventPostgresModel() = StockEventPostgresModel(
-    symbol = "PETR4",
+    ticker = "PETR4",
     type = "DIVIDENDO",
     amount = 10.0,
     description = "Dividendo",

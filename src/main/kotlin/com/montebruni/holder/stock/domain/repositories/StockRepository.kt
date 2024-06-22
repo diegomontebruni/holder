@@ -5,5 +5,5 @@ import com.montebruni.holder.stock.domain.entity.Stock
 interface StockRepository {
 
     fun save(stock: Stock): Stock
-    fun findBySymbol(symbol: String): Stock?
+    fun findByTicker(ticker: String): Stock?
 }

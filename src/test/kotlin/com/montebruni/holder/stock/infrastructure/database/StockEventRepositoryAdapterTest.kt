@@ -31,7 +31,7 @@ class StockEventRepositoryAdapterTest(
 
         val modelCaptured = modelSlot.captured
         assertEquals(stockEvent.amount.value.toDouble(), modelCaptured.amount)
-        assertEquals(stockEvent.symbol, modelCaptured.symbol)
+        assertEquals(stockEvent.ticker, modelCaptured.ticker)
         assertEquals(stockEvent.type.name, modelCaptured.type)
         assertEquals(stockEvent.description, modelCaptured.description)
         assertEquals(stockEvent.paymentDate, modelCaptured.paymentDate)
