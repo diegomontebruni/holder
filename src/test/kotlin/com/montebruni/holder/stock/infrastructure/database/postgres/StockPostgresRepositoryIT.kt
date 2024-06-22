@@ -3,6 +3,7 @@ package com.montebruni.holder.stock.infrastructure.database.postgres
 import com.montebruni.holder.configuration.DatabaseIT
 import com.montebruni.holder.fixtures.createStockPostgresModel
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Nested
@@ -28,6 +29,14 @@ class StockPostgresRepositoryIT(
             assertEquals(model.price, result.price)
             assertEquals(model.createdAt, result.createdAt)
             assertEquals(model.updatedAt, result.updatedAt)
+        }
+
+        @Test
+        fun `should save stock with diff updated at`() {
+            val model = createStockPostgresModel().also(repository::saveAndFlush)
+            val updatedModel = model.copy(price = 15.0).let(repository::saveAndFlush)
+
+            assertNotEquals(model.updatedAt, updatedModel.updatedAt)
         }
     }
 

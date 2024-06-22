@@ -8,15 +8,19 @@ import com.montebruni.holder.account.domain.valueobject.Username
 import com.montebruni.holder.account.infrastructure.database.postgres.model.UserPostgresModel.StatusModel
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
+import jakarta.persistence.EntityListeners
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.Id
 import jakarta.persistence.Table
 import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.Instant
 import java.util.UUID
 
 @Entity
+@EntityListeners(AuditingEntityListener::class)
 @Table(name = "users")
 data class UserPostgresModel(
 
@@ -24,7 +28,7 @@ data class UserPostgresModel(
     @Column(updatable = false)
     val id: UUID,
 
-    @Column(name = "username")
+    @Column(name = "username", updatable = false)
     val username: String,
 
     @Column(name = "password")
@@ -41,8 +45,12 @@ data class UserPostgresModel(
     val passwordRecoverTokenExpiration: Instant? = null,
 
     @CreatedDate
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at", updatable = false)
     val createdAt: Instant = Instant.now(),
+
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    var updatedAt: Instant = Instant.now()
 ) {
 
     enum class StatusModel { PENDING, ACTIVE, INACTIVE }

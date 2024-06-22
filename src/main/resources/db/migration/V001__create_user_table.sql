@@ -5,7 +5,8 @@ CREATE TABLE users (
     status VARCHAR NOT NULL,
     password_recover_token VARCHAR,
     password_recover_token_expiration TIMESTAMP WITH TIME ZONE,
-    created_at TIMESTAMP WITH TIME ZONE NOT NULL
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE NOT NULL
 );
 
 create index idx_users_username on users (username);

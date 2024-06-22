@@ -3,6 +3,7 @@ package com.montebruni.holder.account.infrastructure.database.postgres
 import com.montebruni.holder.configuration.DatabaseIT
 import com.montebruni.holder.fixtures.createCustomerModel
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -68,6 +69,14 @@ class CustomerPostgresRepositoryIT(
             val result = repository.findByIdOrNull(customer.id)
 
             assertNull(result?.name)
+        }
+
+        @Test
+        fun `should save customer with diff updated at`() {
+            val model = createCustomerModel().also(repository::saveAndFlush)
+            val updatedModel = model.copy(name = "new name").let(repository::saveAndFlush)
+
+            assertNotEquals(model.updatedAt, updatedModel.updatedAt)
         }
     }
 }

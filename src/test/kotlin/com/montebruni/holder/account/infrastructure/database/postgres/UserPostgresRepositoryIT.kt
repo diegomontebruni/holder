@@ -1,9 +1,11 @@
 package com.montebruni.holder.account.infrastructure.database.postgres
 
+import com.montebruni.holder.account.infrastructure.database.postgres.model.UserPostgresModel.StatusModel
 import com.montebruni.holder.configuration.DatabaseIT
 import com.montebruni.holder.fixtures.RANDOM_PASSWORD_TOKEN
 import com.montebruni.holder.fixtures.createUserModel
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -35,6 +37,14 @@ class UserPostgresRepositoryIT(
             assertEquals(user.createdAt, result?.createdAt)
             assertNull(result?.passwordRecoverToken)
             assertNull(result?.passwordRecoverTokenExpiration)
+        }
+
+        @Test
+        fun `should save user with diff updated at`() {
+            val model = createUserModel().also(repository::saveAndFlush)
+            val updatedModel = model.copy(status = StatusModel.PENDING).let(repository::saveAndFlush)
+
+            assertNotEquals(model.updatedAt, updatedModel.updatedAt)
         }
     }
 
