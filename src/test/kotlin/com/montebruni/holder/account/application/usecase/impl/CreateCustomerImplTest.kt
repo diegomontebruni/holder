@@ -16,7 +16,6 @@ import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -59,7 +58,7 @@ class CreateCustomerImplTest(
         }
         justRun { eventPublisher.publishEvent(capture(eventSlot)) }
 
-        val output = createCustomer.execute(input)
+        createCustomer.execute(input)
 
         val customerCaptured = customerSlot.captured
         assertEquals(input.userId, customerCaptured.userId)
@@ -67,17 +66,11 @@ class CreateCustomerImplTest(
         assertNull(customerCaptured.name)
         assertNull(customerCaptured.createdAt)
 
-        assertEquals(customerCaptured.id, output.id)
-        assertEquals(customerCaptured.userId, output.userId)
-        assertEquals(customerCaptured.email, output.email)
-        assertNotNull(output.createdAt)
-
         val eventCaptured = eventSlot.captured.getData()
         assertEquals(customerCaptured.id, eventCaptured.id)
         assertEquals(customerCaptured.userId, eventCaptured.userId)
         assertEquals(customerCaptured.email, eventCaptured.email)
         assertEquals(input.managerId, eventCaptured.managerId)
-        assertEquals(eventCaptured.createdAt, output.createdAt)
         assertNull(eventCaptured.name)
 
         verify {

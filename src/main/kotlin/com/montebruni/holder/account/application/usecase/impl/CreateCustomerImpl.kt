@@ -5,8 +5,6 @@ import com.montebruni.holder.account.application.event.events.CustomerCreatedEve
 import com.montebruni.holder.account.application.usecase.CreateCustomer
 import com.montebruni.holder.account.application.usecase.input.CreateCustomerInput
 import com.montebruni.holder.account.application.usecase.input.toCustomer
-import com.montebruni.holder.account.application.usecase.output.CreateCustomerOutput
-import com.montebruni.holder.account.application.usecase.output.fromCustomer
 import com.montebruni.holder.account.domain.entity.Customer
 import com.montebruni.holder.account.domain.exception.UserNotFoundException
 import com.montebruni.holder.account.domain.repositories.CustomerRepository
@@ -23,14 +21,13 @@ class CreateCustomerImpl(
     private val eventPublisher: EventPublisher
 ) : CreateCustomer {
 
-    override fun execute(input: CreateCustomerInput): CreateCustomerOutput {
+    override fun execute(input: CreateCustomerInput) {
         userRepository.findById(input.userId) ?: throw UserNotFoundException()
 
-        return input
+        input
             .toCustomer()
             .let(customerRepository::save)
             .also { publishCustomerCreatedEvent(it, input.managerId) }
-            .let(CreateCustomerOutput::fromCustomer)
     }
 
     private fun publishCustomerCreatedEvent(customer: Customer, managerId: UUID? = null) =
