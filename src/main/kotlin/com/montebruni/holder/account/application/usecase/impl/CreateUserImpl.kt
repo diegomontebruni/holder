@@ -4,8 +4,6 @@ import com.montebruni.holder.account.application.event.EventPublisher
 import com.montebruni.holder.account.application.event.events.UserCreatedEvent
 import com.montebruni.holder.account.application.usecase.CreateUser
 import com.montebruni.holder.account.application.usecase.input.CreateUserInput
-import com.montebruni.holder.account.application.usecase.output.CreateUserOutput
-import com.montebruni.holder.account.application.usecase.output.fromUser
 import com.montebruni.holder.account.domain.crypto.EncryptorProvider
 import com.montebruni.holder.account.domain.entity.User
 import com.montebruni.holder.account.domain.exception.UserAlreadyExistsException
@@ -22,15 +20,14 @@ class CreateUserImpl(
     private val encryptorProvider: EncryptorProvider
 ) : CreateUser {
 
-    override fun execute(input: CreateUserInput): CreateUserOutput {
+    override fun execute(input: CreateUserInput) {
         val username = input.username.value
 
         userRepository.findByUsername(username)?.let { throw UserAlreadyExistsException() }
 
-        return User(username = username)
+        User(username = username)
             .also { it.copy(password = it.password.encrypt(encryptorProvider)).let(userRepository::save) }
             .also { publishUserCreatedEvent(it, input.managerId) }
-            .let(CreateUserOutput::fromUser)
     }
 
     private fun publishUserCreatedEvent(user: User, managerId: UUID? = null) =

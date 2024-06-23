@@ -75,7 +75,7 @@ class CreateWalletImplTest(
         } answers { walletSlot.captured.copy(createdAt = Instant.now()) }
         justRun { eventPublisher.publishEvent(capture(eventSlot)) }
 
-        val output = createWallet.execute(input)
+        createWallet.execute(input)
 
         val walletCaptured = walletSlot.captured
         assertEquals(input.customerId, walletCaptured.id)
@@ -87,11 +87,6 @@ class CreateWalletImplTest(
         assertEquals(walletSlot.captured.managerId, eventCaptured.managerId)
         assertEquals(walletSlot.captured.balance, eventCaptured.balance)
         assertNotNull(eventCaptured.createdAt)
-
-        assertEquals(walletCaptured.id, output.id)
-        assertEquals(walletCaptured.managerId, output.managerId)
-        assertEquals(walletCaptured.balance, output.balance)
-        assertEquals(eventCaptured.createdAt, output.createdAt)
 
         verify(exactly = 1) {
             customerClient.findById(input.customerId)
@@ -113,7 +108,7 @@ class CreateWalletImplTest(
         } answers { walletSlot.captured.copy(createdAt = Instant.now()) }
         justRun { eventPublisher.publishEvent(capture(eventSlot)) }
 
-        val output = createWallet.execute(input)
+        createWallet.execute(input)
 
         val walletCaptured = walletSlot.captured
         assertEquals(input.customerId, walletCaptured.id)
@@ -122,9 +117,6 @@ class CreateWalletImplTest(
         val eventCaptured = eventSlot.captured.getData()
         assertEquals(input.customerId, eventCaptured.id)
         assertEquals(input.managerId, eventCaptured.managerId)
-
-        assertEquals(input.customerId, output.id)
-        assertEquals(input.managerId, output.managerId)
 
         findInputSlot.forEach {
             verify { customerClient.findById(it) }

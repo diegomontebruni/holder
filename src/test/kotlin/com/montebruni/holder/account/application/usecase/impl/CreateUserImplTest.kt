@@ -59,7 +59,7 @@ class CreateUserImplTest(
         every { encryptorProvider.encrypt(capture(encryptorSlot)) } returns ENCRYPTED_PASSWORD
         justRun { eventPublisher.publishEvent(capture(userCreatedEventSlot)) }
 
-        val output = registerUser.execute(input)
+        registerUser.execute(input)
 
         val userCaptured = userSlot.captured
         assertEquals(input.username.value, userCaptured.username.value)
@@ -71,9 +71,6 @@ class CreateUserImplTest(
         assertEquals(encryptorSlot.captured, userCreatedEvent.password?.value)
         assertEquals(userCaptured.status, userCreatedEvent.status)
         assertEquals(input.managerId, userCreatedEvent.managerId)
-
-        assertEquals(output.id, userCaptured.id)
-        assertEquals(output.status, userCaptured.status)
 
         verify {
             userRepository.findByUsername(input.username.value)

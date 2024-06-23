@@ -7,11 +7,8 @@ import com.montebruni.holder.wallet.application.event.events.WalletCreatedEvent
 import com.montebruni.holder.wallet.application.usecase.CreateWallet
 import com.montebruni.holder.wallet.application.usecase.input.CreateWalletInput
 import com.montebruni.holder.wallet.application.usecase.input.toWallet
-import com.montebruni.holder.wallet.application.usecase.output.CreateWalletOutput
-import com.montebruni.holder.wallet.application.usecase.output.fromWallet
 import com.montebruni.holder.wallet.domain.repositories.WalletRepository
 import org.springframework.stereotype.Service
-import kotlin.also
 import kotlin.let
 
 @Service
@@ -21,18 +18,16 @@ class CreateWalletImpl(
     private val eventPublisher: EventPublisher
 ) : CreateWallet {
 
-    override fun execute(input: CreateWalletInput): CreateWalletOutput {
+    override fun execute(input: CreateWalletInput) {
         customerClient.findById(input.customerId) ?: throw CustomerNotFoundException()
         input.managerId?.let {
             customerClient.findById(input.managerId) ?: throw CustomerNotFoundException()
         }
 
-        return input
+        input
             .toWallet()
             .let(walletRepository::create)
-            .also {
-                WalletCreatedEvent(it).let(eventPublisher::publishEvent)
-            }
-            .let { CreateWalletOutput.fromWallet(it) }
+            .let { WalletCreatedEvent(it) }
+            .let(eventPublisher::publishEvent)
     }
 }
