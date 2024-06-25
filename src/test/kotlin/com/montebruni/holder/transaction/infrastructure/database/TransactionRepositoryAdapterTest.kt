@@ -10,6 +10,7 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.slot
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 
 class TransactionRepositoryAdapterTest(
@@ -37,7 +38,15 @@ class TransactionRepositoryAdapterTest(
         assertEquals(transaction.type.name, modelCaptured.type)
         assertEquals(transaction.description, modelCaptured.description)
 
-        assertEquals(transaction, result)
+        assertEquals(transaction.walletId, result.walletId)
+        assertEquals(transaction.ticker, result.ticker)
+        assertEquals(transaction.quantity, result.quantity)
+        assertEquals(transaction.value, result.value)
+        assertEquals(transaction.operation, result.operation)
+        assertEquals(transaction.type, result.type)
+        assertEquals(transaction.description, result.description)
+        assertNotNull(result.id)
+        assertNotNull(result.createdAt)
 
         verify { repository.save(modelSlot.captured) }
     }
