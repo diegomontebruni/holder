@@ -1,5 +1,6 @@
 CREATE TABLE transaction (
     id UUID PRIMARY KEY,
+    status VARCHAR NOT NULL,
     wallet_id UUID NOT NULL,
     ticker VARCHAR NOT NULL,
     quantity INT NOT NULL,
@@ -11,3 +12,4 @@ CREATE TABLE transaction (
 );
 
 create index idx_transaction_wallet_id on transaction (wallet_id);
+create index idx_transaction_status on transaction (status);

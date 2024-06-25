@@ -8,6 +8,7 @@ import com.montebruni.holder.transaction.infrastructure.database.postgres.model.
 import java.util.UUID
 
 fun createTransaction() = Transaction(
+    id = UUID.randomUUID(),
     walletId = UUID.randomUUID(),
     ticker = "PETR4",
     quantity = 100,
@@ -17,6 +18,7 @@ fun createTransaction() = Transaction(
 )
 
 fun createTransactionPostgresModel() = TransactionPostgresModel(
+    status = "CONFIRMED",
     walletId = UUID.randomUUID(),
     ticker = "PETR4",
     quantity = 100,

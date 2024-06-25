@@ -1,6 +1,7 @@
 package com.montebruni.holder.transaction.infrastructure.database.postgres.model
 
 import com.montebruni.holder.transaction.domain.entity.Operation
+import com.montebruni.holder.transaction.domain.entity.Status
 import com.montebruni.holder.transaction.domain.entity.Transaction
 import com.montebruni.holder.transaction.domain.entity.Type
 import com.montebruni.holder.transaction.domain.valueobject.Amount
@@ -24,6 +25,9 @@ data class TransactionPostgresModel(
     @JvmField
     @Column(name = "id", updatable = false)
     val id: UUID = UUID.randomUUID(),
+
+    @Column(name = "status", nullable = false)
+    val status: String,
 
     @Column(name = "wallet_id", updatable = false)
     val walletId: UUID,
@@ -59,6 +63,7 @@ data class TransactionPostgresModel(
 
 fun TransactionPostgresModel.Companion.fromTransaction(transaction: Transaction): TransactionPostgresModel =
     TransactionPostgresModel(
+        status = transaction.status.name,
         walletId = transaction.walletId,
         ticker = transaction.ticker,
         quantity = transaction.quantity,
@@ -69,11 +74,14 @@ fun TransactionPostgresModel.Companion.fromTransaction(transaction: Transaction)
     )
 
 fun TransactionPostgresModel.toTransaction(): Transaction = Transaction(
+    id = id,
+    status = Status.valueOf(status),
     walletId = walletId,
     ticker = ticker,
     quantity = quantity,
     value = Amount(value),
     operation = Operation.valueOf(operation),
     type = Type.valueOf(type),
-    description = description
+    description = description,
+    createdAt = createdAt
 )
