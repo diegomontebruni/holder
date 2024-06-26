@@ -7,8 +7,7 @@ import java.util.UUID
 
 data class CreateCustomerInput(
     val userId: UUID,
-    val email: Email,
-    val managerId: UUID? = null
+    val email: Email
 ) {
     companion object
 }
@@ -20,6 +19,5 @@ fun CreateCustomerInput.toCustomer() = Customer(
 
 fun CreateCustomerInput.Companion.fromEvent(event: UserCreatedEvent) = CreateCustomerInput(
     userId = event.getData().id!!,
-    email = event.getData().username!!.value.let(::Email),
-    managerId = event.getData().managerId
+    email = event.getData().username!!.value.let(::Email)
 )

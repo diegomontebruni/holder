@@ -19,6 +19,6 @@ fun createWallet() = Wallet(
 )
 
 fun createCreateWalletInput() = CreateWalletInput(
-    customerId = UUID.randomUUID(),
+    userId = UUID.randomUUID(),
     managerId = UUID.randomUUID(),
 )
