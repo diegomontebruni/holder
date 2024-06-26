@@ -1,7 +1,7 @@
 package com.montebruni.holder.wallet.infrastructure.event.listener
 
 import com.montebruni.holder.configuration.UnitTests
-import com.montebruni.holder.fixtures.createCustomerCreatedEvent
+import com.montebruni.holder.fixtures.createUserCreatedEvent
 import com.montebruni.holder.wallet.application.usecase.CreateWallet
 import com.montebruni.holder.wallet.application.usecase.input.CreateWalletInput
 import io.mockk.every
@@ -22,7 +22,7 @@ class CreateWalletListenerTest(
 
     @Test
     fun `should call use case successfully`() {
-        val event = createCustomerCreatedEvent()
+        val event = createUserCreatedEvent()
         val inputSlot = slot<CreateWalletInput>()
 
         every { createWallet.execute(capture(inputSlot)) } returns mockk()
@@ -30,7 +30,7 @@ class CreateWalletListenerTest(
         listener.listener(event)
 
         val inputCaptured = inputSlot.captured
-        assertEquals(event.getData().id, inputCaptured.customerId)
+        assertEquals(event.getData().id, inputCaptured.userId)
         assertEquals(event.getData().managerId, inputCaptured.managerId)
 
         verify { createWallet.execute(inputSlot.captured) }

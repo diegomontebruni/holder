@@ -32,7 +32,6 @@ class CreateCustomerListenerTest(
         val inputCaptured = inputSlot.captured
         assertEquals(event.getData().id, inputCaptured.userId)
         assertEquals(event.getData().username?.value, inputCaptured.email.value)
-        assertEquals(event.getData().managerId, inputCaptured.managerId)
 
         verify { createCustomer.execute(inputSlot.captured) }
     }

@@ -4,13 +4,13 @@ import com.montebruni.holder.wallet.domain.entity.Wallet
 import java.util.UUID
 
 data class CreateWalletInput(
-    val customerId: UUID,
+    val userId: UUID,
     val managerId: UUID? = null
 ) {
     companion object
 }
 
 fun CreateWalletInput.toWallet() = Wallet(
-    id = customerId,
-    managerId = managerId ?: customerId
+    id = userId,
+    managerId = managerId ?: userId
 )

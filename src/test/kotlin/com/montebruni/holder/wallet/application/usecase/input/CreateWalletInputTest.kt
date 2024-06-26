@@ -17,8 +17,8 @@ class CreateWalletInputTest {
             val input = createCreateWalletInput().copy(managerId = null)
             val wallet = input.toWallet()
 
-            assertEquals(input.customerId, wallet.id)
-            assertEquals(input.customerId, wallet.managerId)
+            assertEquals(input.userId, wallet.id)
+            assertEquals(input.userId, wallet.managerId)
             assertEquals(BigDecimal.ZERO, wallet.balance.value)
             assertNull(wallet.createdAt)
         }
@@ -28,7 +28,7 @@ class CreateWalletInputTest {
             val input = createCreateWalletInput()
             val wallet = input.toWallet()
 
-            assertEquals(input.customerId, wallet.id)
+            assertEquals(input.userId, wallet.id)
             assertEquals(input.managerId, wallet.managerId)
             assertEquals(BigDecimal.ZERO, wallet.balance.value)
             assertNull(wallet.createdAt)

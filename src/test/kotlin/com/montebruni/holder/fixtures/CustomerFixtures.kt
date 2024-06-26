@@ -1,6 +1,5 @@
 package com.montebruni.holder.fixtures
 
-import com.montebruni.holder.account.application.event.events.CustomerCreatedEvent
 import com.montebruni.holder.account.application.event.events.CustomerRegistrationCompletedEvent
 import com.montebruni.holder.account.application.usecase.input.CompleteCustomerRegistrationInput
 import com.montebruni.holder.account.application.usecase.input.CreateCustomerInput
@@ -27,13 +26,7 @@ fun createCustomerModel() = CustomerPostgresModel(
 
 fun createCreateCustomerInput() = CreateCustomerInput(
     userId = UUID.randomUUID(),
-    email = Email("john.doe@gmail.com"),
-    managerId = UUID.randomUUID()
-)
-
-fun createCustomerCreatedEvent() = CustomerCreatedEvent(
-    entity = createCustomer(),
-    managerId = UUID.randomUUID()
+    email = Email("john.doe@gmail.com")
 )
 
 fun createCompleteCustomerRegistrationInput() = CompleteCustomerRegistrationInput(
