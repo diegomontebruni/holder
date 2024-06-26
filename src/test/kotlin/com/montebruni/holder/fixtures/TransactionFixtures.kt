@@ -1,5 +1,6 @@
 package com.montebruni.holder.fixtures
 
+import com.montebruni.holder.transaction.application.usecase.input.CreateTransactionInput
 import com.montebruni.holder.transaction.domain.entity.Operation
 import com.montebruni.holder.transaction.domain.entity.Transaction
 import com.montebruni.holder.transaction.domain.entity.Type
@@ -25,4 +26,13 @@ fun createTransactionPostgresModel() = TransactionPostgresModel(
     value = 100.0,
     operation = "CREDIT",
     type = "STOCK"
+)
+
+fun createCreateTransactionInput() = CreateTransactionInput(
+    walletId = UUID.randomUUID(),
+    ticker = "PETR4",
+    quantity = 100,
+    value = Amount(100.0),
+    operation = Operation.CREDIT,
+    type = Type.STOCK
 )
