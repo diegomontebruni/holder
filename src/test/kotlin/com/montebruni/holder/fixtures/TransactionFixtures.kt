@@ -6,6 +6,7 @@ import com.montebruni.holder.transaction.domain.entity.Transaction
 import com.montebruni.holder.transaction.domain.entity.Type
 import com.montebruni.holder.transaction.domain.valueobject.Amount
 import com.montebruni.holder.transaction.infrastructure.database.postgres.model.TransactionPostgresModel
+import com.montebruni.holder.transaction.presentation.rest.request.CreateTransactionRequest
 import java.util.UUID
 
 fun createTransaction() = Transaction(
@@ -33,6 +34,15 @@ fun createCreateTransactionInput() = CreateTransactionInput(
     ticker = "PETR4",
     quantity = 100,
     value = Amount(100.0),
+    operation = Operation.CREDIT,
+    type = Type.STOCK
+)
+
+fun createCreateTransactionRequest() = CreateTransactionRequest(
+    walletId = UUID.randomUUID(),
+    ticker = "PETR4",
+    quantity = 100,
+    value = "100.0",
     operation = Operation.CREDIT,
     type = Type.STOCK
 )
