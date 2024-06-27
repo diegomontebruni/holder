@@ -1,4 +1,4 @@
-package com.montebruni.holder.account.presentation.rest.exception
+package com.montebruni.holder.transaction.presentation.rest.exception
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
 
 @RestControllerAdvice(
-    name = "AccountExceptionHandler",
-    basePackages = ["com.montebruni.holder.account.presentation.rest"]
+    name = "TransactionExceptionHandler",
+    basePackages = ["com.montebruni.holder.transaction.presentation.rest"]
 )
 class ExceptionHandler {
 
