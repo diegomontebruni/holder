@@ -3,6 +3,7 @@ CREATE TABLE asset (
     wallet_id UUID NOT NULL,
     ticker VARCHAR NOT NULL,
     quantity INT NOT NULL,
+    total_paid DECIMAL(10, 2) NOT NULL,
     average_price DECIMAL(10, 2) NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE NOT NULL
