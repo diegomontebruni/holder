@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository
 import java.util.UUID
 
 @Repository
-interface AssetPostgresRepository : JpaRepository<AssetPostgresModel, UUID>
+interface AssetPostgresRepository : JpaRepository<AssetPostgresModel, UUID> {
+
+    fun findByWalletIdAndTicker(walletId: UUID, ticker: String): AssetPostgresModel?
+}

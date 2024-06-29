@@ -7,6 +7,7 @@ import com.montebruni.holder.asset.infrastructure.database.postgres.model.AssetP
 import com.montebruni.holder.asset.infrastructure.database.postgres.model.fromAsset
 import com.montebruni.holder.asset.infrastructure.database.postgres.model.toAsset
 import org.springframework.stereotype.Component
+import java.util.UUID
 
 @Component
 class AssetRepositoryAdapter(
@@ -18,4 +19,9 @@ class AssetRepositoryAdapter(
             .fromAsset(asset)
             .let(repository::save)
             .toAsset()
+
+    override fun findByWalletIdAndTicker(walletId: UUID, ticker: String): Asset? =
+        repository
+            .findByWalletIdAndTicker(walletId, ticker)
+            ?.toAsset()
 }

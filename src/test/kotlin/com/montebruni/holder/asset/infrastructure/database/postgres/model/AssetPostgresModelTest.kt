@@ -16,6 +16,7 @@ class AssetPostgresModelTest {
         assertEquals(asset.walletId, model.walletId)
         assertEquals(asset.ticker, model.ticker)
         assertEquals(asset.quantity, model.quantity)
+        assertEquals(asset.totalPaid.value.toDouble(), model.totalPaid)
         assertEquals(asset.averagePrice.value.toDouble(), model.averagePrice)
         assertNotNull(model.id)
         assertNotNull(model.createdAt)
@@ -30,6 +31,7 @@ class AssetPostgresModelTest {
         assertEquals(model.walletId, asset.walletId)
         assertEquals(model.ticker, asset.ticker)
         assertEquals(model.quantity, asset.quantity)
+        assertEquals(model.totalPaid, asset.totalPaid.value.toDouble())
         assertEquals(model.averagePrice, asset.averagePrice.value.toDouble())
     }
 }

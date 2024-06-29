@@ -31,6 +31,9 @@ data class AssetPostgresModel(
     @Column(name = "quantity")
     val quantity: Int,
 
+    @Column(name = "total_paid")
+    val totalPaid: Double,
+
     @Column(name = "average_price")
     val averagePrice: Double,
 
@@ -45,18 +48,18 @@ data class AssetPostgresModel(
     companion object
 }
 
-fun AssetPostgresModel.Companion.fromAsset(asset: Asset): AssetPostgresModel =
-    AssetPostgresModel(
-        walletId = asset.walletId,
-        ticker = asset.ticker,
-        quantity = asset.quantity,
-        averagePrice = asset.averagePrice.value.toDouble()
-    )
+fun AssetPostgresModel.Companion.fromAsset(asset: Asset) = AssetPostgresModel(
+    walletId = asset.walletId,
+    ticker = asset.ticker,
+    quantity = asset.quantity,
+    totalPaid = asset.totalPaid.value.toDouble(),
+    averagePrice = asset.averagePrice.value.toDouble()
+)
 
-fun AssetPostgresModel.toAsset(): Asset =
-    Asset(
-        walletId = walletId,
-        ticker = ticker,
-        quantity = quantity,
-        averagePrice = Amount(averagePrice),
-    )
+fun AssetPostgresModel.toAsset() = Asset(
+    walletId = walletId,
+    ticker = ticker,
+    quantity = quantity,
+    totalPaid = Amount(totalPaid),
+    averagePrice = Amount(averagePrice),
+)
