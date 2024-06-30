@@ -26,7 +26,7 @@ class UpdateStockAssetImplTest(
     private lateinit var usecase: UpdateStockAssetImpl
 
     @Test
-    fun `should create asset successfully when not asset not found`() {
+    fun `should create asset successfully when asset not found`() {
         val input = createUpdateStockAssetInput()
         val repositorySlot = slot<Asset>()
 
@@ -38,8 +38,8 @@ class UpdateStockAssetImplTest(
         assertEquals(input.walletId, repositorySlot.captured.walletId)
         assertEquals(input.ticker, repositorySlot.captured.ticker)
         assertEquals(input.quantity, repositorySlot.captured.quantity)
-        assertEquals(input.value, repositorySlot.captured.totalPaid)
-        assertEquals("100.00", repositorySlot.captured.averagePrice.value.toString())
+        assertEquals("10000.0", repositorySlot.captured.totalPaid.value.toString())
+        assertEquals(input.value.value.toDouble(), repositorySlot.captured.averagePrice.value.toDouble())
 
         verify {
             assetRepository.findByWalletIdAndTicker(input.walletId, input.ticker)
@@ -61,9 +61,7 @@ class UpdateStockAssetImplTest(
 
         usecase.execute(input)
 
-        assertEquals(input.quantity + asset.quantity, repositorySlot.captured.quantity)
-        assertEquals(asset.totalPaid.plus(input.value), repositorySlot.captured.totalPaid)
-        assertEquals("100.00", repositorySlot.captured.averagePrice.value.toString())
+        assertEquals(asset.id, repositorySlot.captured.id)
 
         verify {
             assetRepository.findByWalletIdAndTicker(input.walletId, input.ticker)

@@ -34,6 +34,6 @@ class UpdateStockAssetImpl(
         walletId = input.walletId,
         ticker = input.ticker,
         quantity = input.quantity,
-        totalPaid = input.value
+        unitPrice = input.value
     )
 }

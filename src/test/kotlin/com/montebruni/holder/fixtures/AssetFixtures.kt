@@ -14,7 +14,15 @@ fun createAsset() = Asset(
     totalPaid = Amount(1000.0),
 )
 
+fun createAssetFromConstructor() = Asset(
+    walletId = UUID.randomUUID(),
+    ticker = "AAPL",
+    quantity = 10,
+    unitPrice = Amount(100.0)
+)
+
 fun createAssetPostgresModel() = AssetPostgresModel(
+    id = UUID.randomUUID(),
     walletId = UUID.randomUUID(),
     ticker = "AAPL",
     quantity = 10,
@@ -27,6 +35,6 @@ fun createUpdateStockAssetInput() = UpdateStockAssetInput(
     walletId = UUID.randomUUID(),
     ticker = "AAPL",
     quantity = 10,
-    value = Amount(1000.0),
+    value = Amount(1000.00),
     operation = Operation.CREDIT
 )
