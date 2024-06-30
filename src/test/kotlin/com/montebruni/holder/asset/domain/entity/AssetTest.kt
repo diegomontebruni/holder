@@ -2,12 +2,20 @@ package com.montebruni.holder.asset.domain.entity
 
 import com.montebruni.holder.asset.domain.valueobject.Amount
 import com.montebruni.holder.fixtures.createAsset
+import com.montebruni.holder.fixtures.createAssetFromConstructor
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
 class AssetTest {
+
+    @Test
+    fun `should create asset from secondary constructor`() {
+        val asset = createAssetFromConstructor()
+
+        assertEquals(1000.0, asset.totalPaid.value.toDouble())
+    }
 
     @Test
     fun `should calculate average price`() {
@@ -18,12 +26,13 @@ class AssetTest {
     fun `should update asset when operation is credit and calculate average price`() {
         val multiplier = 2
         val asset = createAsset()
+        val expectedTotalPaid = asset.totalPaid.plus(asset.totalPaid.multiply(Amount(asset.quantity)))
 
         val updatedAsset = asset.update(asset.quantity, asset.totalPaid, Operation.CREDIT)
 
         assertEquals(asset.quantity * multiplier, updatedAsset.quantity)
-        assertEquals(asset.totalPaid.multiply(Amount(multiplier)), updatedAsset.totalPaid)
-        assertEquals(asset.averagePrice.value.toDouble(), updatedAsset.averagePrice.value.toDouble())
+        assertEquals(expectedTotalPaid, updatedAsset.totalPaid)
+        assertEquals(550.0, updatedAsset.averagePrice.value.toDouble())
     }
 
     @Test

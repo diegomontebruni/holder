@@ -20,7 +20,7 @@ data class AssetPostgresModel(
 
     @Id
     @Column(name = "id", updatable = false)
-    val id: UUID = UUID.randomUUID(),
+    val id: UUID,
 
     @Column(name = "wallet_id", updatable = false)
     val walletId: UUID,
@@ -49,6 +49,7 @@ data class AssetPostgresModel(
 }
 
 fun AssetPostgresModel.Companion.fromAsset(asset: Asset) = AssetPostgresModel(
+    id = asset.id,
     walletId = asset.walletId,
     ticker = asset.ticker,
     quantity = asset.quantity,
@@ -57,6 +58,7 @@ fun AssetPostgresModel.Companion.fromAsset(asset: Asset) = AssetPostgresModel(
 )
 
 fun AssetPostgresModel.toAsset() = Asset(
+    id = id,
     walletId = walletId,
     ticker = ticker,
     quantity = quantity,

@@ -13,12 +13,12 @@ class AssetPostgresModelTest {
         val asset = createAsset()
         val model = AssetPostgresModel.fromAsset(asset)
 
+        assertEquals(asset.id, model.id)
         assertEquals(asset.walletId, model.walletId)
         assertEquals(asset.ticker, model.ticker)
         assertEquals(asset.quantity, model.quantity)
         assertEquals(asset.totalPaid.value.toDouble(), model.totalPaid)
         assertEquals(asset.averagePrice.value.toDouble(), model.averagePrice)
-        assertNotNull(model.id)
         assertNotNull(model.createdAt)
         assertNotNull(model.updatedAt)
     }
@@ -28,6 +28,7 @@ class AssetPostgresModelTest {
         val model = createAssetPostgresModel()
         val asset = model.toAsset()
 
+        assertEquals(model.id, asset.id)
         assertEquals(model.walletId, asset.walletId)
         assertEquals(model.ticker, asset.ticker)
         assertEquals(model.quantity, asset.quantity)
