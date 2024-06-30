@@ -4,6 +4,7 @@ import com.montebruni.holder.asset.application.client.TransactionClient
 import com.montebruni.holder.asset.application.client.exception.TransactionNotFoundException
 import com.montebruni.holder.asset.application.client.response.TransactionResponse.TransactionResponseStatus
 import com.montebruni.holder.asset.application.event.EventPublisher
+import com.montebruni.holder.asset.application.event.events.TransactionAssetCreatedEvent
 import com.montebruni.holder.asset.application.event.events.TransactionAssetFailedEvent
 import com.montebruni.holder.asset.domain.entity.Asset
 import com.montebruni.holder.asset.domain.repositories.AssetRepository
@@ -43,9 +44,7 @@ class UpdateStockAssetImplTest(
 
         assertDoesNotThrow { usecase.execute(input) }
 
-        verify {
-            transactionClient.findById(input.transactionId)
-        }
+        verify { transactionClient.findById(input.transactionId) }
         verify(exactly = 0) {
             assetRepository.findByWalletIdAndTicker(any(), any())
             assetRepository.save(any())
@@ -56,10 +55,12 @@ class UpdateStockAssetImplTest(
     @Test
     fun `should create asset successfully when asset not found`() {
         val repositorySlot = slot<Asset>()
+        val eventSlot = slot<TransactionAssetCreatedEvent>()
 
         every { transactionClient.findById(input.transactionId) } returns transactionResponse
         every { assetRepository.findByWalletIdAndTicker(input.walletId, input.ticker) } returns null
         every { assetRepository.save(capture(repositorySlot)) } answers { repositorySlot.captured }
+        every { eventPublisher.publishEvent(capture(eventSlot)) } answers { eventSlot.captured }
 
         usecase.execute(input)
 
@@ -69,13 +70,13 @@ class UpdateStockAssetImplTest(
         assertEquals("10000.0", repositorySlot.captured.totalPaid.value.toString())
         assertEquals(input.value.value.toDouble(), repositorySlot.captured.averagePrice.value.toDouble())
 
-        verify {
+        assertEquals(input.transactionId, eventSlot.captured.data.transactionId)
+
+        verify(exactly = 1) {
             assetRepository.findByWalletIdAndTicker(input.walletId, input.ticker)
             assetRepository.save(repositorySlot.captured)
             transactionClient.findById(input.transactionId)
-        }
-        verify(exactly = 0) {
-            eventPublisher.publishEvent(any())
+            eventPublisher.publishEvent(eventSlot.captured)
         }
     }
 
@@ -83,22 +84,23 @@ class UpdateStockAssetImplTest(
     fun `should update asset successfully when asset found`() {
         val asset = createAsset()
         val repositorySlot = slot<Asset>()
+        val eventSlot = slot<TransactionAssetCreatedEvent>()
 
         every { transactionClient.findById(input.transactionId) } returns transactionResponse
         every { assetRepository.findByWalletIdAndTicker(input.walletId, input.ticker) } returns asset
         every { assetRepository.save(capture(repositorySlot)) } answers { repositorySlot.captured }
+        every { eventPublisher.publishEvent(capture(eventSlot)) } answers { eventSlot.captured }
 
         usecase.execute(input)
 
         assertEquals(asset.id, repositorySlot.captured.id)
+        assertEquals(input.transactionId, eventSlot.captured.data.transactionId)
 
-        verify {
+        verify(exactly = 1) {
             assetRepository.findByWalletIdAndTicker(input.walletId, input.ticker)
             assetRepository.save(repositorySlot.captured)
             transactionClient.findById(input.transactionId)
-        }
-        verify(exactly = 0) {
-            eventPublisher.publishEvent(any())
+            eventPublisher.publishEvent(eventSlot.captured)
         }
     }
 
@@ -113,7 +115,7 @@ class UpdateStockAssetImplTest(
 
         assertEquals(input.transactionId, eventSlot.captured.data.transactionId)
 
-        verify {
+        verify(exactly = 1) {
             eventPublisher.publishEvent(eventSlot.captured)
             transactionClient.findById(input.transactionId)
         }

@@ -3,11 +3,13 @@ package com.montebruni.holder.asset.application.usecase.impl
 import com.montebruni.holder.asset.application.client.TransactionClient
 import com.montebruni.holder.asset.application.client.exception.TransactionNotFoundException
 import com.montebruni.holder.asset.application.event.EventPublisher
+import com.montebruni.holder.asset.application.event.events.TransactionAssetCreatedEvent
 import com.montebruni.holder.asset.application.event.events.TransactionAssetFailedEvent
 import com.montebruni.holder.asset.application.usecase.UpdateStockAsset
 import com.montebruni.holder.asset.application.usecase.request.UpdateStockAssetInput
 import com.montebruni.holder.asset.domain.entity.Asset
 import com.montebruni.holder.asset.domain.entity.TransactionStatus
+import com.montebruni.holder.asset.domain.event.TransactionAssetCreatedEventData
 import com.montebruni.holder.asset.domain.event.TransactionAssetFailedEventData
 import com.montebruni.holder.asset.domain.repositories.AssetRepository
 import org.springframework.stereotype.Service
@@ -34,11 +36,17 @@ class UpdateStockAssetImpl(
                 ?: createAsset(input)
 
             assetRepository.save(asset)
-        }.getOrElse {
-            TransactionAssetFailedEventData(input.transactionId)
-                .let(::TransactionAssetFailedEvent)
-                .let(eventPublisher::publishEvent)
         }
+            .onSuccess {
+                TransactionAssetCreatedEventData(input.transactionId)
+                    .let(::TransactionAssetCreatedEvent)
+                    .let(eventPublisher::publishEvent)
+            }
+            .onFailure {
+                TransactionAssetFailedEventData(input.transactionId)
+                    .let(::TransactionAssetFailedEvent)
+                    .let(eventPublisher::publishEvent)
+            }.getOrNull()
     }
 
     private fun createAsset(input: UpdateStockAssetInput) = Asset(
