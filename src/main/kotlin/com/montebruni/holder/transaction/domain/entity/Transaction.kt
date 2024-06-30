@@ -15,4 +15,9 @@ data class Transaction(
     val type: Type,
     val description: String? = null,
     val createdAt: Instant? = null
-)
+) {
+
+    fun toConfirmed(): Transaction? = status.takeIf { it == Status.PENDING }?.let { copy(status = Status.CONFIRMED) }
+
+    fun toFailed(): Transaction? = status.takeIf { it == Status.PENDING }?.let { copy(status = Status.FAILED) }
+}

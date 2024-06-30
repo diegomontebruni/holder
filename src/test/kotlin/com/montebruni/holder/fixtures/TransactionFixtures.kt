@@ -20,7 +20,7 @@ fun createTransaction() = Transaction(
 )
 
 fun createTransactionPostgresModel() = TransactionPostgresModel(
-    status = "CONFIRMED",
+    status = "PENDING",
     walletId = UUID.randomUUID(),
     ticker = "PETR4",
     quantity = 100,

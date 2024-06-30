@@ -56,7 +56,7 @@ data class TransactionPostgresModel(
 ) : Persistable<UUID> {
 
     override fun getId(): UUID? = id
-    override fun isNew(): Boolean = true
+    override fun isNew(): Boolean = status == Status.PENDING.name
 
     companion object
 }
