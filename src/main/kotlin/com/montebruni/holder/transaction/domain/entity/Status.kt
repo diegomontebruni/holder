@@ -1,3 +1,3 @@
 package com.montebruni.holder.transaction.domain.entity
 
-enum class Status { CONFIRMED, CANCELED }
+enum class Status { PENDING, CONFIRMED, FAILED }

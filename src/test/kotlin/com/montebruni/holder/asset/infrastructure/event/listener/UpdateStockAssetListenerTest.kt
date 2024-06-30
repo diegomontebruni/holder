@@ -42,6 +42,7 @@ class UpdateStockAssetListenerTest(
         val eventData = event.getData()
         val input = useCaseSlot.captured
         assertEquals(eventData.id, input.transactionId)
+        assertEquals(eventData.status!!.name, input.transactionStatus.name)
         assertEquals(eventData.walletId, input.walletId)
         assertEquals(eventData.ticker, input.ticker)
         assertEquals(eventData.quantity, input.quantity)

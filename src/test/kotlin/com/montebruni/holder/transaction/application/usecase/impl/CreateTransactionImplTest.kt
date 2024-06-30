@@ -9,6 +9,7 @@ import com.montebruni.holder.transaction.application.client.exception.WalletNotF
 import com.montebruni.holder.transaction.application.event.EventPublisher
 import com.montebruni.holder.transaction.application.event.events.TransactionCreatedEvent
 import com.montebruni.holder.transaction.application.usecase.input.toTransaction
+import com.montebruni.holder.transaction.domain.entity.Status
 import com.montebruni.holder.transaction.domain.entity.Transaction
 import com.montebruni.holder.transaction.domain.repositories.TransactionRepository
 import io.mockk.every
@@ -83,6 +84,7 @@ class CreateTransactionImplTest(
         usecase.execute(input)
 
         val transactionCaptured = transactionSlot.captured
+        assertEquals(Status.PENDING, transactionCaptured.status)
         assertEquals(input.walletId, transactionCaptured.walletId)
         assertEquals(input.ticker, transactionCaptured.ticker)
         assertEquals(input.quantity, transactionCaptured.quantity)

@@ -20,7 +20,7 @@ class CreateTransactionInputTest {
         assertEquals(input.operation, transaction.operation)
         assertEquals(input.type, transaction.type)
         assertEquals(input.description, transaction.description)
-        assertEquals(Status.CONFIRMED, transaction.status)
+        assertEquals(Status.PENDING, transaction.status)
         assertNull(transaction.createdAt)
     }
 }
