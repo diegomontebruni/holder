@@ -6,7 +6,9 @@ import com.montebruni.holder.transaction.infrastructure.database.postgres.Transa
 import com.montebruni.holder.transaction.infrastructure.database.postgres.model.TransactionPostgresModel
 import com.montebruni.holder.transaction.infrastructure.database.postgres.model.fromTransaction
 import com.montebruni.holder.transaction.infrastructure.database.postgres.model.toTransaction
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
+import java.util.UUID
 
 @Component
 class TransactionRepositoryAdapter(
@@ -18,4 +20,6 @@ class TransactionRepositoryAdapter(
             .fromTransaction(transaction)
             .let(repository::save)
             .toTransaction()
+
+    override fun findById(id: UUID): Transaction? = repository.findByIdOrNull(id)?.toTransaction()
 }

@@ -6,7 +6,7 @@ import java.util.UUID
 
 data class Transaction(
     val id: UUID = UUID.randomUUID(),
-    val status: Status = Status.CONFIRMED,
+    val status: Status = Status.PENDING,
     val walletId: UUID,
     val ticker: String,
     val quantity: Int,
