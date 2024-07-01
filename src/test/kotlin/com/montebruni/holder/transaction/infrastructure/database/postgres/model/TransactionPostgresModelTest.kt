@@ -13,6 +13,7 @@ class TransactionPostgresModelTest {
         val transaction = createTransaction()
         val model = TransactionPostgresModel.fromTransaction(transaction)
 
+        assertEquals(transaction.id, model.id)
         assertEquals(transaction.walletId, model.walletId)
         assertEquals(transaction.ticker, model.ticker)
         assertEquals(transaction.quantity, model.quantity)
@@ -20,7 +21,6 @@ class TransactionPostgresModelTest {
         assertEquals(transaction.operation.name, model.operation)
         assertEquals(transaction.type.name, model.type)
         assertEquals(transaction.description, model.description)
-        assertNotNull(model.id)
         assertNotNull(model.createdAt)
     }
 
