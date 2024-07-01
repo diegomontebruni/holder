@@ -24,7 +24,7 @@ data class TransactionPostgresModel(
     @Id
     @JvmField
     @Column(name = "id", updatable = false)
-    val id: UUID = UUID.randomUUID(),
+    val id: UUID,
 
     @Column(name = "status", nullable = false)
     val status: String,
@@ -63,6 +63,7 @@ data class TransactionPostgresModel(
 
 fun TransactionPostgresModel.Companion.fromTransaction(transaction: Transaction): TransactionPostgresModel =
     TransactionPostgresModel(
+        id = transaction.id,
         status = transaction.status.name,
         walletId = transaction.walletId,
         ticker = transaction.ticker,
