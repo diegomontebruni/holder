@@ -31,11 +31,26 @@ spring:
           time_zone: UTC
     open-in-view: false
 
+  cloud:
+    openfeign:
+      client:
+        decodeSlash: false
+        config:
+          default:
+            logger-level: full
+            connect-timeout: 30000
+            read-timeout: 30000
+      okhttp:
+        enabled: true
+      httpclient:
+        ok-http:
+          read-timeout: 30000
+
   logging:
     level:
       org:
         springframework:
-          web: INFO
+          web: DEBUG
       com:
         montebruni:
           holder: DEBUG
@@ -45,5 +60,13 @@ springdoc:
     path: /swagger-ui.html
 
 app:
+  providers:
+    brapi:
+      host: ${BRAPI_HOST:https://brapi.dev}
+      token: ${BRAPI_TOKEN:123123}
+      retry:
+        initial-await-time-ms: 1000
+        max-await-time-ms: 10000
+        attempts: 3
   url:
     recover-password: ${RECOVER_PASSWORD_URL:http://localhost:${spring.server.port}/recover-password?token=}
