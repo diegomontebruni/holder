@@ -2,6 +2,7 @@ package com.montebruni.holder.stock.infrastructure.rest.provider.brapi
 
 import com.montebruni.holder.stock.infrastructure.rest.provider.brapi.configuration.BrapiAuthInterceptor
 import com.montebruni.holder.stock.infrastructure.rest.provider.brapi.configuration.BrapiHttpClientConfiguration
+import com.montebruni.holder.stock.infrastructure.rest.provider.brapi.response.BrapiResponse
 import com.montebruni.holder.stock.infrastructure.rest.provider.brapi.response.FindByTickerResponse
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.GetMapping
@@ -16,5 +17,5 @@ import org.springframework.web.bind.annotation.PathVariable
 interface BrapiHttpClient {
 
     @GetMapping("/quote/{ticker}")
-    fun findByTicker(@PathVariable ticker: String): FindByTickerResponse
+    fun findByTicker(@PathVariable ticker: String): BrapiResponse<FindByTickerResponse>
 }
