@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 data class FindByTickerResponse(
     @JsonProperty("symbol")
     val ticker: String,
-    @JsonProperty("shortName")
+    @JsonProperty("longName")
     val name: String,
     @JsonProperty("regularMarketPrice")
     val price: Double
