@@ -7,9 +7,11 @@ import com.montebruni.holder.stock.infrastructure.database.postgres.model.StockP
 fun createStock() = Stock(
     ticker = "BBAS3",
     price = Amount(27.55),
+    name = "Banco do Brasil"
 )
 
 fun createStockPostgresModel() = StockPostgresModel(
     ticker = "BBAS3",
     price = 27.55,
+    name = "Banco do Brasil"
 )

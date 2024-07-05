@@ -39,6 +39,7 @@ class StockRepositoryAdapterTest(
             val modelCaptured = modelSlot.captured
             assertEquals(stock.price.value.toDouble(), modelCaptured.price)
             assertEquals(stock.ticker, modelCaptured.ticker)
+            assertEquals(stock.name, modelCaptured.name)
             assertNotNull(modelCaptured.createdAt)
             assertNotNull(modelCaptured.updatedAt)
 
@@ -62,6 +63,7 @@ class StockRepositoryAdapterTest(
 
             assertEquals(result!!.price.value.toDouble(), model.price)
             assertEquals(result.ticker, model.ticker)
+            assertEquals(result.name, model.name)
 
             verify { repository.findByIdOrNull(ticker) }
         }
