@@ -1,6 +1,7 @@
 CREATE TABLE stock (
     ticker VARCHAR PRIMARY KEY,
     price DECIMAL(10, 2) NOT NULL,
+    name VARCHAR NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE NOT NULL
 );

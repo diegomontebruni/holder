@@ -24,6 +24,9 @@ data class StockPostgresModel(
     @Column(name = "price")
     val price: Double,
 
+    @Column(name = "name")
+    val name: String,
+
     @CreatedDate
     @Column(name = "created_at", updatable = false)
     val createdAt: Instant = Instant.now(),
@@ -39,9 +42,11 @@ data class StockPostgresModel(
 fun StockPostgresModel.Companion.fromStock(stock: Stock) = StockPostgresModel(
     ticker = stock.ticker,
     price = stock.price.value.toDouble(),
+    name = stock.name
 )
 
 fun StockPostgresModel.toStock() = Stock(
     ticker = ticker,
     price = Amount(price),
+    name = name,
 )

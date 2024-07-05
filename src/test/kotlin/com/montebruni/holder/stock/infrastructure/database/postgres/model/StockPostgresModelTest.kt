@@ -15,6 +15,7 @@ class StockPostgresModelTest {
 
         assertEquals(stock.ticker, model.ticker)
         assertEquals(stock.price.value.toDouble(), model.price)
+        assertEquals(stock.name, model.name)
         assertNotNull(model.createdAt)
         assertNotNull(model.updatedAt)
     }
@@ -26,5 +27,6 @@ class StockPostgresModelTest {
 
         assertEquals(model.ticker, stock.ticker)
         assertEquals(model.price, stock.price.value.toDouble())
+        assertEquals(model.name, stock.name)
     }
 }
