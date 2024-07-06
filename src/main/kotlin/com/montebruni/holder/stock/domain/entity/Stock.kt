@@ -6,4 +6,7 @@ data class Stock(
     val ticker: String,
     val price: Amount,
     val name: String,
-)
+) {
+
+    fun update(price: Amount) = copy(price = price)
+}
