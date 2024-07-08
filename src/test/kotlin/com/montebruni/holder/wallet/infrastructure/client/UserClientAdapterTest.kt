@@ -1,8 +1,8 @@
 package com.montebruni.holder.wallet.infrastructure.client
 
-import com.montebruni.holder.account.domain.repositories.UserRepository
+import com.montebruni.holder.account.presentation.interfaces.UserInterface
 import com.montebruni.holder.configuration.UnitTests
-import com.montebruni.holder.fixtures.createUser
+import com.montebruni.holder.fixtures.createFindUserByIdResponse
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test
 import java.util.UUID
 
 class UserClientAdapterTest(
-    @MockK private val userRepository: UserRepository
+    @MockK private val userInterface: UserInterface
 ) : UnitTests() {
 
     @InjectMockKs
@@ -24,26 +24,26 @@ class UserClientAdapterTest(
 
     @Test
     fun `should find user by id`() {
-        val customer = createUser().copy(id = userId)
+        val userResponse = createFindUserByIdResponse().copy(id = userId)
 
-        every { userRepository.findById(userId) } returns customer
+        every { userInterface.findById(userId) } returns userResponse
 
         val result = adapter.findById(userId)
 
         assertNotNull(result)
         assertEquals(userId, result?.id)
 
-        verify(exactly = 1) { userRepository.findById(userId) }
+        verify(exactly = 1) { userInterface.findById(userId) }
     }
 
     @Test
     fun `should return null when user not found`() {
-        every { userRepository.findById(userId) } returns null
+        every { userInterface.findById(userId) } returns null
 
         val result = adapter.findById(userId)
 
         assertNull(result)
 
-        verify(exactly = 1) { userRepository.findById(userId) }
+        verify(exactly = 1) { userInterface.findById(userId) }
     }
 }
