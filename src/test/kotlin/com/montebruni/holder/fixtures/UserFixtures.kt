@@ -11,6 +11,7 @@ import com.montebruni.holder.account.domain.valueobject.Password
 import com.montebruni.holder.account.domain.valueobject.PasswordRecoverToken
 import com.montebruni.holder.account.domain.valueobject.Username
 import com.montebruni.holder.account.infrastructure.database.postgres.model.UserPostgresModel
+import com.montebruni.holder.account.presentation.interfaces.response.FindUserByIdResponse
 import com.montebruni.holder.account.presentation.rest.request.ChangeUserPasswordRequest
 import com.montebruni.holder.account.presentation.rest.request.CreateUserRequest
 import java.time.Instant
@@ -72,4 +73,10 @@ fun createPasswordRecoveryInitiatedEvent() = PasswordRecoveryInitiatedEvent(
         passwordRecoverToken = PasswordRecoverToken(RANDOM_PASSWORD_TOKEN),
         passwordRecoverTokenExpiration = Instant.now().plusSeconds(3600)
     )
+)
+
+fun createFindUserByIdResponse() = FindUserByIdResponse(
+    id = UUID.randomUUID(),
+    username = "a@a.com",
+    status = "ACTIVE"
 )
