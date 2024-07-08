@@ -1,7 +1,7 @@
 package com.montebruni.holder.transaction.infrastructure.client
 
 import com.montebruni.holder.configuration.UnitTests
-import com.montebruni.holder.wallet.domain.repositories.WalletRepository
+import com.montebruni.holder.wallet.presentation.interfaces.WalletInterface
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test
 import java.util.UUID
 
 class WalletClientAdapterTest(
-    @MockK private val walletRepository: WalletRepository
+    @MockK private val walletInterface: WalletInterface
 ) : UnitTests() {
 
     @InjectMockKs
@@ -23,17 +23,17 @@ class WalletClientAdapterTest(
 
     @Test
     fun `should return true when wallet exists`() {
-        every { walletRepository.findById(walletId) } returns mockk()
+        every { walletInterface.getWalletById(walletId) } returns mockk()
 
         assertTrue(adapter.existsByWalletId(walletId))
-        verify(exactly = 1) { walletRepository.findById(walletId) }
+        verify(exactly = 1) { walletInterface.getWalletById(walletId) }
     }
 
     @Test
     fun `should return false when wallet does not exist`() {
-        every { walletRepository.findById(walletId) } returns null
+        every { walletInterface.getWalletById(walletId) } returns null
 
         assertFalse(adapter.existsByWalletId(walletId))
-        verify(exactly = 1) { walletRepository.findById(walletId) }
+        verify(exactly = 1) { walletInterface.getWalletById(walletId) }
     }
 }
