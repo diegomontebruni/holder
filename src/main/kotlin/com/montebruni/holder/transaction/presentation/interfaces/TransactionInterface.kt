@@ -1,16 +1,16 @@
 package com.montebruni.holder.transaction.presentation.interfaces
 
-import com.montebruni.holder.transaction.application.usecase.FindById
+import com.montebruni.holder.transaction.application.usecase.FindTransactionById
 import com.montebruni.holder.transaction.presentation.interfaces.response.FindByIdResponse
 import org.springframework.stereotype.Component
 import java.util.UUID
 
 @Component
 class TransactionInterface(
-    private val findById: FindById
+    private val findTransactionById: FindTransactionById
 ) {
 
-    fun findById(id: UUID): FindByIdResponse? = findById.execute(id)?.let {
+    fun findById(id: UUID): FindByIdResponse? = findTransactionById.execute(id)?.let {
         FindByIdResponse(
             id = it.id,
             status = it.status.toString(),

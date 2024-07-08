@@ -7,7 +7,7 @@ import com.montebruni.holder.transaction.domain.valueobject.Amount
 import java.time.Instant
 import java.util.UUID
 
-data class FindByIdOutput(
+data class FindTransactionByIdOutput(
     val id: UUID,
     val status: Status,
     val walletId: UUID,

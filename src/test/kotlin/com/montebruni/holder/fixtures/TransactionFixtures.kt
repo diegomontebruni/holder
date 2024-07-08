@@ -1,7 +1,7 @@
 package com.montebruni.holder.fixtures
 
 import com.montebruni.holder.transaction.application.usecase.input.CreateTransactionInput
-import com.montebruni.holder.transaction.application.usecase.output.FindByIdOutput
+import com.montebruni.holder.transaction.application.usecase.output.FindTransactionByIdOutput
 import com.montebruni.holder.transaction.domain.entity.Operation
 import com.montebruni.holder.transaction.domain.entity.Status
 import com.montebruni.holder.transaction.domain.entity.Transaction
@@ -52,7 +52,7 @@ fun createCreateTransactionRequest() = CreateTransactionRequest(
     type = Type.STOCK
 )
 
-fun createFindTransactionByIdOutput() = FindByIdOutput(
+fun createFindTransactionByIdOutput() = FindTransactionByIdOutput(
     id = UUID.randomUUID(),
     status = Status.PENDING,
     walletId = UUID.randomUUID(),

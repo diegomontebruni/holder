@@ -12,12 +12,12 @@ import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import java.util.UUID.randomUUID
 
-class FindByIdImplTest(
+class FindTransactionByIdImplTest(
     @MockK private val transactionRepository: TransactionRepository
 ) : UnitTests() {
 
     @InjectMockKs
-    private lateinit var usecase: FindByIdImpl
+    private lateinit var usecase: FindTransactionByIdImpl
 
     @Test
     fun `should find transaction by id`() {

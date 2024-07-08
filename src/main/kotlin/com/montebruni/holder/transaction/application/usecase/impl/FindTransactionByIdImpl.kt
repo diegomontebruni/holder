@@ -1,18 +1,18 @@
 package com.montebruni.holder.transaction.application.usecase.impl
 
-import com.montebruni.holder.transaction.application.usecase.FindById
-import com.montebruni.holder.transaction.application.usecase.output.FindByIdOutput
+import com.montebruni.holder.transaction.application.usecase.FindTransactionById
+import com.montebruni.holder.transaction.application.usecase.output.FindTransactionByIdOutput
 import com.montebruni.holder.transaction.domain.repositories.TransactionRepository
 import org.springframework.stereotype.Service
 import java.util.UUID
 
 @Service
-class FindByIdImpl(
+class FindTransactionByIdImpl(
     private val transactionRepository: TransactionRepository
-) : FindById {
+) : FindTransactionById {
 
-    override fun execute(id: UUID): FindByIdOutput? = transactionRepository.findById(id)?.let {
-        FindByIdOutput(
+    override fun execute(id: UUID): FindTransactionByIdOutput? = transactionRepository.findById(id)?.let {
+        FindTransactionByIdOutput(
             id = it.id,
             status = it.status,
             walletId = it.walletId,

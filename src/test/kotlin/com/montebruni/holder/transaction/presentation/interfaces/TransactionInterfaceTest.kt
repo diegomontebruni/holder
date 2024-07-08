@@ -2,7 +2,7 @@ package com.montebruni.holder.transaction.presentation.interfaces
 
 import com.montebruni.holder.configuration.UnitTests
 import com.montebruni.holder.fixtures.createFindTransactionByIdOutput
-import com.montebruni.holder.transaction.application.usecase.FindById
+import com.montebruni.holder.transaction.application.usecase.FindTransactionById
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test
 import java.util.UUID
 
 class TransactionInterfaceTest(
-    @MockK private val findById: FindById
+    @MockK private val findById: FindTransactionById
 ) : UnitTests() {
 
     @InjectMockKs
