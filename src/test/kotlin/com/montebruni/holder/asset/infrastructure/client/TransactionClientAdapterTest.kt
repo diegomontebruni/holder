@@ -1,8 +1,8 @@
 package com.montebruni.holder.asset.infrastructure.client
 
 import com.montebruni.holder.configuration.UnitTests
-import com.montebruni.holder.fixtures.createTransaction
-import com.montebruni.holder.transaction.domain.repositories.TransactionRepository
+import com.montebruni.holder.fixtures.createFindTransactionByIdResponse
+import com.montebruni.holder.transaction.presentation.interfaces.TransactionInterface
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test
 import java.util.UUID.randomUUID
 
 class TransactionClientAdapterTest(
-    @MockK private val transactionRepository: TransactionRepository
+    @MockK private val transactionInterface: TransactionInterface
 ) : UnitTests() {
 
     @InjectMockKs
@@ -23,24 +23,24 @@ class TransactionClientAdapterTest(
     fun `should return null when transaction not found`() {
         val id = randomUUID()
 
-        every { transactionRepository.findById(id) } returns null
+        every { transactionInterface.findById(id) } returns null
 
         assertNull(adapter.findById(id))
 
-        verify { transactionRepository.findById(id) }
+        verify { transactionInterface.findById(id) }
     }
 
     @Test
     fun `should return transaction response when transaction found`() {
         val id = randomUUID()
-        val transaction = createTransaction()
+        val transaction = createFindTransactionByIdResponse().copy(id = id)
 
-        every { transactionRepository.findById(id) } returns transaction
+        every { transactionInterface.findById(id) } returns transaction
 
         val response = adapter.findById(id)
 
-        assertEquals(transaction.status.name, response?.status?.name)
+        assertEquals(transaction.status, response?.status?.name)
 
-        verify { transactionRepository.findById(id) }
+        verify { transactionInterface.findById(id) }
     }
 }
