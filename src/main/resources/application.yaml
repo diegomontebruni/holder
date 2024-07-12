@@ -22,8 +22,8 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none
-    show-sql: false
+      ddl-auto: update
+    show-sql: true
     properties:
       hibernate:
         format_sql: true
@@ -49,6 +49,12 @@ spring:
   logging:
     level:
       org:
+        hibernate:
+          SQL: DEBUG
+          type:
+            descriptor:
+              sql:
+                BasicBinder: TRACE
         springframework:
           web: DEBUG
       com:
@@ -63,10 +69,18 @@ app:
   providers:
     brapi:
       host: ${BRAPI_HOST:https://brapi.dev}
-      token: ${BRAPI_TOKEN:123123}
+      token: ${BRAPI_TOKEN:a4nj4Ry6V9xH6gRzBJbXXw}
       retry:
         initial-await-time-ms: 1000
         max-await-time-ms: 10000
         attempts: 3
   url:
     recover-password: ${RECOVER_PASSWORD_URL:http://localhost:${spring.server.port}/recover-password?token=}
+
+security:
+  jwt:
+    issuer: ${spring.application.name}
+    expiration-seconds: 3600
+    key:
+      public: classpath:public_key.pem
+      private: classpath:private_key.pem

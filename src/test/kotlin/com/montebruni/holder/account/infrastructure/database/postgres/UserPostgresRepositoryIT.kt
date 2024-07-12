@@ -1,5 +1,7 @@
 package com.montebruni.holder.account.infrastructure.database.postgres
 
+import com.montebruni.holder.account.domain.entity.Role
+import com.montebruni.holder.account.infrastructure.database.postgres.model.RolePostgresModel
 import com.montebruni.holder.account.infrastructure.database.postgres.model.UserPostgresModel.StatusModel
 import com.montebruni.holder.configuration.DatabaseIT
 import com.montebruni.holder.fixtures.RANDOM_PASSWORD_TOKEN
@@ -9,6 +11,8 @@ import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.EnumSource
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
 import java.time.Instant
@@ -34,6 +38,25 @@ class UserPostgresRepositoryIT(
             assertEquals(user.username, result?.username)
             assertEquals(user.password, result?.password)
             assertEquals(user.status.name, result?.status?.name)
+            assertEquals(user.createdAt, result?.createdAt)
+            assertNull(result?.passwordRecoverToken)
+            assertNull(result?.passwordRecoverTokenExpiration)
+        }
+
+        @ParameterizedTest
+        @EnumSource(Role::class, mode = EnumSource.Mode.MATCH_ALL)
+        fun `should save user with configured roles`(role: Role) {
+            val roleModel = RolePostgresModel.from(role)
+            val user = createUserModel().copy(roles = setOf(roleModel))
+            repository.save(user)
+
+            val result = repository.findByIdOrNull(user.id)
+
+            assertEquals(user.id, result?.id)
+            assertEquals(user.username, result?.username)
+            assertEquals(user.password, result?.password)
+            assertEquals(user.status.name, result?.status?.name)
+            assertEquals(roleModel.name, result?.roles?.first()?.name)
             assertEquals(user.createdAt, result?.createdAt)
             assertNull(result?.passwordRecoverToken)
             assertNull(result?.passwordRecoverTokenExpiration)

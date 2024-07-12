@@ -5,6 +5,7 @@ import com.montebruni.holder.account.application.event.events.UserCreatedEvent
 import com.montebruni.holder.account.application.usecase.CreateUser
 import com.montebruni.holder.account.application.usecase.input.CreateUserInput
 import com.montebruni.holder.account.domain.crypto.EncryptorProvider
+import com.montebruni.holder.account.domain.entity.Role
 import com.montebruni.holder.account.domain.entity.User
 import com.montebruni.holder.account.domain.exception.UserAlreadyExistsException
 import com.montebruni.holder.account.domain.repositories.UserRepository
@@ -26,9 +27,16 @@ class CreateUserImpl(
         userRepository.findByUsername(username)?.let { throw UserAlreadyExistsException() }
 
         User(username = username)
-            .also { it.copy(password = it.password.encrypt(encryptorProvider)).let(userRepository::save) }
+            .also {
+                it.copy(
+                    password = it.password.encrypt(encryptorProvider),
+                    roles = setOf(getRoleFromInput(input))
+                ).let(userRepository::save)
+            }
             .also { publishUserCreatedEvent(it, input.managerId) }
     }
+
+    private fun getRoleFromInput(input: CreateUserInput) = input.managerId?.let { Role.CUSTOMER } ?: Role.USER
 
     private fun publishUserCreatedEvent(user: User, managerId: UUID? = null) =
         UserCreatedEvent(user, managerId).let(eventPublisher::publishEvent)

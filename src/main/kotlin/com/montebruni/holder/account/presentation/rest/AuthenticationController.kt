@@ -1,11 +1,15 @@
 package com.montebruni.holder.account.presentation.rest
 
 import com.montebruni.holder.account.application.usecase.InitiatePasswordRecovery
+import com.montebruni.holder.account.application.usecase.Login
 import com.montebruni.holder.account.application.usecase.RecoverPassword
 import com.montebruni.holder.account.application.usecase.input.RecoverPasswordInput
 import com.montebruni.holder.account.presentation.rest.exception.ErrorResponse
 import com.montebruni.holder.account.presentation.rest.request.InitiatePasswordRecoverRequest
+import com.montebruni.holder.account.presentation.rest.request.LoginRequest
 import com.montebruni.holder.account.presentation.rest.request.toInput
+import com.montebruni.holder.account.presentation.rest.response.LoginResponse
+import com.montebruni.holder.account.presentation.rest.response.from
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.media.Content
@@ -25,8 +29,56 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("v1/auth")
 class AuthenticationController(
     private val initiatePasswordRecovery: InitiatePasswordRecovery,
-    private val recoverPassword: RecoverPassword
+    private val recoverPassword: RecoverPassword,
+    private val login: Login
 ) {
+
+    @Operation(
+        summary = "Login",
+        description = "Authenticate the user and return a token to be used in the following requests.",
+        tags = ["Authentication"]
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200",
+                description = "User authenticated",
+                content = [
+                    Content(
+                        mediaType = APPLICATION_JSON_VALUE,
+                        schema = Schema(implementation = LoginResponse::class)
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "400",
+                description = "Response error",
+                content = [
+                    Content(
+                        mediaType = APPLICATION_JSON_VALUE,
+                        schema = Schema(implementation = ErrorResponse::class)
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "500",
+                description = "Server side error",
+                content = [
+                    Content(
+                        mediaType = APPLICATION_JSON_VALUE,
+                        schema = Schema(implementation = ErrorResponse::class)
+                    )
+                ]
+            )
+        ]
+    )
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/login")
+    fun login(@RequestBody request: LoginRequest) =
+        request
+            .toInput()
+            .let(login::execute)
+            .let(LoginResponse::from)
 
     @Operation(
         summary = "Initiate Password Recovery",

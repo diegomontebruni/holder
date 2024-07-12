@@ -6,12 +6,17 @@ import com.montebruni.holder.account.domain.valueobject.Password
 import com.montebruni.holder.account.domain.valueobject.PasswordRecoverToken
 import com.montebruni.holder.account.domain.valueobject.Username
 import com.montebruni.holder.account.infrastructure.database.postgres.model.UserPostgresModel.StatusModel
+import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EntityListeners
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
+import jakarta.persistence.FetchType
 import jakarta.persistence.Id
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.JoinTable
+import jakarta.persistence.ManyToMany
 import jakarta.persistence.Table
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
@@ -44,6 +49,14 @@ data class UserPostgresModel(
     @Column(name = "password_recover_token_expiration")
     val passwordRecoverTokenExpiration: Instant? = null,
 
+    @ManyToMany(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "user_role",
+        joinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")],
+        inverseJoinColumns = [JoinColumn(name = "role_id", referencedColumnName = "id")]
+    )
+    val roles: Set<RolePostgresModel>?,
+
     @CreatedDate
     @Column(name = "created_at", updatable = false)
     val createdAt: Instant = Instant.now(),
@@ -62,6 +75,7 @@ data class UserPostgresModel(
             username = user.username.value,
             password = user.password.value,
             status = StatusModel.valueOf(user.status.name),
+            roles = user.roles.map { RolePostgresModel.from(it) }.toSet(),
             passwordRecoverToken = user.passwordRecoverToken?.value,
             passwordRecoverTokenExpiration = user.passwordRecoverTokenExpiration,
         )
@@ -73,6 +87,7 @@ fun UserPostgresModel.toUser() = User(
     username = Username(username),
     password = Password(password),
     status = Status.valueOf(status.name),
+    roles = roles?.map(RolePostgresModel::toRole)?.toSet() ?: throw IllegalArgumentException("Roles cannot be null"),
     passwordRecoverToken = passwordRecoverToken?.let(::PasswordRecoverToken),
     passwordRecoverTokenExpiration = passwordRecoverTokenExpiration,
 )

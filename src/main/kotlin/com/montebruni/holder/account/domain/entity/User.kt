@@ -14,6 +14,7 @@ data class User(
     val username: Username,
     val password: Password,
     val status: Status = Status.PENDING,
+    val roles: Set<Role> = emptySet(),
     val passwordRecoverToken: PasswordRecoverToken? = null,
     val passwordRecoverTokenExpiration: Instant? = null,
 ) {

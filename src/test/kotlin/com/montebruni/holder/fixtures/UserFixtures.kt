@@ -32,6 +32,7 @@ fun createUserModel() = UserPostgresModel(
     username = "john.snow.model@winterfell.north",
     password = Password().value,
     status = UserPostgresModel.StatusModel.ACTIVE,
+    roles = emptySet(),
 )
 
 fun createUserInput() = CreateUserInput(
