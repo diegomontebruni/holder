@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 
 @Schema(description = "Login request")
 data class LoginRequest(
-    @Schema(description = "Username", example = "john.doe")
+    @Schema(description = "Username", example = "john.doe@.johndoe.com")
     val username: String,
     @Schema(description = "Password", example = "123456")
     val password: String
