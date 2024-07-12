@@ -94,6 +94,26 @@ class UserController(
                 ]
             ),
             ApiResponse(
+                responseCode = "401",
+                description = "Unauthorized",
+                content = [
+                    Content(
+                        mediaType = APPLICATION_JSON_VALUE,
+                        schema = Schema(implementation = ErrorResponse::class)
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "403",
+                description = "Forbidden",
+                content = [
+                    Content(
+                        mediaType = APPLICATION_JSON_VALUE,
+                        schema = Schema(implementation = ErrorResponse::class)
+                    )
+                ]
+            ),
+            ApiResponse(
                 responseCode = "500",
                 description = "Server side error",
                 content = [
