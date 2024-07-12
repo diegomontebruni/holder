@@ -1,5 +1,6 @@
 package com.montebruni.holder.transaction.infrastructure.security
 
+import com.montebruni.holder.account.domain.entity.Role
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpMethod
 
@@ -12,7 +13,7 @@ class TransactionRoleTest {
 
         assert(roleConfiguration.size == 1)
         assert(roleConfiguration[0].url == "/v1/transactions")
-        assert(roleConfiguration[0].authorities.containsAll(listOf("USER", "CUSTOMER")))
+        assert(roleConfiguration[0].authorities.containsAll(listOf(Role.USER.name, Role.CUSTOMER.name)))
         assert(roleConfiguration[0].method == HttpMethod.POST)
     }
 }

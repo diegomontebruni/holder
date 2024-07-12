@@ -1,5 +1,6 @@
 package com.montebruni.holder.account.infrastructure.security
 
+import com.montebruni.holder.account.domain.entity.Role
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpMethod
 
@@ -12,11 +13,11 @@ class AccountRoleTest {
 
         assert(roleConfiguration.size == 3)
         assert(roleConfiguration[0].url == "/v1/customers/complete-registration")
-        assert(roleConfiguration[0].authorities.containsAll(listOf("USER", "CUSTOMER")))
+        assert(roleConfiguration[0].authorities.containsAll(listOf(Role.USER.name, Role.CUSTOMER.name)))
         assert(roleConfiguration[0].method == HttpMethod.POST)
 
         assert(roleConfiguration[1].url == "/v1/users/change-password")
-        assert(roleConfiguration[1].authorities.containsAll(listOf("USER", "CUSTOMER")))
+        assert(roleConfiguration[1].authorities.containsAll(listOf(Role.USER.name, Role.CUSTOMER.name)))
         assert(roleConfiguration[1].method == HttpMethod.POST)
 
         assert(roleConfiguration[2].url == "/v1/users")
