@@ -1,7 +1,6 @@
 package com.montebruni.holder.configuration
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.montebruni.holder.infrastructure.configuration.DisableApplicationSecurityFilter
 import com.montebruni.holder.infrastructure.configuration.JacksonConfiguration
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired

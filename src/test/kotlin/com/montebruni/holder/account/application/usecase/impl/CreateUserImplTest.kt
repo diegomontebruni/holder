@@ -3,6 +3,7 @@ package com.montebruni.holder.account.application.usecase.impl
 import com.montebruni.holder.account.application.event.EventPublisher
 import com.montebruni.holder.account.application.event.events.UserCreatedEvent
 import com.montebruni.holder.account.domain.crypto.EncryptorProvider
+import com.montebruni.holder.account.domain.entity.Role
 import com.montebruni.holder.account.domain.entity.User
 import com.montebruni.holder.account.domain.exception.UserAlreadyExistsException
 import com.montebruni.holder.account.domain.repositories.UserRepository
@@ -64,6 +65,7 @@ class CreateUserImplTest(
         val userCaptured = userSlot.captured
         assertEquals(input.username.value, userCaptured.username.value)
         assertEquals(ENCRYPTED_PASSWORD, userCaptured.password.value)
+        assertEquals(Role.CUSTOMER, userCaptured.roles.first())
 
         val userCreatedEvent = userCreatedEventSlot.captured.getData()
         assertEquals(userCaptured.id, userCreatedEvent.id)
@@ -84,16 +86,18 @@ class CreateUserImplTest(
     fun `should send event successfully when managerId is null`() {
         val input = createUserInput().copy(managerId = null)
         val encryptorSlot = slot<String>()
+        val userSlot = slot<User>()
         val userCreatedEventSlot = slot<UserCreatedEvent>()
 
         every { userRepository.findByUsername(input.username.value) } returns null
-        every { userRepository.save(any()) } answers { firstArg() }
+        every { userRepository.save(capture(userSlot)) } answers { firstArg() }
         justRun { eventPublisher.publishEvent(capture(userCreatedEventSlot)) }
         every { encryptorProvider.encrypt(capture(encryptorSlot)) } answers { encryptorSlot.captured }
 
         registerUser.execute(input)
 
         assertNull(userCreatedEventSlot.captured.getData().managerId)
+        assertEquals(Role.USER, userSlot.captured.roles.first())
 
         verify {
             userRepository.findByUsername(input.username.value)

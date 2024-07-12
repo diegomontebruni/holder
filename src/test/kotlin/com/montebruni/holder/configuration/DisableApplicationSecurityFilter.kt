@@ -1,4 +1,4 @@
-package com.montebruni.holder.infrastructure.configuration
+package com.montebruni.holder.configuration
 
 import org.springframework.context.annotation.Bean
 import org.springframework.security.config.annotation.web.builders.HttpSecurity

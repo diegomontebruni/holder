@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.web.bind.annotation.PostMapping
@@ -46,6 +47,26 @@ class CustomerController(
                 ]
             ),
             ApiResponse(
+                responseCode = "401",
+                description = "Unauthorized",
+                content = [
+                    Content(
+                        mediaType = APPLICATION_JSON_VALUE,
+                        schema = Schema(implementation = ErrorResponse::class)
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "403",
+                description = "Forbidden",
+                content = [
+                    Content(
+                        mediaType = APPLICATION_JSON_VALUE,
+                        schema = Schema(implementation = ErrorResponse::class)
+                    )
+                ]
+            ),
+            ApiResponse(
                 responseCode = "500",
                 description = "Server side error",
                 content = [
@@ -57,6 +78,7 @@ class CustomerController(
             )
         ]
     )
+    @SecurityRequirement(name = "bearerAuth")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping("/complete-registration")
     fun completeRegistration(@RequestBody request: CompleteCustomerRegistrationRequest) {
